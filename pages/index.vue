@@ -6,7 +6,7 @@
         miamparty
       </h1>
       <h2 class="subtitle">
-        My riveting Nuxt.js project
+        My superb Nuxt.js project
       </h2>
       <div class="links">
         <a

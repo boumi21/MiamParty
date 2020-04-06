@@ -1,8 +1,23 @@
 <template>
-  <div>
-    <nuxt />
+  <div class="app-container">
+    <Navbar />
+    <div class="app-content">
+      <nuxt />
+    </div>
   </div>
 </template>
+
+
+<script>
+
+import Navbar from '~/components/Navbar'
+export default {
+  components: {
+            Navbar
+        }
+}
+</script>
+
 
 <style>
 html {
