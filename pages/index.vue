@@ -30,12 +30,14 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import dataBaseConnection from '~/components/Database.vue'
 
 export default {
   components: {
     Logo
   }
 }
+
 </script>
 
 <style>
