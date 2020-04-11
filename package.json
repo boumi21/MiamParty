@@ -15,8 +15,11 @@
     "bootstrap-vue": "^2.0.0",
     "cross-env": "^5.2.0",
     "express": "^4.16.4",
+    "fs": "^0.0.1-security",
     "mysql": "^2.18.1",
-    "nuxt": "^2.0.0"
+    "net": "^1.0.2",
+    "nuxt": "^2.0.0",
+    "tls": "^0.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.9"
