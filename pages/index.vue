@@ -13,28 +13,33 @@
       </h3>
       <div>
     <b-form @submit="onSubmit" v-if="show">
-      
-
-      <b-form-group id="input-group-pseudo" label="Votre pseudo:" label-for="input-pseudo">
+      <b-form-group id="input-group-username" label="Nom d'utilisateur" label-for="input-username">
         <b-form-input
-          id="input-pseudo"
-          v-model="form.pseudo"
+          id="input-username"
+          v-model="form.username"
           required
-          placeholder="Entrez votre pseudo"
+          placeholder="ex : boumi21"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-mdp" label="Mot de passe:" label-for="input-mdp">
+      <b-form-group id="input-group-email" label="Email" label-for="input-email">
         <b-form-input
-          id="input-mdp"
-          v-model="form.mdp"
+          id="input-email"
+          v-model="form.email"
+          required
+          placeholder="Entrer un email"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group id="input-group-password" label="Mot de passe" label-for="input-password">
+        <b-form-input
+          id="input-password"
+          v-model="form.password"
           type="password"
           required
-          placeholder="Entrez votre mot de passe"
+          placeholder="Saisir un mot de passe"
         ></b-form-input>
       </b-form-group>
-
-      
 
       <b-button type="submit" variant="primary">Je m'inscris</b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
@@ -63,13 +68,8 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-var Database = require('~/server/database/Database.js');
 
-//Database.request("SELECT * from TR_COOKING_LEVEL;");
-
-
-
-var particulier = require('~/server/dao/particulier.js');
+var Particular = require('~/server/dao/Particular.js');
 
   export default {
     components: {
@@ -78,16 +78,16 @@ var particulier = require('~/server/dao/particulier.js');
     data() {
       return {
         form: {
-          pseudo: '',
-          mdp: ''
+          username: null,
+          email   : null,
+          password: null
         },
         show: true
       }
     },
     methods: {
-      async onSubmit(registrationInfo) {
-          console.log("lol");
-        let user = await particulier.addUser(registrationInfo);
+      async onSubmit() {
+        let user = await Particular.signUp(this.form);
       },
     }
   }
