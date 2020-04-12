@@ -49,6 +49,7 @@
           v-model="form.sexe"
           :options="sexes"
           id="input-sexe"
+          required
       ></b-form-radio-group>
       </b-form-group>
 
@@ -61,6 +62,7 @@
           v-model="form.statut"
           :options="statuts"
           id="input-statut"
+          required
       ></b-form-radio-group>
       </b-form-group>
 
