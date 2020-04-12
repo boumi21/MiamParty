@@ -76,6 +76,7 @@
 </template>
 
 <script>
+
   export default {
     data() {
       return {
@@ -95,9 +96,8 @@
       }
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      async onSubmit(registrationInfo) {
+        
       },
       onReset(evt) {
         evt.preventDefault()

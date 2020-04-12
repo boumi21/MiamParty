@@ -19,7 +19,7 @@
           Connexion
         </a>
         <a
-          href="/register"
+          href="/register2"
           class="button--grey"
         >
           Inscription
@@ -31,9 +31,9 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-var Database = require('~/components/Database.js');
+var Database = require('~/server/database/Database.js');
 
-Database.request("SELECT * from TR_COOKING_LEVEL;");
+//Database.request("SELECT * from TR_COOKING_LEVEL;");
 
 export default {
   components: {
