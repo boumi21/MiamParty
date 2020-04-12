@@ -30,7 +30,9 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
-import dataBaseConnection from '~/components/Database.vue'
+var Database = require('~/components/Database.js');
+
+Database.request("SELECT * from TR_COOKING_LEVEL;");
 
 export default {
   components: {
