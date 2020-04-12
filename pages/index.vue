@@ -3,11 +3,14 @@
     <div>
       <logo />
       <h1 class="title">
-        Miam Party !
+        Miam Party
       </h1>
       <h2 class="subtitle">
-        Welcome
+        Bienvenue !
       </h2>
+      <h3 class="info">
+        Connectez-vous pour découvrir toutes nos fonctionnalités.
+      </h3>
       <div class="links">
         <a
           href="/connection"
@@ -65,6 +68,13 @@ export default {
   font-size: 42px;
   color: #526488;
   word-spacing: 5px;
+  padding-bottom: 15px;
+}
+
+.info {
+  font-weight: 300;
+  font-size: 20px;
+  color: #000000;
   padding-bottom: 15px;
 }
 
