@@ -11,14 +11,12 @@
       <div class="links">
         <a
           href="/connection"
-          target="_blank"
           class="button--green"
         >
           Connexion
         </a>
         <a
-          href=""
-          target="_blank"
+          href="/register"
           class="button--grey"
         >
           Inscription
