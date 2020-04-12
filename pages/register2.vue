@@ -47,9 +47,9 @@ var particulier = require('~/server/dao/particulier.js');
       }
     },
     methods: {
-      async onSubmit(registrationInfo) {
+      async onSubmit() {
           console.log("lol");
-        let user = await particulier.addUser(registrationInfo);
+        let user = await particulier.addUser(this.form);
       },
     }
   }

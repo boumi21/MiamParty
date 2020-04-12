@@ -1,5 +1,4 @@
 exports.addUser = function(registerInfo){
-    console.log("partiulier");
-    console.log(registerInfo);
+    console.log(registerInfo.mdp);
     return registerInfo;
 }
