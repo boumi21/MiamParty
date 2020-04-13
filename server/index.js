@@ -31,3 +31,10 @@ async function start () {
   })
 }
 start()
+
+
+// POST method route
+app.post('/', function (req, res) {
+  console.log('cacahuete');
+  res.send('POST request to the homepage');
+});

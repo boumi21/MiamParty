@@ -44,11 +44,23 @@ module.exports = {
     '@nuxtjs/auth'
   ],
   
+
   auth: {
-    // Options
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/', method: 'post'},
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+        },
+        // tokenRequired: true,
+        // tokenType: 'bearer'
+        // autoFetchUser: true
+      }
+    }
   },
 
-  
+
   /*
   ** Build configuration
   */

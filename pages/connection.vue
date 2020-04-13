@@ -1,19 +1,16 @@
 <template>
   <div>
     <b-form @submit="onSubmit" v-if="show">
-      <b-form-group
-        id="input-group-email"
-        label="Courrier électronique:"
-        label-for="input-email"
-      >
+
+      <b-form-group id="input-group-username" label="Nom d'utilisateur" label-for="input-username">
         <b-form-input
-          id="input-email"
-          v-model="form.email"
-          type="email"
+          id="input-username"
+          v-model="form.username"
           required
-          placeholder="Votre mel"
+          placeholder="Votre nom d'utilisateur"
         ></b-form-input>
       </b-form-group>
+
 
       <b-form-group id="input-group-mdp" label="Mot de passe:" label-for="input-mdp">
         <b-form-input
@@ -40,16 +37,20 @@ export default {
   data() {
       return {
         form: {
-          email: '',
+          username: '',
           mdp: ''
         },
         show: true
       }
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      async onSubmit() {
+        try {
+        let response = await this.$auth.loginWith('local', { data: this.form })
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
       }
     }
 }

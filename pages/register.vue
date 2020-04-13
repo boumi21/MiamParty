@@ -97,7 +97,7 @@
     },
     methods: {
       async onSubmit(registrationInfo) {
-        
+        await this.$axios.post('/users', registrationInfo)
       },
       onReset(evt) {
         evt.preventDefault()
