@@ -27,6 +27,12 @@
 
                 <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
+                <div v-if="$auth.loggedIn">
+                    <p>logged in</p>
+                </div>
+                <div v-else>
+                    <p>pas logged in</p>
+                </div>
                 <template v-slot:button-content>
                     <em>User</em>
                 </template>
