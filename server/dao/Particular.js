@@ -14,16 +14,14 @@ exports.signUp = function(registrationInfo) {
     var result = Database.sendRequest(getAccountType);
     var accountType = result[0].account_type;
     
-
-
-
     var insertParticular = 'INSERT INTO Account SET'
-                + ' id_account_type = ' + accountType
-                + ', username = ' + registrationInfo.username
-                + ', password = ' + password
-                + ', salt = ' + salt
-                + ', email = ' + registrationInfo.email
-                + ', creation_date = NOW()'
-                + ', last_access = NOW()';
+                         + ' id_account_type = ' + accountType
+                         + ', username = ' + registrationInfo.username
+                         + ', password = ' + password
+                         + ', salt = ' + salt
+                         + ', email = ' + registrationInfo.email
+                         + ', creation_date = NOW()'
+                         + ', last_access = NOW()';
+
     Database.sendRequest(insertParticular);
 }
