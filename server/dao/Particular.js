@@ -1,4 +1,4 @@
-var Database = require('~/server/database/Database.js');
+var database = require('~/server/database/Database.js');
 var Password = require('~/components/Password.js');
 
 exports.signUp = function(registrationInfo) {
@@ -25,3 +25,18 @@ exports.signUp = function(registrationInfo) {
 
     Database.sendRequest(insertParticular);
 }
+
+
+exports.test = function (newTask, result) {    
+    database.query("INSERT INTO tasks set ?", newTask, function (err, res) {
+            
+            if(err) {
+                console.log("error: ", err);
+                result(err, null);
+            }
+            else{
+                console.log(res.insertId);
+                result(null, res.insertId);
+            }
+        });           
+};

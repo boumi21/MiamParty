@@ -16,30 +16,30 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-pseudo" label="Votre pseudo:" label-for="input-pseudo">
+      <b-form-group id="input-group-username" label="Votre pseudo:" label-for="input-username">
         <b-form-input
-          id="input-pseudo"
-          v-model="form.pseudo"
+          id="input-username"
+          v-model="form.username"
           required
           placeholder="Entrez votre pseudo"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-mdp" label="Mot de passe:" label-for="input-mdp">
+      <b-form-group id="input-group-password" label="Mot de passe:" label-for="input-password">
         <b-form-input
-          id="input-mdp"
-          v-model="form.mdp"
+          id="input-password"
+          v-model="form.password"
           type="password"
           required
           placeholder="Entrez votre mot de passe"
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-niveau" label="Votre niveau de cuisine:" label-for="input-niveau">
+      <b-form-group id="input-group-level" label="Votre niveau de cuisine:" label-for="input-level">
         <b-form-select
-          id="input-niveau"
-          v-model="form.niveau"
-          :options="niveaux"
+          id="input-level"
+          v-model="form.level"
+          :options="levels"
           required
         ></b-form-select>
       </b-form-group>
@@ -53,15 +53,15 @@
       ></b-form-radio-group>
       </b-form-group>
 
-      <b-form-group id="input-group-naissance" label="Date de naissance:" label-for="input-naissance">
-        <b-form-input type="date" id="input-naissance" v-model="form.naissance" required></b-form-input>
+      <b-form-group id="input-group-birth" label="Date de naissance:" label-for="input-birth">
+        <b-form-input type="date" id="input-birth" v-model="form.birth" required></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-statut" label="Votre statut:" label-for="input-statut">
+      <b-form-group id="input-group-status" label="Votre statut:" label-for="input-status">
         <b-form-radio-group
-          v-model="form.statut"
-          :options="statuts"
-          id="input-statut"
+          v-model="form.status"
+          :options="statuss"
+          id="input-status"
           required
       ></b-form-radio-group>
       </b-form-group>
@@ -77,27 +77,36 @@
 
 <script>
 
+var particulier = require('~/server/dao/Particular.js');
+
   export default {
     data() {
       return {
         form: {
           email: '',
-          pseudo: '',
-          mdp: '',
-          niveau: null,
+          username: '',
+          password: '',
+          level: null,
           sexe: null,
-          naissance: '',
-          statut: null
+          birth: '',
+          status: null
         },
-        niveaux: [{ text: 'Sélectionner un niveau', value: null }, { text: 'Débutant', value: 0 }, { text: 'Intermédiaire', value: 1 }, { text: 'Confirmé', value: 2 }, { text: 'Chef cuisto', value: 3 } ],
+        levels: [{ text: 'Sélectionner un niveau', value: null }, { text: 'Débutant', value: 0 }, { text: 'Intermédiaire', value: 1 }, { text: 'Confirmé', value: 2 }, { text: 'Chef cuisto', value: 3 } ],
         sexes: [{text: 'Homme', value: '0'}, {text: 'Femme', value: '1'}],
-        statuts: [{text: 'Particulier', value: '0'}, {text: 'Pro', value: '1'}],
+        statuss: [{text: 'Particulier', value: '0'}, {text: 'Pro', value: '1'}],
         show: true
       }
     },
     methods: {
       async onSubmit(registrationInfo) {
-        await this.$axios.post('/users', registrationInfo)
+        //let response = await this.$axios.post('/users', registrationInfo)
+        let response = await particulier.test(this.form, function(err, task) {
+    
+    if (err)
+      res.send(err);
+    res.json(task);
+  });
+        console.log(response)
       },
       onReset(evt) {
         evt.preventDefault()

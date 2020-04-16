@@ -38,3 +38,11 @@ app.post('/', function (req, res) {
   console.log('cacahuete');
   res.send('POST request to the homepage');
 });
+
+
+
+// POST method route
+app.post('/users', function (req, res) {
+  console.log(req);
+  res.send('POST request to the homepage');
+});

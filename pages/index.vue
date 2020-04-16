@@ -56,7 +56,7 @@
           Connexion
         </a>
         <a
-          href="/register2"
+          href="/register"
           class="button--grey"
         >
           Inscription
