@@ -77,8 +77,6 @@
 
 <script>
 
-var particulier = require('~/server/dao/Particular.js');
-
   export default {
     data() {
       return {
@@ -98,16 +96,16 @@ var particulier = require('~/server/dao/Particular.js');
       }
     },
     methods: {
-      async onSubmit(registrationInfo) {
-        //let response = await this.$axios.post('/users', registrationInfo)
-        let response = await particulier.test(this.form, function(err, task) {
+  //     async onSubmit(registrationInfo) {
+  //       //let response = await this.$axios.post('/users', registrationInfo)
+  //       //let response = await particulier.test(this.form, function(err, task) {
     
-    if (err)
-      res.send(err);
-    res.json(task);
-  });
-        console.log(response)
-      },
+  //   if (err)
+  //     res.send(err);
+  //   res.json(task);
+  // });
+  //       console.log(response)
+  //     },
       onReset(evt) {
         evt.preventDefault()
         // Reset our form values

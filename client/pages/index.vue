@@ -69,7 +69,7 @@
 <script>
 import Logo from '~/components/Logo.vue'
 
-var Particular = require('~/server/dao/Particular.js');
+//var Particular = require('~/server/dao/Particular.js');
 
   export default {
     components: {
@@ -86,9 +86,9 @@ var Particular = require('~/server/dao/Particular.js');
       }
     },
     methods: {
-      async onSubmit() {
-        let user = await Particular.signUp(this.form);
-      },
+      // async onSubmit() {
+      //   let user = await Particular.signUp(this.form);
+      // },
     }
   }
 

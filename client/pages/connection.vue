@@ -1,8 +1,11 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" v-if="show">
-
-      <b-form-group id="input-group-username" label="Nom d'utilisateur" label-for="input-username">
+    <b-form @submit="onSubmit" v-if="show" method="post">
+      <b-form-group
+        id="input-group-username"
+        label="Nom d'utilisateur"
+        label-for="input-username"
+      >
         <b-form-input
           id="input-username"
           v-model="form.username"
@@ -11,8 +14,11 @@
         ></b-form-input>
       </b-form-group>
 
-
-      <b-form-group id="input-group-mdp" label="Mot de passe:" label-for="input-mdp">
+      <b-form-group
+        id="input-group-mdp"
+        label="Mot de passe:"
+        label-for="input-mdp"
+      >
         <b-form-input
           id="input-mdp"
           v-model="form.mdp"
@@ -22,7 +28,9 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Connexion</b-button>
+      <b-button type="submit" variant="primary">
+        Connexion
+      </b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -32,28 +40,27 @@
 </template>
 
 <script>
+import authService from "@/services/AuthService.js";
 
 export default {
   data() {
-      return {
-        form: {
-          username: '',
-          mdp: ''
-        },
-        show: true
-      }
-    },
-    methods: {
-      async onSubmit() {
-        try {
-        let response = await this.$auth.loginWith('local', { data: this.form })
-        console.log(response)
+    return {
+      form: {
+        username: "",
+        mdp: ""
+      },
+      show: true
+    };
+  },
+  methods: {
+    async onSubmit() {
+      try {
+        let response = await authService.login(this.form);
+        console.log(response);
       } catch (err) {
-        console.log(err)
-      }
+        console.log(err);
       }
     }
-}
+  }
+};
 </script>
-
-

@@ -1,30 +1,24 @@
-module.exports = {
-     sendRequest: function (pRequest) {
-        console.log("Entré dans sendRequest");
-        var mysql = require('mysql');
-        var con = mysql.createConnection({
-            database : 'miampartytest',
-            host     : 'localhost',
-            user     : 'test',
-            password : 'test'
-        });
+var mysql = require("mysql");
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "miampartytest",
+});
 
-        console.log("Connexion créée");
-        con.connect(function(err) {
-            if (err) {
-                console.error('error connecting: ' + err.stack);
-                return;
-            }
-        });
+connection.connect(function (err) {
+  if (err) {
+    throw err;
+  } else {
+    console.log("info", "Connected to MySQL DB");
+  }
+});
 
-        console.log("Connecté à la bdd");
-        con.query(pRequest, function(err, rows, fields) {
-            if (err) throw err;
-            console.log(rows);
-        });
+module.exports = connection;
 
-        con.end();
+// connection.query('SELECT DESCRIPTION from account_type WHERE ID_ACCOUNT_TYPE = 1', function(err, rows, fields) {
+//   if (err) throw err;
+//   console.log('The solution is: ', rows[0]);
+// });
 
-        console.log("Terminé");
-    }
-}
+//connection.end();
