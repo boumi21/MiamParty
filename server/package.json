@@ -7,11 +7,12 @@
     "dev": "cross-env NODE_ENV=development nodemon bin/www --watch server"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-jwt": "^5.3.3",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "js-sha256": "^0.9.0",

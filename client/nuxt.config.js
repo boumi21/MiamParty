@@ -49,15 +49,20 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/', method: 'post'},
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+          login: { url: '/user/login2', method: 'post', propertyName: 'token'},
+          logout: { url: '/user/logout', method: 'post' },
+          user: { url: '/user/user', method: 'get', propertyName: 'user' }
         },
         // tokenRequired: true,
         // tokenType: 'bearer'
         // autoFetchUser: true
       }
     }
+  },
+
+
+  axios: {
+    baseURL: 'http://localhost:8080'
   },
 
 

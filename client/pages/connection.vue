@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="onSubmit" v-if="show" method="post">
+    <b-form @submit="onSubmit" v-if="show">
       <b-form-group
         id="input-group-username"
         label="Nom d'utilisateur"
@@ -8,7 +8,7 @@
       >
         <b-form-input
           id="input-username"
-          v-model="form.username"
+          v-model="form.login"
           required
           placeholder="Votre nom d'utilisateur"
         ></b-form-input>
@@ -21,7 +21,7 @@
       >
         <b-form-input
           id="input-mdp"
-          v-model="form.mdp"
+          v-model="form.password"
           type="password"
           required
           placeholder="Votre mot de passe"
@@ -46,20 +46,38 @@ export default {
   data() {
     return {
       form: {
-        username: "",
-        mdp: ""
+        login: "",
+        password: ""
       },
       show: true
     };
   },
   methods: {
-    async onSubmit() {
+    async onSubmit(e) {
+        e.preventDefault();
       try {
-        let response = await authService.login(this.form);
-        console.log(response);
+        this.$auth.loginWith('local', { data: {
+          login: this.form.login,
+          password: this.form.password
+        } })
+
+        // let response = await authService.login(this.form);
+        // console.log("Je reviens côté client");
+        // console.log("Réponse de authService :");
+        // if (response.data.hasOwnProperty("error")) {
+        //     console.log(response.data.error);
+        //     return;
+        //   }
+        //   else {
+        //     console.log(response.data);
+        //     this.$router.push("/connection");
+        //   }
+        // //this.$router.push("/connection");
       } catch (err) {
         console.log(err);
       }
+
+      
     }
   }
 };

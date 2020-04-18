@@ -4,6 +4,9 @@ var path = require("path");
 var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+const bodyParser = require('body-parser')
+const jwt = require('express-jwt')
+const jsonwebtoken = require('jsonwebtoken')
 
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
@@ -21,6 +24,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.json())
+
+//JWT middleware
+// app.use(
+//   jwt({
+//     secret: 'dummy'
+//   }).unless({
+//     path: ['/user/login2']
+//   })
+// )
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
@@ -42,3 +55,4 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+exports.jsonwebtoken = jsonwebtoken;
