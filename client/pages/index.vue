@@ -109,13 +109,6 @@ import authService from "@/services/AuthService.js";
     methods: {
       async onSubmit(e) {
         e.preventDefault();
-        if (document.getElementById("input-login").value == "test") {
-          console.log("le test");
-          alert("le test eee")
-          document.getElementById("input-login").setCustomValidity("blablabla");
-         //   document.getElementById("submit-group").submit();
-            return false;
-        }
         console.log("je passe ici");
         try {
           let response = await authService.login(this.form);
@@ -124,11 +117,6 @@ import authService from "@/services/AuthService.js";
           console.log(response.data.hasOwnProperty("error"))
           if (response.data.hasOwnProperty("error")) {
             console.log(response.data.error);
-            if (response.data.error == "User not found") {
-              console.log(document.getElementById("feedback").value);
-              document.getElementById("feedback").value = "User not found";
-              return;
-            }
             return;
           }
           else {
