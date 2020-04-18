@@ -13,25 +13,20 @@ function signIn(loginInfo, callback) {
                      'OR ' +
                      'account.email = ' + mysql.escape(loginInfo.body.login);
 
-    console.log(checkLogin);
     connection.query(checkLogin, function (err, result, fields) {
         if (err) {
-            console.log(err);
-            callback(err, null);
+            callback(err.toString(), null);
         }
         else {
-            console.log(result);
             if (result.length == 0 ) {
-                console.log("User not found");
-                callback(Error("User not found"), null);
+                callback("User not found", null);
             }
             else if (password.hashString(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
-                console.log("Incorrect password")
- +                callback(Error("Incorrect password"), null);
+                callback("Incorrect password", null);
             }
             else {
                 callback(null, {
-                    client: result[0]
+                    user: result[0]
                 });
             }
         }

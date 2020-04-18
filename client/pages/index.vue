@@ -32,7 +32,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Se connecter</b-button>
+      <b-button type="submit" id="submit-button" variant="primary">Se connecter</b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -77,17 +77,30 @@ import authService from "@/services/AuthService.js";
       }
     },
     methods: {
-      async onSubmit() {
-      try {
-        let response = await authService.login(this.form);
-        console.log("Je reviens côté client");
-        console.log("Réponse de authService :");
-        console.log(response.data.client);
-        console.log(response.data.client.ID_ACCOUNT);
-      } catch (err) {
-        console.log(err);
+      async onSubmit(e) {
+        e.preventDefault();
+        if (document.getElementById("input-login").value == "test") {
+          document.getElementById("input-login").setCustomValidity("blablabla");
+          document.getElementById("submit-button").click();
+          return false;
+        }
+        try {
+          let response = await authService.login(this.form);
+          console.log("Je reviens côté client");
+          console.log("Réponse de authService :");
+          console.log(response.data.hasOwnProperty("error"))
+          if (response.data.hasOwnProperty("error")) {
+            console.log(response.data.error);
+            return;
+          }
+          else {
+            console.log(response.data);
+            this.$router.push("/connection");
+          }
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
     }
   }
 
