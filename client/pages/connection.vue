@@ -61,6 +61,8 @@ export default {
           password: this.form.password
         } })
 
+        //this.$router.push("/patate");
+
         // let response = await authService.login(this.form);
         // console.log("Je reviens côté client");
         // console.log("Réponse de authService :");

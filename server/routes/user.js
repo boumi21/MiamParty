@@ -55,7 +55,7 @@ const refreshTokens = {}
 router.post("/login2", function (req, res) {
 
   const { login, password } = req.body
-  const expiresIn = 15
+  const expiresIn = 5
   const refreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
 
   console.log("voici : "+login)
@@ -73,29 +73,6 @@ router.post("/login2", function (req, res) {
   else {
 
 
-    const accessToken = user.jsonwebtoken.sign(
-      {
-        login,
-        name: 'User ' + login
-      }, SECRET, {
-        expiresIn
-      }
-    )
-
-    
-
-    refreshTokens[refreshToken] = {
-      accessToken,
-      user: {
-        login,
-        name: 'User ' + login
-      }
-    }
-
-    console.log("refresh : "+ refreshToken + "  access : "+accessToken)
-
-    
-
 
     account.signIn(req, function callback(err, result) {
       if (err != null) {
@@ -105,54 +82,91 @@ router.post("/login2", function (req, res) {
         });
       }
       else {
-        console.log("Je renvoie le résultat");
-        console.log("encore : "+result);
-        res.json({
-          token: {
-            accessToken,
-            refreshToken,
-            clientId: '123'
+        for (var item in result){
+          for (var item2 in item){
+            for (var item3 in item2){
+              for (var item4 in item3){
+                console.log("Je renvoie le résultat : "+item4);
+              }
+              
+            }
           }
+          
+        }
+        
+
+        const accessToken = user.jsonwebtoken.sign(
+          {
+            id : result.user.ID_ACCOUNT,
+            username : result.user.USERNAME,
+            email : login
+          }, SECRET, {
+            expiresIn
+          }
+        )
+
+
+
+        res.json({
+          token: accessToken
         })
       }
     });
+
+
+    
+
+    
+
+    // refreshTokens[refreshToken] = {
+    //   accessToken,
+    //   user: {
+    //     login,
+    //     name: 'User ' + login
+    //   }
+    // }
+
+    
+
+
+    
   }
 });
 
 
 
-router.post('/refresh', (req, res, next) => {
-  const { refreshToken } = req.body
+// router.post('/refresh', (req, res, next) => {
+//   const { refreshToken } = req.body
 
-  if ((refreshToken in refreshTokens)) {
-    const user = refreshTokens[refreshToken].user
-    const expiresIn = 15
-    const newRefreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
-    delete refreshTokens[refreshToken]
-    const accessToken = user.jsonwebtoken.sign(
-      {
-        user: user.login
-      }, 'dummy', {
-        expiresIn
-      }
-    )
+//   if ((refreshToken in refreshTokens)) {
+//     const user = refreshTokens[refreshToken].user
+//     const expiresIn = 15
+//     const newRefreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
+//     delete refreshTokens[refreshToken]
+//     const accessToken = user.jsonwebtoken.sign(
+//       {
+//         user: user.login
+//       }, 'dummy', {
+//         expiresIn
+//       }
+//     )
 
-    refreshTokens[newRefreshToken] = {
-      accessToken,
-      user: user,
-      clientId: '123'
-    }
+//     refreshTokens[newRefreshToken] = {
+//       accessToken,
+//       user: user,
+//       clientId: '123'
+//     }
 
-    res.json({
-      token: {
-        accessToken,
-        refreshToken: newRefreshToken
-      }
-    })
-  } else {
-    res.sendStatus(401)
-  }
-})
+//     res.json({
+//       token: {
+//         accessToken,
+//         refreshToken: newRefreshToken
+//       }
+//     })
+//   } else {
+//     res.sendStatus(401)
+//   }
+// })
 
 
 
@@ -185,7 +199,6 @@ const checkTokenMiddleware = (req, res, next) => {
   user.jsonwebtoken.verify(token, SECRET, (err, decodedToken) => {
     
       if (err) {
-        console.log("je suis un pet")
           res.status(408).json({ message: 'Error. Bad token' })
       } else {
           return next()
@@ -213,7 +226,7 @@ router.get('/user', checkTokenMiddleware, (req, res, next) => {
 
     console.log("decode : "+decoded)
 
-    return res.json({ user: 'callum' })
+    return res.json({ user: decoded })
 })
 
 
