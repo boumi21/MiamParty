@@ -9,7 +9,7 @@ function signIn(loginInfo, callback) {
                      'FROM ' +
                      'account ' +
                      'WHERE ' +
-                     'account.username = ' + mysql.escape(loginInfo.body.login)
+                     'account.username = ' + mysql.escape(loginInfo.body.login) +
                      'OR ' +
                      'account.email = ' + mysql.escape(loginInfo.body.login);
 
@@ -27,7 +27,7 @@ function signIn(loginInfo, callback) {
             }
             else if (password.hashString(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
                 console.log("Incorrect password")
-                callback(Error("Incorrect password"), null);
+ +                callback(Error("Incorrect password"), null);
             }
             else {
                 callback(null, {
