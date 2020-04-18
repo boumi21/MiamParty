@@ -12,14 +12,20 @@
         Connectez-vous pour découvrir toutes nos fonctionnalités.
       </h3>
       <div>
-    <b-form @submit="onSubmit" v-if="show" method="post">
-      <b-form-group id="input-group-login" label="Login" label-for="input-login">
+    <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
+      <b-form-group class="invalid" id="input-group-login" label="Login" label-for="input-login">
         <b-form-input
           id="input-login"
           v-model="form.login"
+          :state="validation"
           required
           placeholder="Email or username"
+          minlength="4"
+          maxlength="60"
         ></b-form-input>
+        <b-form-invalid-feedback id="feedback" :state="validation">
+          Your login must be 4-60 characters long.
+        </b-form-invalid-feedback>
       </b-form-group>
 
       <b-form-group id="input-group-password" label="Mot de passe" label-for="input-password">
@@ -28,11 +34,12 @@
           v-model="form.password"
           type="password"
           required
+          minlength="8"
           placeholder="Saisir un mot de passe"
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" id="submit-button" variant="primary">Se connecter</b-button>
+      <b-button type="submit" variant="primary">Se connecter</b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -61,6 +68,7 @@
 import Logo from '~/components/Logo.vue'
 import authService from "@/services/AuthService.js";
 
+
 //var Particular = require('~/server/dao/Particular.js');
 
   export default {
@@ -70,20 +78,45 @@ import authService from "@/services/AuthService.js";
     data() {
       return {
         form: {
-          login   : null,
-          password: null
+          login   : '',
+          password: ''
         },
         show: true
       }
     },
+
+    computed: {
+      validation() {
+        if (this.form.login.length == 6) {
+          document.getElementById("input-login").setCustomValidity("dede");
+          console.log(document.getElementById("feedback").value);
+          return true;
+        }
+        if (this.form.login.length > 4 && this.form.login.length < 13) {
+        
+        }
+        if (this.form.login.length == 6) {
+          
+        }
+        else {
+      
+        }
+        return false;
+      },
+    },
+
+
     methods: {
       async onSubmit(e) {
         e.preventDefault();
         if (document.getElementById("input-login").value == "test") {
+          console.log("le test");
+          alert("le test eee")
           document.getElementById("input-login").setCustomValidity("blablabla");
-          document.getElementById("submit-button").click();
-          return false;
+         //   document.getElementById("submit-group").submit();
+            return false;
         }
+        console.log("je passe ici");
         try {
           let response = await authService.login(this.form);
           console.log("Je reviens côté client");
@@ -91,6 +124,11 @@ import authService from "@/services/AuthService.js";
           console.log(response.data.hasOwnProperty("error"))
           if (response.data.hasOwnProperty("error")) {
             console.log(response.data.error);
+            if (response.data.error == "User not found") {
+              console.log(document.getElementById("feedback").value);
+              document.getElementById("feedback").value = "User not found";
+              return;
+            }
             return;
           }
           else {
