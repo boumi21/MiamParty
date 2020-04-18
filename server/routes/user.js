@@ -1,22 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const account = require("../dao/Account");
+const account = require("../dao/Account.js");
+const regex = require("../assistant/Regex.js")
 
 /* GET users listing. */
 router.post("/login", function (req, res) {
-  var checkLogin = { 
-    email : true,
-    password : true
-  };
-  console.log(checkLogin);
-  if (req.body.email == null || req.body.email.length == 0) {
-    checkLogin.email = false;
+  if (!regex.login(req.body.login)) {
+    res.send(Error("Invalid login"));
   }
-  if (req.body.password == null || req.body.password.length == 0) {
-    checkLogin.password = false;
-  }
-  if (checkLogin.email == false || checkLogin.password == false) {
-    res.send("Erreur");
+  else if (!regex.password(req.body.password)) {
+    res.send("Invalid password");
   }
   else {
     account.signIn(req, function callback(err, result) {
@@ -24,12 +17,9 @@ router.post("/login", function (req, res) {
         res.send(err);
       }
       else {
-        if (result == true) {
-          res.send("Client connecté");
-        }
-        else {
-          res.send("Client non connecté");
-        }
+        console.log("Je renvoie le résultat");
+        console.log(result);
+        res.send(result);
       }
     });
   }

@@ -1,30 +1,38 @@
 const database = require("../database/Database.js");
 const mysql = database.mysql;
 const connection = database.connection;
-const password = require("./Password.js");
+const password = require("../assistant/Password.js");
 
 function signIn(loginInfo, callback) {
-    var checkEmail = 'SELECT ' +
+    var checkLogin = 'SELECT ' +
                      '* ' +
                      'FROM ' +
                      'account ' +
                      'WHERE ' +
-                     'account.email = ' + mysql.escape(loginInfo.body.email);
+                     'account.username = ' + mysql.escape(loginInfo.body.login)
+                     'OR ' +
+                     'account.email = ' + mysql.escape(loginInfo.body.login);
 
-    console.log(checkEmail);
-    connection.query(checkEmail, function (err, result, fields) {
+    console.log(checkLogin);
+    connection.query(checkLogin, function (err, result, fields) {
         if (err) {
-            callback(err, false);
+            console.log(err);
+            callback(err, null);
         }
         else {
+            console.log(result);
             if (result.length == 0 ) {
-                callback(null, false);
+                console.log("User not found");
+                callback(Error("User not found"), null);
             }
-            else if (password.hashPassword(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
-                callback(null, false);
+            else if (password.hashString(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
+                console.log("Incorrect password")
+                callback(Error("Incorrect password"), null);
             }
             else {
-                callback(null, true);
+                callback(null, {
+                    client: result[0]
+                });
             }
         }
        

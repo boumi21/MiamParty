@@ -13,12 +13,12 @@
       </h3>
       <div>
     <b-form @submit="onSubmit" v-if="show" method="post">
-      <b-form-group id="input-group-email" label="Email" label-for="input-email">
+      <b-form-group id="input-group-login" label="Login" label-for="input-login">
         <b-form-input
-          id="input-email"
-          v-model="form.email"
+          id="input-login"
+          v-model="form.login"
           required
-          placeholder="Entrer un email"
+          placeholder="Email or username"
         ></b-form-input>
       </b-form-group>
 
@@ -70,7 +70,7 @@ import authService from "@/services/AuthService.js";
     data() {
       return {
         form: {
-          email   : null,
+          login   : null,
           password: null
         },
         show: true
@@ -80,8 +80,10 @@ import authService from "@/services/AuthService.js";
       async onSubmit() {
       try {
         let response = await authService.login(this.form);
-        console.log("Raponse de authService :");
-        console.log(response.data);
+        console.log("Je reviens côté client");
+        console.log("Réponse de authService :");
+        console.log(response.data.client);
+        console.log(response.data.client.ID_ACCOUNT);
       } catch (err) {
         console.log(err);
       }

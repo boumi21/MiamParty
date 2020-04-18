@@ -7,12 +7,12 @@ function getSalt(saltLength) {
     return salt;
 }
 
-function hashPassword(passwordToHash) {
+function hashString(stringToHash) {
     var sha256 = require('js-sha256');
-    return sha256(passwordToHash);
+    return sha256(stringToHash);
 }
 
 module.exports = {
     getSalt,
-    hashPassword
+    hashString
 };
