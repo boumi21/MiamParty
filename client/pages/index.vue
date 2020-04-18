@@ -12,16 +12,7 @@
         Connectez-vous pour découvrir toutes nos fonctionnalités.
       </h3>
       <div>
-    <b-form @submit="onSubmit" v-if="show">
-      <b-form-group id="input-group-username" label="Nom d'utilisateur" label-for="input-username">
-        <b-form-input
-          id="input-username"
-          v-model="form.username"
-          required
-          placeholder="ex : boumi21"
-        ></b-form-input>
-      </b-form-group>
-
+    <b-form @submit="onSubmit" v-if="show" method="post">
       <b-form-group id="input-group-email" label="Email" label-for="input-email">
         <b-form-input
           id="input-email"
@@ -41,7 +32,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Je m'inscris</b-button>
+      <b-button type="submit" variant="primary">Se connecter</b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
     <b-card class="mt-3" header="Form Data Result">
@@ -68,6 +59,7 @@
 
 <script>
 import Logo from '~/components/Logo.vue'
+import authService from "@/services/AuthService.js";
 
 //var Particular = require('~/server/dao/Particular.js');
 
@@ -78,7 +70,6 @@ import Logo from '~/components/Logo.vue'
     data() {
       return {
         form: {
-          username: null,
           email   : null,
           password: null
         },
@@ -86,9 +77,15 @@ import Logo from '~/components/Logo.vue'
       }
     },
     methods: {
-      // async onSubmit() {
-      //   let user = await Particular.signUp(this.form);
-      // },
+      async onSubmit() {
+      try {
+        let response = await authService.login(this.form);
+        console.log("Raponse de authService :");
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
     }
   }
 

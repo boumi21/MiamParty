@@ -1,4 +1,4 @@
-exports.getSalt = function(saltLength) {
+function getSalt(saltLength) {
     var salt = '';
     var char = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&()*+,-./:;<=>?@[/]^_`{|}~';
     for (var i = 0; i < saltLength; i++) {
@@ -7,7 +7,12 @@ exports.getSalt = function(saltLength) {
     return salt;
 }
 
-exports.hashPassword = function(passwordToHash) {
+function hashPassword(passwordToHash) {
     var sha256 = require('js-sha256');
-    return sha256(stringToHash);
+    return sha256(passwordToHash);
 }
+
+module.exports = {
+    getSalt,
+    hashPassword
+};
