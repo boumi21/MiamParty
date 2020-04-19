@@ -83,20 +83,7 @@ export default {
 
         this.$router.push("/dashboard");
 
-        //this.$router.push("/patate");
 
-        // let response = await authService.login(this.form);
-        // console.log("Je reviens côté client");
-        // console.log("Réponse de authService :");
-        // if (response.data.hasOwnProperty("error")) {
-        //     console.log(response.data.error);
-        //     return;
-        //   }
-        //   else {
-        //     console.log(response.data);
-        //     this.$router.push("/connection");
-        //   }
-        // //this.$router.push("/connection");
       } catch (error) {
         let err = document.getElementById("error-password")
         err.innerText = "Votre identifiant ou mot de passe est incorrect !";
