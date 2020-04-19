@@ -1,5 +1,5 @@
-import database from "../database/Database.js"
-import password from "../assistant/Password.js"
+const database = require("../database/Database.js")
+const password = require( "../assistant/Password.js")
 
 const mysql = database.mysql;
 const connection = database.connection;

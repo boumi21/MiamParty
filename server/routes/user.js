@@ -1,6 +1,6 @@
-import express from "express"
-import account from "../dao/Account.js"
-import user from '../app'
+const express = require("express")
+const account = require("../dao/Account.js")
+const user = require('../app')
 
 const router = express.Router();
 const SECRET = 'dummy'
@@ -206,6 +206,4 @@ router.post('/logout', (req, res, next) => {
   res.json({ status: 'OK' })
 })
 
-export default {
-  router
-}
+module.exports = router;
