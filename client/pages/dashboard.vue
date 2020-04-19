@@ -2,10 +2,10 @@
   <div class="container">
     <div>
       <h1 class="title">
-        Miam Party
+        
       </h1>
       <h2 class="subtitle">
-        Vous êtes connecté
+        Vous êtes connecté !
       </h2>
     </div>
   </div>

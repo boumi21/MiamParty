@@ -11,55 +11,37 @@
       <h3 class="info">
         Connectez-vous pour découvrir toutes nos fonctionnalités.
       </h3>
-      <div>
-    <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
-      <b-form-group class="invalid" id="input-group-login" label="Login" label-for="input-login">
-        <b-form-input
-          id="input-login"
-          v-model="form.login"
-          :state="validation"
-          required
-          placeholder="Email or username"
-          minlength="4"
-          maxlength="60"
-        ></b-form-input>
-        <b-form-invalid-feedback id="feedback" :state="validation">
-          Your login must be 4-60 characters long.
-        </b-form-invalid-feedback>
-      </b-form-group>
+      <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
 
-      <b-form-group id="input-group-password" label="Mot de passe" label-for="input-password">
-        <b-form-input
-          id="input-password"
-          v-model="form.password"
-          type="password"
-          required
-          minlength="8"
-          placeholder="Saisir un mot de passe"
-        ></b-form-input>
-      </b-form-group>
+        <b-form-group id="input-group-login" class="input" label="" label-for="input-login">
+          <b-form-input id="input-login" v-model="form.login" placeholder="E-mail ou numéro de mobile"></b-form-input>
+          <small id="error-login" class=""></small>
+        </b-form-group>
 
-      <b-button type="submit" variant="primary">Se connecter</b-button>
-      <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
-    </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
-  </div>
+        <b-form-group id="input-group-password" class="input" label="" label-for="input-password" >
+          <b-form-input
+            id="input-password"
+            v-model="form.password"
+            type="password"
+            placeholder="Mot de passe"
+          ></b-form-input>
+          <small id="error-password"></small>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Se connecter</b-button>
+        <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
+      </b-form>
       <div class="links">
-        <a
-          href="/connection"
-          class="button--green"
-        >
-          Connexion
-        </a>
+        Envie de nous rejoindre ?
         <a
           href="/register"
-          class="button--grey"
         >
-          Inscription
+        Créer un compte
         </a>
       </div>
+      <b-card class="mt-3" header="Form Data Result">
+        <pre class="m-0">{{ form }}</pre>
+      </b-card>
     </div>
   </div>
 </template>
@@ -67,9 +49,7 @@
 <script>
 import Logo from '~/components/Logo.vue'
 import authService from "@/services/AuthService.js";
-
-
-//var Particular = require('~/server/dao/Particular.js');
+import regex from "@/assistant/Regex.js";
 
   export default {
     components: {
@@ -85,31 +65,56 @@ import authService from "@/services/AuthService.js";
       }
     },
 
-    computed: {
-      validation() {
-        if (this.form.login.length == 6) {
-          document.getElementById("input-login").setCustomValidity("dede");
-          console.log(document.getElementById("feedback").value);
-          return true;
-        }
-        if (this.form.login.length > 4 && this.form.login.length < 13) {
-        
-        }
-        if (this.form.login.length == 6) {
-          
-        }
-        else {
-      
-        }
-        return false;
-      },
-    },
-
-
     methods: {
       async onSubmit(e) {
         e.preventDefault();
-        console.log("je passe ici");
+
+        /** checkLogin */
+
+        let err = document.getElementById("error-login");
+        let input = document.getElementById("input-login");
+        let elt = this.form.login;
+
+        if (elt.length == 0) {
+          err.innerText = "Champ obligatoire.";
+          err.classList.add("text-danger");
+          input.classList.add("is-invalid");
+          return;
+        }
+        if (!regex.login(elt)) {
+          err.innerText = "Le format n'est pas valide.";
+          err.classList.add("text-danger");
+          input.classList.add("is-invalid");
+          return;
+        }
+        err.innerText = ""
+        err.classList.remove("text-danger");
+        input.classList.remove("is-invalid");
+
+        /** Check password */
+
+        err = document.getElementById("error-password");
+        input = document.getElementById("input-password");
+        elt = this.form.password;
+
+        if (elt.length == 0) {
+          err.innerText = "Champ obligatoire.";
+          err.classList.add("text-danger");
+          input.classList.add("is-invalid");
+          return;
+        }
+        if (!regex.password(elt)) {
+          err.innerText = "mot de passe doit comprendre 8 caractères ou plus, sans espaces.";
+          err.classList.add("text-danger");
+          input.classList.add("is-invalid");
+          return;
+        }
+        err.innerText = ""
+        err.classList.remove("text-danger");
+        input.classList.remove("is-invalid");
+
+        /** Send form to server-side */
+
         try {
           let response = await authService.login(this.form);
           console.log("Je reviens côté client");
@@ -121,7 +126,7 @@ import authService from "@/services/AuthService.js";
           }
           else {
             console.log(response.data);
-            this.$router.push("/connection");
+            this.$router.push("/dashboard");
           }
         } catch (err) {
           console.log(err);
@@ -160,6 +165,10 @@ import authService from "@/services/AuthService.js";
   padding-bottom: 15px;
 }
 
+.input {
+  justify-content: left;
+  text-align: left;
+}
 .info {
   font-weight: 300;
   font-size: 20px;
