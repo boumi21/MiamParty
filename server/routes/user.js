@@ -43,22 +43,8 @@ const refreshTokens = {}
 router.post("/login2", function (req, res) {
 
   const { login, password } = req.body
-  const expiresIn = 5
+  const expiresIn = 3600
   const refreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
-
-  console.log("voici : "+login)
-
-  if (!regex.login(req.body.login)) {
-    res.send({
-      error: "Invalid login"
-    });
-  }
-  else if (!regex.password(req.body.password)) {
-    res.send({
-      error: "Invalid password"
-    });
-  }
-  else {
 
 
 
@@ -117,8 +103,6 @@ router.post("/login2", function (req, res) {
     
 
 
-    
-  }
 });
 
 
@@ -187,7 +171,7 @@ const checkTokenMiddleware = (req, res, next) => {
   user.jsonwebtoken.verify(token, SECRET, (err, decodedToken) => {
     
       if (err) {
-          res.status(408).json({ message: 'Error. Bad token' })
+          res.status(401).json({ message: 'Pas authorisé' })
       } else {
           return next()
       }
