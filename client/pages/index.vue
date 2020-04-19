@@ -47,13 +47,13 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import authService from "@/services/AuthService.js";
-import regex from "@/assistant/Regex.js";
+import logo from "@/components/Logo.vue"
+import authService from "@/services/AuthService.js"
+import formValidate from "@/assistant/FormValidate.js"
 
   export default {
     components: {
-    Logo
+    logo
   },
     data() {
       return {
@@ -67,67 +67,32 @@ import regex from "@/assistant/Regex.js";
 
     methods: {
       async onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
 
-        /** checkLogin */
+        /** Validate SignIn */
 
-        let err = document.getElementById("error-login");
-        let input = document.getElementById("input-login");
-        let elt = this.form.login;
-
-        if (elt.length == 0) {
-          err.innerText = "Ce champ est obligatoire.";
-          err.classList.add("text-danger");
-          input.classList.add("is-invalid");
-          return;
+        let validate = await formValidate.validateSignIn(document, this.form)
+        if (validate == false) {
+          return
         }
-        if (!regex.login(elt)) {
-          err.innerText = "Le format n'est pas valide.";
-          err.classList.add("text-danger");
-          input.classList.add("is-invalid");
-          return;
-        }
-        err.innerText = ""
-        err.classList.remove("text-danger");
-        input.classList.remove("is-invalid");
-
-        /** Check password */
-
-        err = document.getElementById("error-password");
-        input = document.getElementById("input-password");
-        elt = this.form.password;
-
-        if (elt.length == 0) {
-          err.innerText = "Ce champ est obligatoire.";
-          err.classList.add("text-danger");
-          input.classList.add("is-invalid");
-          return;
-        }
-        if (!regex.password(elt)) {
-          err.innerText = "Le mot de passe doit comprendre 8 caractères ou plus, sans espaces.";
-          err.classList.add("text-danger");
-          input.classList.add("is-invalid");
-          return;
-        }
-        err.innerText = ""
-        err.classList.remove("text-danger");
-        input.classList.remove("is-invalid");
 
         /** Send form to server-side */
 
         try {
-          let res = await authService.login(this.form);
-          console.log("Je reviens côté client");
+          let res = await authService.login(this.form)
+          console.log("Je reviens côté client")
           if (res.data.hasOwnProperty("error")) {
-            err.innerText = res.data.error;
-            err.classList.add("text-danger");
-            return;
+            let err = document.getElementById("error-password")
+            err.innerText = res.data.error
+            err.classList.add("text-danger")
+            this.form.password = ""
+            return
           }
           else {
-            this.$router.push("/dashboard");
+            this.$router.push("/dashboard")
           }
         } catch (err) {
-          console.log(err);
+          console.log(err)
         }
       }
     }
