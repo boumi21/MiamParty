@@ -9,7 +9,7 @@
         Bienvenue !
       </h2>
       <h3 class="info">
-        Connectez-vous pour découvrir toutes nos fonctionnalités.
+        Ceci sera la page d'accueil du site :)
       </h3>
       <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
 
