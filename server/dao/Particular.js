@@ -1,5 +1,5 @@
-var database = require("../database/Database.js");
-var password = require("./Password.js");
+import database from "../database/Database.js"
+import password from "./Password.js"
 
 exports.signUp = function (registrationInfo) {
   var salt = Password.getSalt(64);

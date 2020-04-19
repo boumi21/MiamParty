@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const account = require("../dao/Account.js");
-const user = require('../app');
+import express from "express"
+import account from "../dao/Account.js"
+import user from '../app'
 
+const router = express.Router();
 const SECRET = 'dummy'
 
 
@@ -206,4 +206,6 @@ router.post('/logout', (req, res, next) => {
   res.json({ status: 'OK' })
 })
 
-module.exports = router;
+export default {
+  router
+}

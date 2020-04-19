@@ -12,7 +12,7 @@ function hashString(stringToHash) {
     return sha256(stringToHash);
 }
 
-module.exports = {
+export default {
     getSalt,
     hashString
 };

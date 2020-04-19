@@ -1,7 +1,8 @@
-const database = require("../database/Database.js");
+import database from "../database/Database.js"
+import password from "../assistant/Password.js"
+
 const mysql = database.mysql;
 const connection = database.connection;
-const password = require("../assistant/Password.js");
 
 function signIn(loginInfo, callback) {
     var checkLogin = 'SELECT ' +
@@ -22,7 +23,7 @@ function signIn(loginInfo, callback) {
                 callback("Votre identifiant ou mot de passe est incorrect.", null);
             }
             else if (password.hashString(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
-                callback("Votre identifiant ou mot de passe est incorrect", null);
+                callback("Votre identifiant ou mot de passe est incorrect.", null);
             }
             else {
                 callback(null, {
