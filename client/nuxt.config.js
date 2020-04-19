@@ -50,8 +50,8 @@ module.exports = {
       local: {
         endpoints: {
           login: { url: '/user/login2', method: 'post', propertyName: 'token'},
-          logout: { url: '/user/logout', method: 'post' },
-          user: { url: '/user/user', method: 'get', propertyName: 'user' }
+          user: { url: '/user/user', method: 'get', propertyName: 'user' },
+          logout: false
         },
         // tokenRequired: true,
         // tokenType: 'bearer'
