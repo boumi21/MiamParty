@@ -72,7 +72,7 @@
     <div class="links">
         Vous possédez déjà un compte ?
         <a
-          href="/connection"
+          href="/login"
         >
         S'identifier
         </a>
