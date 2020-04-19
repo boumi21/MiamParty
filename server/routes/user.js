@@ -56,18 +56,6 @@ router.post("/login2", function (req, res) {
         });
       }
       else {
-        for (var item in result){
-          for (var item2 in item){
-            for (var item3 in item2){
-              for (var item4 in item3){
-                console.log("Je renvoie le résultat : "+item4);
-              }
-              
-            }
-          }
-          
-        }
-        
 
         const accessToken = user.jsonwebtoken.sign(
           {
