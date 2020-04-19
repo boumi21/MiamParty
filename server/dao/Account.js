@@ -19,10 +19,10 @@ function signIn(loginInfo, callback) {
         }
         else {
             if (result.length == 0 ) {
-                callback("User not found", null);
+                callback("Votre identifiant ou mot de passe est incorrect.", null);
             }
             else if (password.hashString(loginInfo.body.password + result[0].SALT) != result[0].PASSWORD) {
-                callback("Incorrect password", null);
+                callback("Votre identifiant ou mot de passe est incorrect", null);
             }
             else {
                 callback(null, {

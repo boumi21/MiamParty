@@ -76,7 +76,7 @@ import regex from "@/assistant/Regex.js";
         let elt = this.form.login;
 
         if (elt.length == 0) {
-          err.innerText = "Champ obligatoire.";
+          err.innerText = "Ce champ est obligatoire.";
           err.classList.add("text-danger");
           input.classList.add("is-invalid");
           return;
@@ -98,13 +98,13 @@ import regex from "@/assistant/Regex.js";
         elt = this.form.password;
 
         if (elt.length == 0) {
-          err.innerText = "Champ obligatoire.";
+          err.innerText = "Ce champ est obligatoire.";
           err.classList.add("text-danger");
           input.classList.add("is-invalid");
           return;
         }
         if (!regex.password(elt)) {
-          err.innerText = "mot de passe doit comprendre 8 caractères ou plus, sans espaces.";
+          err.innerText = "Le mot de passe doit comprendre 8 caractères ou plus, sans espaces.";
           err.classList.add("text-danger");
           input.classList.add("is-invalid");
           return;
@@ -116,16 +116,14 @@ import regex from "@/assistant/Regex.js";
         /** Send form to server-side */
 
         try {
-          let response = await authService.login(this.form);
+          let res = await authService.login(this.form);
           console.log("Je reviens côté client");
-          console.log("Réponse de authService :");
-          console.log(response.data.hasOwnProperty("error"))
-          if (response.data.hasOwnProperty("error")) {
-            console.log(response.data.error);
+          if (res.data.hasOwnProperty("error")) {
+            err.innerText = res.data.error;
+            err.classList.add("text-danger");
             return;
           }
           else {
-            console.log(response.data);
             this.$router.push("/dashboard");
           }
         } catch (err) {
