@@ -28,10 +28,13 @@
                 <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
                 <div v-if="$auth.loggedIn">
-                    <p>logged in</p>
+                    <p>Vous êtes connecté</p>
+                    <p>Votre id : {{ $auth.user.id }}</p>
+                    <p>Votre pseudo : {{ $auth.user.username }}</p>
+                    <p>Votre email : {{ $auth.user.email }}</p>
                 </div>
                 <div v-else>
-                    <p>pas logged in</p>
+                    <p>Vous n'êtes pas connecté</p>
                 </div>
                 <template v-slot:button-content>
                     <em>User</em>
