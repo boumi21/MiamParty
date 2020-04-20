@@ -1,198 +1,198 @@
-CREATE DATABASE IF NOT EXISTS MiamPartyTest;
-USE MiamPartyTest;
+create database if not exists miampartytest;
+use miampartytest;
 # -----------------------------------------------------------------------------
-#       TABLE : COOKING_LEVEL
+#       table : cooking_level
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS COOKING_LEVEL
+create table if not exists cooking_level
  (
-   ID_COOKING_LEVEL SMALLINT NOT NULL AUTO_INCREMENT ,
-   DESCRIPTION VARCHAR(100) NOT NULL  
-   , PRIMARY KEY (ID_COOKING_LEVEL) 
+   id_cooking_level smallint not null auto_increment ,
+   description varchar(100) not null  
+   , primary key (id_cooking_level) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : ACCOUNT_TYPE
+#       table : account_type
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS ACCOUNT_TYPE
+create table if not exists account_type
  (
-   ID_ACCOUNT_TYPE SMALLINT NOT NULL AUTO_INCREMENT ,
-   DESCRIPTION VARCHAR(100) NOT NULL  
-   , PRIMARY KEY (ID_ACCOUNT_TYPE) 
+   id_account_type smallint not null auto_increment ,
+   description varchar(100) not null  
+   , primary key (id_account_type) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : ACCOUNT
+#       table : account
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS ACCOUNT
+create table if not exists account
  (
-   ID_ACCOUNT SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_ACCOUNT_TYPE SMALLINT NOT NULL  ,
-   EMAIL VARCHAR(128) NOT NULL UNIQUE  ,
-   PASSWORD VARCHAR(256) NOT NULL  ,
-   SALT VARCHAR(256) NOT NULL
-   , PRIMARY KEY (ID_ACCOUNT) 
+   id_account smallint not null auto_increment ,
+   id_account_type smallint not null  ,
+   email varchar(128) not null unique  ,
+   password varchar(256) not null  ,
+   salt varchar(256) not null
+   , primary key (id_account) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : MARK
+#       table : mark
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS MARK
+create table if not exists mark
  (
-   ID_MARK SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_ACCOUNT SMALLINT NOT NULL  ,
-   ID_PARTY SMALLINT NOT NULL  ,
-   DESCRIPTION VARCHAR(100) NULL  
-   , PRIMARY KEY (ID_MARK) 
+   id_mark smallint not null auto_increment ,
+   id_account smallint not null  ,
+   id_party smallint not null  ,
+   description varchar(100) null  
+   , primary key (id_mark) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : PARTY
+#       table : party
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS PARTY
+create table if not exists party
  (
-   ID_PARTY SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_ACCOUNT SMALLINT NOT NULL  ,
-   ID_STATUS SMALLINT NOT NULL  ,
-   PARTY_DATE DATETIME NOT NULL  ,
-   PRICE DECIMAL(10,2) NOT NULL  ,
-   NB_ADDRESS SMALLINT NOT NULL  ,
-   STREET VARCHAR(50) NOT NULL  ,
-   CITY VARCHAR(50) NOT NULL  ,
-   POSTAL_CODE VARCHAR(8) NOT NULL  ,
-   COUNTRY VARCHAR(50) NOT NULL  ,
-   NB_GUESTS SMALLINT NOT NULL  ,
-   PICTURE LONGBLOB NULL  ,
-   DESCRIPTION VARCHAR(100) NULL  
-   , PRIMARY KEY (ID_PARTY) 
+   id_party smallint not null auto_increment ,
+   id_account smallint not null  ,
+   id_status smallint not null  ,
+   party_date datetime not null  ,
+   price decimal(10,2) not null  ,
+   nb_address smallint not null  ,
+   street varchar(50) not null  ,
+   city varchar(50) not null  ,
+   postal_code varchar(8) not null  ,
+   country varchar(50) not null  ,
+   nb_guests smallint not null  ,
+   picture longblob null  ,
+   description varchar(100) null  
+   , primary key (id_party) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : PROFESSIONAL
+#       table : professional
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS PROFESSIONAL
+create table if not exists professional
  (
-   ID_PROFESSIONAL SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_ACCOUNT SMALLINT NOT NULL  ,
-   NAME CHAR(32) NOT NULL  ,
-   NB_ADDRESS SMALLINT NULL  ,
-   STREET VARCHAR(50) NULL  ,
-   CITY VARCHAR(50) NULL  ,
-   POSTAL_CODE VARCHAR(8) NULL  ,
-   COUNTRY VARCHAR(50) NULL  
-   , PRIMARY KEY (ID_PROFESSIONAL) 
+   id_professional smallint not null auto_increment ,
+   id_account smallint not null  ,
+   name char(32) not null  ,
+   nb_address smallint null  ,
+   street varchar(50) null  ,
+   city varchar(50) null  ,
+   postal_code varchar(8) null  ,
+   country varchar(50) null  
+   , primary key (id_professional) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : PARTICULAR
+#       table : particular
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS PARTICULAR
+create table if not exists particular
  (
-   ID_PARTICULAR SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_ACCOUNT SMALLINT NOT NULL  ,
-   ID_COOKING_LEVEL SMALLINT NOT NULL  ,
-   FIRSTNAME VARCHAR(50) NOT NULL  ,
-   LASTNAME VARCHAR(50) NOT NULL  ,
-   BIRTHDAY DATE NULL  ,
-   SEX BOOL NULL  ,
-   NB_ADDRESS SMALLINT NULL  ,
-   STREET VARCHAR(50) NULL  ,
-   CITY VARCHAR(50) NULL  ,
-   POSTAL_CODE VARCHAR(8) NULL  ,
-   COUNTRY VARCHAR(50) NULL  
-   , PRIMARY KEY (ID_PARTICULAR) 
+   id_particular smallint not null auto_increment ,
+   id_account smallint not null  ,
+   id_cooking_level smallint not null  ,
+   firstname varchar(50) not null  ,
+   lastname varchar(50) not null  ,
+   birthday date null  ,
+   sex bool null  ,
+   nb_address smallint null  ,
+   street varchar(50) null  ,
+   city varchar(50) null  ,
+   postal_code varchar(8) null  ,
+   country varchar(50) null  
+   , primary key (id_particular) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : STATUS
+#       table : status
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS STATUS
+create table if not exists status
  (
-   ID_STATUS SMALLINT NOT NULL AUTO_INCREMENT ,
-   DESCRIPTION VARCHAR(50) NOT NULL  
-   , PRIMARY KEY (ID_STATUS) 
+   id_status smallint not null auto_increment ,
+   description varchar(50) not null  
+   , primary key (id_status) 
  ) 
  comment = "";
 
 # -----------------------------------------------------------------------------
-#       TABLE : RESERVATION
+#       table : reservation
 # -----------------------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS RESERVATION
+create table if not exists reservation
  (
-   ID_ACCOUNT SMALLINT NOT NULL AUTO_INCREMENT ,
-   ID_PARTY SMALLINT NOT NULL  ,
-   NB_PLACES SMALLINT NOT NULL  
-   , PRIMARY KEY (ID_ACCOUNT,ID_PARTY) 
+   id_account smallint not null auto_increment ,
+   id_party smallint not null  ,
+   nb_places smallint not null  
+   , primary key (id_account,id_party) 
  ) 
  comment = "";
 
 
 # -----------------------------------------------------------------------------
-#       CREATION DES REFERENCES DE TABLE
+#       creation des references de table
 # -----------------------------------------------------------------------------
 
 
-ALTER TABLE ACCOUNT 
-  ADD FOREIGN KEY FK_ACCOUNT_ACCOUNT_TYPE (ID_ACCOUNT_TYPE)
-      REFERENCES ACCOUNT_TYPE (ID_ACCOUNT_TYPE) ;
+alter table account 
+  add foreign key fk_account_account_type (id_account_type)
+      references account_type (id_account_type) ;
 
 
-ALTER TABLE MARK 
-  ADD FOREIGN KEY FK_MARK_ACCOUNT (ID_ACCOUNT)
-      REFERENCES ACCOUNT (ID_ACCOUNT) ;
+alter table mark 
+  add foreign key fk_mark_account (id_account)
+      references account (id_account) ;
 
 
-ALTER TABLE MARK 
-  ADD FOREIGN KEY FK_MARK_PARTY (ID_PARTY)
-      REFERENCES PARTY (ID_PARTY) ;
+alter table mark 
+  add foreign key fk_mark_party (id_party)
+      references party (id_party) ;
 
 
-ALTER TABLE PARTY 
-  ADD FOREIGN KEY FK_PARTY_ACCOUNT (ID_ACCOUNT)
-      REFERENCES ACCOUNT (ID_ACCOUNT) ;
+alter table party 
+  add foreign key fk_party_account (id_account)
+      references account (id_account) ;
 
 
-ALTER TABLE PARTY 
-  ADD FOREIGN KEY FK_PARTY_STATUS (ID_STATUS)
-      REFERENCES STATUS (ID_STATUS) ;
+alter table party 
+  add foreign key fk_party_status (id_status)
+      references status (id_status) ;
 
 
-ALTER TABLE PROFESSIONAL 
-  ADD FOREIGN KEY FK_PROFESSIONAL_ACCOUNT (ID_ACCOUNT)
-      REFERENCES ACCOUNT (ID_ACCOUNT) ;
+alter table professional 
+  add foreign key fk_professional_account (id_account)
+      references account (id_account) ;
 
 
-ALTER TABLE PARTICULAR 
-  ADD FOREIGN KEY FK_PARTICULAR_ACCOUNT (ID_ACCOUNT)
-      REFERENCES ACCOUNT (ID_ACCOUNT) ;
+alter table particular 
+  add foreign key fk_particular_account (id_account)
+      references account (id_account) ;
 
 
-ALTER TABLE PARTICULAR 
-  ADD FOREIGN KEY FK_PARTICULAR_COOKING_LEVEL (ID_COOKING_LEVEL)
-      REFERENCES COOKING_LEVEL (ID_COOKING_LEVEL) ;
+alter table particular 
+  add foreign key fk_particular_cooking_level (id_cooking_level)
+      references cooking_level (id_cooking_level) ;
 
 
-ALTER TABLE RESERVATION 
-  ADD FOREIGN KEY FK_RESERVATION_ACCOUNT (ID_ACCOUNT)
-      REFERENCES ACCOUNT (ID_ACCOUNT) ;
+alter table reservation 
+  add foreign key fk_reservation_account (id_account)
+      references account (id_account) ;
 
 
-ALTER TABLE RESERVATION 
-  ADD FOREIGN KEY FK_RESERVATION_PARTY (ID_PARTY)
-      REFERENCES PARTY (ID_PARTY) ;
+alter table reservation 
+  add foreign key fk_reservation_party (id_party)
+      references party (id_party) ;
 
