@@ -131,7 +131,7 @@ export default {
         accountType: null
       },
       sexs: [{text: 'Femme', value: true}, {text: 'Homme', value: false}, {text: 'Non précisé', value: null}],
-      levels: [{text: 'test', value: 1}, {text: 'pas vide', value: 2],
+      levels: [{text: 'test', value: 1}, {text: 'pas vide', value: 2}],
       show: true
     }
   },
