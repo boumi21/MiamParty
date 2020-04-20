@@ -20,17 +20,28 @@ router.post("/login", function (req, res) {
       console.log(result);
       res.send(result);
     }
-  });
-});
+  })
+})
 
 
 /* GET user listing. */
-router.post("/register", function (req, res) {
-  //vérifier champs formulaire, vérifier que l'utilisateur n'existe pas
-  //if(req.body.password && req.body.email)
-  console.log(req.body);
-  res.send("respond with a resource - register");
-});
+router.post("/registerPart", function (req, res) {
+  debugger
+  account.signUpPart(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      });
+    }
+    else {
+      console.log("Je renvoie le résultat")
+      console.log(result)
+      res.send({
+        insertId: result
+      })
+    }
+  })
+})
 
 
 
@@ -59,9 +70,8 @@ router.post("/login2", function (req, res) {
 
         const accessToken = user.jsonwebtoken.sign(
           {
-            id : result.user.ID_ACCOUNT,
-            username : result.user.USERNAME,
-            email : login
+            id : result.user.id_account,
+            email : result.user.email
           }, SECRET, {
             expiresIn
           }

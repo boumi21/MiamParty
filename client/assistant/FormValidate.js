@@ -1,28 +1,40 @@
 import regex from "@/assistant/Regex.js"
 
+function setError(input, err, message) {
+  input.classList.add("is-invalid")
+  err.classList.add("text-danger")
+  err.innerText = message
+
+  return false
+}
+
+function resetError(input, err) {
+  input.classList.remove("is-invalid")
+  err.classList.remove("text-danger")
+  err.innerText = ""
+}
+
+//************************************************ */
+
 function validateSignIn(document, form) {
 
-  /** Check login */
+  let validate = true
 
-  let err = document.getElementById("error-login")
-  let input = document.getElementById("input-login")
-  let elt = form.login
+  /** Check email */
+
+  let err = document.getElementById("error-email")
+  let input = document.getElementById("input-email")
+  let elt = form.email
 
   if (elt.length == 0) {
-    err.innerText = "Ce champ est obligatoire."
-    err.classList.add("text-danger")
-    input.classList.add("is-invalid")
-    return false
+    validate = setError(input, err, "Ce champ est obligatoire.")
   }
-  if (!regex.regexLogin(elt)) {
-    err.innerText = "Le format de l'identifiant n'est pas valide."
-    err.classList.add("text-danger")
-    input.classList.add("is-invalid")
-    return false
+  else if (!regex.regexEmail(elt)) {
+    validate = setError(input, err, "Le format de l'adresse email n'est pas valide.")
   }
-  err.innerText = ""
-  err.classList.remove("text-danger")
-  input.classList.remove("is-invalid")
+  else {
+    resetError(input, err)
+  }
 
   /** Check password */
 
@@ -31,24 +43,133 @@ function validateSignIn(document, form) {
   elt = form.password
 
   if (elt.length == 0) {
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (!regex.regexPassword(elt)) {
+    validate = setError(input, err, "Le mot de passe doit comprendre 6 caractères ou plus.")
+  }
+  else {
+    resetError(input, err)
+  }
+  
+  return validate
+}
+
+//************************************************ */
+
+function validateSignUpPart(document, form) {
+
+  let validate = true
+
+  /** Check firstname */
+
+  let err = document.getElementById("error-firstname")
+  let input = document.getElementById("input-firstname")
+  let elt = form.firstname
+
+  if (elt.length == 0) {
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (elt.charAt(0) != elt.charAt(0).toUpperCase()) {
+    validate = setError(input, err, "Le prénom doit commencer par une majuscule.")
+  }
+  else if (!regex.regexName(elt)) {
+    validate = setError(input, err, "Vous devez saisir un prénom valide.")
+  }
+  else {
+    resetError(input, err)
+  }
+
+  /** Check lastname */
+
+  err = document.getElementById("error-lastname")
+  input = document.getElementById("input-lastname")
+  elt = form.lastname
+
+  if (elt.length == 0) {
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (elt.charAt(0) != elt.charAt(0).toUpperCase()) {
+    validate = setError(input, err, "Le nom doit commencer par une majuscule.")
+  }
+  else if (!regex.regexName(elt)) {
+    validate = setError(input, err, "Vous devez saisir un nom valide.")
+  }
+  else {
+    resetError(input, err)
+  }
+
+  /** Check email */
+
+  err = document.getElementById("error-email")
+  input = document.getElementById("input-email")
+  elt = form.email
+
+  if (elt.length == 0) {
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (!regex.regexEmail(elt)) {
+    validate = setError(input, err, "Vous devez saisir une adresse email valide.")
+  }
+  else {
+    resetError(input, err)
+  }
+  
+  /** Check password */
+
+  err = document.getElementById("error-password")
+  input = document.getElementById("input-password")
+  elt = form.password
+
+  if (elt.length == 0) {
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (!regex.regexPassword(elt)) {
+    validate = setError(input, err, "Le mot de passe doit comprendre 6 caractères ou plus.")
+  }
+  else if (form.confirmPassword.length == 0) {
+    err = document.getElementById("error-confirm-password")
+    input = document.getElementById("input-confirm-password")
+    validate = setError(input, err, "Ce champ est obligatoire.")
+  }
+  else if (elt != form.confirmPassword) {
+    err = document.getElementById("error-confirm-password")
+    input = document.getElementById("input-confirm-password")
+    validate = setError(input, err, "Les mots de passe ne correspondent pas.")
+  }
+  else {
+    err = document.getElementById("error-password")
+    input = document.getElementById("input-password")
+    resetError(input, err)
+    err = document.getElementById("error-confirm-password")
+    input = document.getElementById("input-confirm-password")
+    resetError(input, err)
+  }
+
+  /** Cooking level */
+
+  err = document.getElementById("error-level")
+  input = document.getElementById("input-level")
+  elt = form.level
+
+  if (elt == null) {
     err.innerText = "Ce champ est obligatoire."
     err.classList.add("text-danger")
     input.classList.add("is-invalid")
-    return false
+    validate = false
   }
-  if (!regex.regexPassword(elt)) {
-    err.innerText = "Le mot de passe doit comprendre 8 caractères ou plus, sans espaces."
-    err.classList.add("text-danger")
-    input.classList.add("is-invalid")
-    return false
+  else {
+    resetError(input, err)
   }
-  err.innerText = ""
-  err.classList.remove("text-danger")
-  input.classList.remove("is-invalid")
 
-  return true
+  /** Check birth */
+
+  return validate
 }
 
 export default {
-  validateSignIn
+  setError,
+  resetError,
+  validateSignIn,
+  validateSignUpPart
 }

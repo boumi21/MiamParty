@@ -13,9 +13,9 @@
       </h3>
       <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
 
-        <b-form-group id="input-group-login" class="input">
-          <b-form-input id="input-login" v-model="form.login" placeholder="E-mail ou numéro de mobile"></b-form-input>
-          <small id="error-login" class=""></small>
+        <b-form-group id="input-group-email" class="input">
+          <b-form-input id="input-email" v-model="form.email" placeholder="E-mail"></b-form-input>
+          <small id="error-email"></small>
         </b-form-group>
 
         <b-form-group id="input-group-password" class="input">
@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       form: {
-        login: "",
+        email: "",
         password: ""
       },
       show: true
@@ -77,7 +77,7 @@ export default {
 
       try {
         let res = await this.$auth.loginWith('local', { data: {
-          login: this.form.login,
+          email: this.form.email,
           password: this.form.password
         } })
 

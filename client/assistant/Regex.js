@@ -1,15 +1,20 @@
-function regexLogin(field) {
+function regexEmail(field) {
     const emailReg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
-    const mobileReg = /^((\+)33|0)[1-9](\d{2}){4}$/
-    return (emailReg.test(field) || mobileReg.test(field)) 
+    return emailReg.test(field)
 }
 
 function regexPassword(field) {
-    const passwordReg = /^(?!.*[\s]).{8,128}$/
+    const passwordReg = /^.{6,128}$/
     return passwordReg.test(field)
 }
 
+function regexName(field) {
+    const nameReg = /^[A-Z][A-Za-z\é\è\ê\-]{2,49}$/
+    return nameReg.test(field)
+}
+
 export default {
-    regexLogin,
-    regexPassword
+    regexEmail,
+    regexPassword,
+    regexName
 }
