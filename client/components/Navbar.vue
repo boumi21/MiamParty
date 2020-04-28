@@ -14,12 +14,11 @@
                 <!-- Using 'button-content' slot -->
                 <div v-if="$auth.loggedIn">
                     <p>Votre id : {{ $auth.user.id }}</p>
-                    <p>Votre pseudo : {{ $auth.user.username }}</p>
                     <p>Votre email : {{ $auth.user.email }}</p>
                 </div>
 
                 <template v-slot:button-content>
-                    <em v-if="$auth.loggedIn">{{$auth.user.username}}</em>
+                    <em v-if="$auth.loggedIn">{{ $auth.user.email }}</em>
                     <em v-else>Non connecté</em>
                 </template>
                 <div v-if="$auth.loggedIn">

@@ -100,24 +100,23 @@
 import formValidate from "@/assistant/FormValidate.js"
 import authService from "@/services/AuthService.js"
 
-if (process.client) {
-  (async function() {
-    let result = await authService.getCookingLevels()
-    console.log(this.form)
-    if (result.data.hasOwnProperty("error")) {
-      console.log(result.data.error)
-    }
-    else {
-      console.log(this.form)
-      for (let i = 0; i < res.data.length; i ++) {
-        this.form.sexs.push({text: result.data[i].description, value: result.data[i].id_cooking_level})
-      }
-    }
-  })()
-}
+
 
 export default {
+
+  async asyncData () {
+
+
+    let result = await authService.getCookingLevels()
+
+    return {levels: result.data}
+
+  },
+
+  
+  
   data() {
+     
     return {
       form: {
         firstname: '',
@@ -130,14 +129,18 @@ export default {
         birth: null,
         accountType: null
       },
+      
       sexs: [{text: 'Femme', value: true}, {text: 'Homme', value: false}, {text: 'Non précisé', value: null}],
-      levels: [{text: 'test', value: 1}, {text: 'pas vide', value: 2}],
+      levels: [],
       show: true
     }
   },
+  
   methods: {
     async onSubmit(e) {
     e.preventDefault()
+
+    
 
     /** Validate SignUp */
 

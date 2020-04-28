@@ -1,20 +1,19 @@
 const express = require("express")
-const query = require("../dao/Query.js")
+const part = require("../dao/Part.js")
 const router = express.Router();
 
 
 
 /* GET home page. */
-router.post("/getCookingLevels", function () {
+router.post("/getCookingLevels", function (req, res) {
     console.log("je passe par le router")
-    query.getCookingLevels(req, function callback(err, result) {
+    part.getCookingLevels(req, function callback(err, result) {
       if (err != null) {
         res.send({
           error: err
         })
       }
       else {
-        console.log(result)
         res.send(result)
       }
     })

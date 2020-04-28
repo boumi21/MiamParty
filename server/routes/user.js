@@ -26,7 +26,7 @@ router.post("/login", function (req, res) {
 
 /* GET user listing. */
 router.post("/registerPart", function (req, res) {
-  debugger
+
   account.signUpPart(req, function callback(err, result) {
     if (err != null) {
       res.send({
@@ -203,5 +203,8 @@ router.get('/user', checkTokenMiddleware, (req, res, next) => {
 router.post('/logout', (req, res, next) => {
   res.json({ status: 'OK' })
 })
+
+
+
 
 module.exports = router;
