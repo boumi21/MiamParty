@@ -58,7 +58,7 @@ router.post("/login2", function (req, res) {
   const refreshToken = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1
 
 
-
+    //On vérifie si les identifiants de connexion de l'utilisateur sont corrects
     account.signIn(req, function callback(err, result) {
       if (err != null) {
         console.log("erreur : "+err)
@@ -67,21 +67,55 @@ router.post("/login2", function (req, res) {
         });
       }
       else {
-
-        const accessToken = user.jsonwebtoken.sign(
-          {
-            id : result.user.id_account,
-            email : result.user.email
-          }, SECRET, {
-            expiresIn
+        // Si les identifiants dont bons, on récupère les données liées à l'utilisateur
+        account.getUserInfo(result.user, function callback(err, userInfo){
+          if (err != null) {
+            console.log("erreur : "+err)
+            res.send({
+              error: err
+            });
           }
-        )
+          else {
+            const accessToken = user.jsonwebtoken.sign(
+              {
+                //All
+                id : userInfo.user.id_account,
+                accountType : userInfo.user.id_account_type,
+                email : userInfo.user.email,
+                nbAddress : userInfo.user.nb_address,
+                street : userInfo.user.street,
+                city : userInfo.user.city,
+                postCode : userInfo.user.postal_code,
+                country : userInfo.user.country,
+                
+                //Part
+                idPart : userInfo.user.id_partiular,
+                cookingLevel : userInfo.user.id_cooking_level,
+                firstname : userInfo.user.firstname,
+                lastname : userInfo.user.lastname,
+                birthday : userInfo.user.birthday,
+                sex : userInfo.user.sex,
+                
+                //Pro
+                idPro : userInfo.user.id_professional,
+                namePro : userInfo.user.name
+
+              }, SECRET, {
+                expiresIn
+              }
+            )
+    
+    
+    
+            res.json({
+              token: accessToken
+            })
+          }
+        });
 
 
+        
 
-        res.json({
-          token: accessToken
-        })
       }
     });
 
@@ -183,13 +217,7 @@ const checkTokenMiddleware = (req, res, next) => {
 
 router.get('/user', checkTokenMiddleware, (req, res, next) => {
   const token = req.headers.authorization && extractBearerToken(req.headers.authorization)
-  for (var item in token) {
-    console.log("tok : "+item)
-    for (var item2 in item){
-      
-    }
-    
- }
+
   
     // Décodage du token
     const decoded = user.jsonwebtoken.decode(token, { complete: false })

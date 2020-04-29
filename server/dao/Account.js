@@ -8,7 +8,7 @@ function signIn(loginInfo, callback) {
     let checkEmail = 'SELECT * ' +
                      'FROM account ' +
                      'WHERE account.email = ' + mysql.escape(loginInfo.body.email);
-    console.log(loginInfo.body.email)
+
     connection.query(checkEmail, function (err, result, fields) {
         if (err) {
             console.log(err)
@@ -25,7 +25,6 @@ function signIn(loginInfo, callback) {
                 callback("Votre identifiant ou mot de passe est incorrect.", null);
             }
             else {
-                console.log(result)
                 callback(null, {
                     user: result[0]
                 });
@@ -34,6 +33,55 @@ function signIn(loginInfo, callback) {
        
     })
 }
+
+//Récupère les informations de l'utilisateur pour un particulier ou un pro
+function getUserInfo(user, callback){
+    
+    console.log("type "+ user.id_account_type)
+    if(user.id_account_type == 1){
+
+        let ressources = 
+        'SELECT * ' +
+        'FROM account ' +
+        'INNER JOIN particular on account.id_account = particular.id_account '+
+        'WHERE account.id_account = '+ user.id_account;
+        connection.query(ressources, function (err, result) {
+            
+            if (err) {
+                console.log(err)
+                callback("Erreur dans la récupération des données du particulier", null);
+            }
+            else {
+                
+                callback(null, {
+                    user: result[0]
+                });          
+            }           
+        })
+    }
+    else if(user.id_account_type == 2){
+        let ressources = 
+        'SELECT * ' +
+        'FROM account ' +
+        'INNER JOIN professional on account.id_account = professional.id_account '+
+        'WHERE account.id_account = '+ user.id_account;
+        connection.query(ressources, function (err, result) {
+            
+            if (err) {
+                console.log(err)
+                callback("Erreur dans la récupération des données du professionnel", null);
+            }
+            else {
+                
+                callback(null, {
+                    user: result[0]
+                });          
+            }           
+        })
+    }
+}
+
+
 
 function signUpPart(registerInfo, callback) {
     let checkEmail = 'SELECT * ' +
@@ -100,6 +148,7 @@ function signUpPart(registerInfo, callback) {
 }
 
 module.exports = {
+    getUserInfo,
     signIn,
     signUpPart
 }
