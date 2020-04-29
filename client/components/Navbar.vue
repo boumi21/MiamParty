@@ -15,6 +15,7 @@
                 <div v-if="$auth.loggedIn">
                     <p>Votre id : {{ $auth.user.id }}</p>
                     <p>Votre type : {{ $auth.user.accountType }}</p>
+                    <p>Description : {{ $auth.user.description }}</p>
                     <p>Votre email : {{ $auth.user.email }}</p>
                     <p>Votre prenom : {{ $auth.user.firstname }}</p>
                     <p>Votre pet : {{ $auth.user.prout }}</p>

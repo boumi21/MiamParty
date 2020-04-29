@@ -7,6 +7,9 @@ export default {
     registerPart(credentials) {
         return api().post('user/registerPart', credentials)
     },
+    registerPro(credentials) {
+        return api().post('user/registerPro', credentials)
+    },
     getCookingLevels(cookingLevels) {
         console.log("je passe dans authservice")
         return api().post('part/getCookingLevels', cookingLevels)

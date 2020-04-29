@@ -100,8 +100,6 @@
 import formValidate from "@/assistant/FormValidate.js"
 import authService from "@/services/AuthService.js"
 
-
-
 export default {
 
   async asyncData () {
@@ -112,7 +110,6 @@ export default {
     return {levels: result.data}
 
   },
-
   
   
   data() {
@@ -140,15 +137,13 @@ export default {
     async onSubmit(e) {
     e.preventDefault()
 
-    
-
     /** Validate SignUp */
 
-    let validate = await formValidate.validateSignUpPart(document, this.form)
+let validate = await formValidate.validateSignUpPart(document, this.form)
       if (validate == false) {
         return
       }
-      console.log(this.form.sex.value)
+
     /** Send form to server-side */
 
     try {
@@ -158,11 +153,21 @@ export default {
         err.innerText = res.data.error
         err.classList.add("text-danger")
         this.form.password = ""
+        this.form.confirmPassword = ""
         return
       }
       else {
-        console.log("Le succès")
-        //this.$router.push("/dashboard")
+        try {
+        let res = await this.$auth.loginWith('local', { data: {
+          email: this.form.email,
+          password: this.form.password
+        } })
+
+        this.$router.push("/dashboard")
+
+
+      } catch (error) {
+      }
       }
     }
     catch(e) {

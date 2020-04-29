@@ -16,8 +16,6 @@ router.post("/login", function (req, res) {
       });
     }
     else {
-      console.log("Je renvoie le résultat");
-      console.log(result);
       res.send(result);
     }
   })
@@ -35,13 +33,25 @@ router.post("/registerPart", function (req, res) {
     }
     else {
       console.log("Je renvoie le résultat")
-      console.log(result)
-      res.send({
-        insertId: result
-      })
+      res.send(result)
     }
   })
 })
+
+router.post("/registerPro", function (req, res) {
+  console.log("je passe ici")
+  account.signUpPro(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      });
+    }
+    else {
+      res.send(result)
+    }
+  })
+})
+
 
 
 
@@ -79,26 +89,27 @@ router.post("/login2", function (req, res) {
             const accessToken = user.jsonwebtoken.sign(
               {
                 //All
-                id : userInfo.user.id_account,
-                accountType : userInfo.user.id_account_type,
-                email : userInfo.user.email,
-                nbAddress : userInfo.user.nb_address,
-                street : userInfo.user.street,
-                city : userInfo.user.city,
-                postCode : userInfo.user.postal_code,
-                country : userInfo.user.country,
+                id : userInfo.id_account,
+                accountType : userInfo.id_account_type,
+                description : userInfo.description,
+                email : userInfo.email,
+                nbAddress : userInfo.nb_address,
+                street : userInfo.street,
+                city : userInfo.city,
+                postCode : userInfo.postal_code,
+                country : userInfo.country,
                 
                 //Part
-                idPart : userInfo.user.id_partiular,
-                cookingLevel : userInfo.user.id_cooking_level,
-                firstname : userInfo.user.firstname,
-                lastname : userInfo.user.lastname,
-                birthday : userInfo.user.birthday,
-                sex : userInfo.user.sex,
+                idPart : userInfo.id_partiular,
+                cookingLevel : userInfo.id_cooking_level,
+                firstname : userInfo.firstname,
+                lastname : userInfo.lastname,
+                birthday : userInfo.birthday,
+                sex : userInfo.sex,
                 
                 //Pro
-                idPro : userInfo.user.id_professional,
-                namePro : userInfo.user.name
+                idPro : userInfo.id_professional,
+                namePro : userInfo.name
 
               }, SECRET, {
                 expiresIn

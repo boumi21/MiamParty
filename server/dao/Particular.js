@@ -25,9 +25,7 @@ exports.signUp = function (registrationInfo) {
     ", salt = " +
     salt +
     ", email = " +
-    registrationInfo.email +
-    ", creation_date = NOW()" +
-    ", last_access = NOW()";
+    registrationInfo.email
 
   database.query(insertParticular);
 };
