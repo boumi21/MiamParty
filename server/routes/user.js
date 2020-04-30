@@ -86,6 +86,19 @@ router.post("/login2", function (req, res) {
             });
           }
           else {
+            var desc = userInfo.description
+            var isPart
+            var isPro
+
+            if(desc == "Particulier"){
+              part = true
+              pro = false
+            } else{
+              part = false
+              pro = true
+            }
+            
+
             const accessToken = user.jsonwebtoken.sign(
               {
                 //All
@@ -98,6 +111,8 @@ router.post("/login2", function (req, res) {
                 city : userInfo.city,
                 postCode : userInfo.postal_code,
                 country : userInfo.country,
+                isPart : part,
+                isPro : pro,
                 
                 //Part
                 idPart : userInfo.id_partiular,

@@ -1,12 +1,37 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">
-        
-      </h1>
+        <h1 class="mt-4">Bienvenue {{$auth.user.firstname}}</h1>
+        <hr>
       <h2 class="subtitle">
-        Vous êtes connecté !
+        Vous avez "number" soirées qui arrivent !
       </h2>
+
+
+      <b-card-group deck>
+    <b-card img-src="/images/party-food1.jpg" img-alt="party-food" img-top>
+      <b-card-text>Préparez vos soirées qui arrivent, remémorez-vous celles du passé et plus encore !</b-card-text>
+      <template v-slot:footer>
+        <b-button block pill variant="outline-primary">Gérez vos soirées</b-button>
+      </template>
+    </b-card>
+
+    <b-card img-src="/images/party-food2.jpg" img-alt="Image" img-top class="">
+      <b-card-text>Parcourez les soirées proposées par les autres utilisateurs et les restaurants !</b-card-text>
+      <template v-slot:footer>
+        <b-button block pill variant="outline-primary" class="">Recherchez une soirée</b-button>
+      </template>
+      
+    </b-card>
+
+    <b-card img-src="/images/party-food3.jpg" img-alt="Image" img-top>
+      <b-card-text>Vous vous sentez l'âme d'un cordon bleu et êtes prêt à accueillir ? <br> N'attendez plus pour créez <b>votre</b> soirée !</b-card-text>
+      <template v-slot:footer>
+        <b-button block pill variant="outline-primary">Créez votre soirée</b-button>
+      </template>
+    </b-card>
+  </b-card-group>
+
     </div>
   </div>
 </template>
@@ -18,14 +43,18 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   text-align: center;
+}
+
+.card-footer{
+  background-color: white;
 }
 
 .title {

@@ -12,17 +12,11 @@
 
                 <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
-                <div v-if="$auth.loggedIn">
-                    <p>Votre id : {{ $auth.user.id }}</p>
-                    <p>Votre type : {{ $auth.user.accountType }}</p>
-                    <p>Description : {{ $auth.user.description }}</p>
-                    <p>Votre email : {{ $auth.user.email }}</p>
-                    <p>Votre prenom : {{ $auth.user.firstname }}</p>
-                    <p>Votre pet : {{ $auth.user.prout }}</p>
-                </div>
+
 
                 <template v-slot:button-content>
-                    <em v-if="$auth.loggedIn">{{ $auth.user.email }}</em>
+                    <em v-if="$auth.loggedIn && $auth.user.isPart">{{ $auth.user.firstname }}</em>
+                    <em v-else-if="$auth.loggedIn && $auth.user.isPro">{{ $auth.user.namePro }}</em>
                     <em v-else>Non connecté</em>
                 </template>
                 <div v-if="$auth.loggedIn">
