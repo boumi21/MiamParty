@@ -252,10 +252,61 @@ function validateSignUpPro(document, form) {
   return validate
 }
 
+
+/************************************************************************* */
+
+
+function validateCreatePart(document, form){
+
+  let validate = true
+
+  /** Check firstname */
+
+  let err = document.getElementById("error-name")
+  let input = document.getElementById("input-name")
+  let elt = form.name
+
+  if (elt.length <= 4) {
+    validate = setError(input, err, "Votre nom de soirée doit faire plus de 4 caractères.")
+  } else {
+    validate = resetError(input, err)
+  }
+
+
+  /** Check date */
+
+  err = document.getElementById("error-date")
+  input = document.getElementById("input-date")
+  elt = form.date
+
+  if (elt.length == 0  || elt == null) {
+    validate = setError(input, err, "Veuillez choisir une date pour votre soirée.")
+  } else {
+    validate = resetError(input, err)
+  }
+
+
+  /** Check price */
+
+  err = document.getElementById("error-price")
+  input = document.getElementById("input-price")
+  elt = form.price
+
+  if (elt == null || elt == "") {
+    validate = setError(input, err, "Veuillez choisir une date pour votre soirée.")
+  } else {
+    validate = resetError(input, err)
+  }
+
+
+  return validate
+}
+
 export default {
   setError,
   resetError,
   validateSignIn,
   validateSignUpPart,
-  validateSignUpPro
+  validateSignUpPro,
+  validateCreatePart
 }
