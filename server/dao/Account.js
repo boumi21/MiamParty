@@ -204,9 +204,30 @@ function signUpPro(registerInfo, callback) {
     })
 }
 
+
+
+function getUserAddress(req, callback){
+    
+    let userAddress = 'SELECT  ' +
+                            'nb_address, street, city, postal_code, country ' +
+                           'FROM account ' +
+                           'WHERE account.id_account = ' + req.body.userId;
+    connection.query(userAddress, function (err, result, fields) {
+    if (err) {
+        console.log(err)
+        callback(err.sqlMessage, null)
+    }
+    else {
+        
+        callback(null, JSON.stringify(result[0]))
+        }
+    })
+}
+
 module.exports = {
     getUserInfo,
     signIn,
     signUpPart,
-    signUpPro
+    signUpPro,
+    getUserAddress
 }

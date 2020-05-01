@@ -163,6 +163,19 @@ router.post("/login2", function (req, res) {
 
 });
 
+router.post("/userAddress", function (req, res) {
+  account.getUserAddress(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
+});
+
 
 
 // router.post('/refresh', (req, res, next) => {

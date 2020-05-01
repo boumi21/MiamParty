@@ -4,13 +4,22 @@
       <logo />
       <h2 class="subtitle">Créez une soirée en toute simplicité</h2>
 
-      <b-form @submit="onSubmit" id="form_Create_Part" v-if="show" method="post">
+      <b-form
+        @submit="onSubmit"
+        id="form_Create_Part"
+        v-if="show"
+        method="post"
+      >
         <b-form-group
           id="input-group-name"
           label="Quel sera le nom de votre soirée ?"
           label-for="input-name"
         >
-          <b-form-input id="input-name" v-model="form.name" placeholder="Nom de votre soirée"></b-form-input>
+          <b-form-input
+            id="input-name"
+            v-model="form.name"
+            placeholder="Nom de votre soirée"
+          ></b-form-input>
           <small id="error-name"></small>
         </b-form-group>
 
@@ -35,7 +44,12 @@
               label="Combien d'invités pourront participer au maximum ?"
               label-for="input-guest"
             >
-              <b-form-spinbutton id="input-guest" v-model="form.guest" min="2" max="100"></b-form-spinbutton>
+              <b-form-spinbutton
+                id="input-guest"
+                v-model="form.guest"
+                min="2"
+                max="100"
+              ></b-form-spinbutton>
               <small id="error-guest"></small>
             </b-form-group>
           </b-col>
@@ -46,12 +60,110 @@
               label-for="input-price"
             >
               <b-input-group size="md" prepend="€">
-                <b-form-input id="input-price" type="number" v-model="form.price" min="0" max="500" step="0.5"></b-form-input>
+                <b-form-input
+                  id="input-price"
+                  type="number"
+                  v-model="form.price"
+                  min="0"
+                  max="500"
+                  step="0.5"
+                ></b-form-input>
               </b-input-group>
               <small id="error-price"></small>
             </b-form-group>
           </b-col>
         </b-row>
+
+        <hr />
+
+        <h4>Adresse de la soirée</h4>
+        <div class="m-3">
+          <b-button pill variant="outline-success" v-on:click="fillAddress()"
+            >Utiliser l'adresse enregistrée dans mon profil</b-button
+          >
+        </div>
+        <b-row align-v="end">
+          <b-col cols="3">
+            <b-form-group id="input-group-nbAddress">
+              <b-form-input
+                id="input-nbAddress"
+                type="text"
+                placeholder="N° de rue"
+                v-model="form.nbAddress"
+              ></b-form-input>
+              <small id="error-nbAddress"></small>
+            </b-form-group>
+          </b-col>
+          <b-col cols="9">
+            <b-form-group id="input-group-street">
+              <b-form-input
+                id="input-street"
+                v-model="form.street"
+                placeholder="Nom de rue"
+              ></b-form-input>
+              <small id="error-street"></small>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <b-row align-v="end">
+          <b-col>
+            <b-form-group id="input-group-city">
+              <b-form-input
+                id="input-city"
+                type="text"
+                placeholder="Ville"
+                v-model="form.city"
+              ></b-form-input>
+              <small id="error-city"></small>
+            </b-form-group>
+          </b-col>
+          <b-col>
+            <b-form-group id="input-group-postCode">
+              <b-form-input
+                id="input-postCode"
+                type="number"
+                v-model="form.postCode"
+                placeholder="Code postal"
+                step="1"
+              ></b-form-input>
+              <small id="error-postCode"></small>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        <hr />
+
+        <b-row>
+          <b-col>
+            <b-form-group label="Ajoutez une description" label-for="input-description">
+              <b-form-textarea
+      id="input-description"
+      v-model="form.description"
+      placeholder="Donnez des informations complémentaires sur votre soirée !"
+      rows="3"
+      max-rows="6"
+    ></b-form-textarea>
+            </b-form-group>
+          </b-col>
+          <b-col>
+            <b-form-group label="Choissisez une image" label-for="input-image">
+            <b-form-file 
+          v-model="form.image"
+          id="input-image"
+          accept=".jpg, .png"
+          :state="Boolean(file)"
+          placeholder="(png ou jpeg)"
+          drop-placeholder="Déposez votre image ici..."
+        ></b-form-file>
+            </b-form-group>
+          </b-col>
+        </b-row>
+
+        
+
+        <!-- Hidden input -->
+        <input type="hidden" v-model="form.country" />
 
         <b-button type="submit" variant="primary">Se connecter</b-button>
       </b-form>
@@ -64,13 +176,13 @@
         <pre class="m-0">{{ form }}</pre>
       </b-card>-->
     </div>
+   
   </div>
 </template>
 
-
 <script>
 import Logo from "~/components/Logo.vue";
-import authService from "@/services/AuthService.js";
+import userService from "@/services/UserService.js";
 import formValidate from "@/assistant/FormValidate.js";
 
 export default {
@@ -84,12 +196,20 @@ export default {
         name: "",
         date: "",
         guest: 2,
-        price: 0
+        price: 0,
+        nbAddress: "",
+        street: "",
+        city: "",
+        postCode: null,
+        country: "France",
+        description: "",
+        image: null
       },
       min_date: getMinDate(),
       show: true
     };
   },
+  mounted() {},
   methods: {
     async onSubmit(e) {
       e.preventDefault();
@@ -115,6 +235,20 @@ export default {
       //     err.innerText = "Votre identifiant ou mot de passe est incorrect !";
       //     err.classList.add("text-danger");
       //   }
+    },
+
+    async fillAddress() {
+      let result = await userService.getUserAddress({
+        userId: this.$auth.user.id,
+        isPart: this.$auth.user.isPart
+      });
+      console.log("voici voila : ");
+      console.log(result);
+
+      this.form.nbAddress = result.data.nb_address;
+      this.form.street = result.data.street;
+      this.form.city = result.data.city;
+      this.form.postCode = result.data.postal_code;
     }
   }
 };
@@ -127,8 +261,6 @@ function getMinDate() {
   return minDate;
 }
 </script>
-
-
 
 <style scoped>
 .container {
