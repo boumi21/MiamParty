@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 30 avr. 2020 à 13:14
+-- Généré le :  sam. 02 mai 2020 à 09:16
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -35,6 +35,11 @@ CREATE TABLE IF NOT EXISTS `account` (
   `email` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
   `salt` varchar(256) NOT NULL,
+  `nb_address` smallint(6) NOT NULL,
+  `street` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `postal_code` varchar(8) NOT NULL,
+  `country` varchar(50) NOT NULL,
   PRIMARY KEY (`id_account`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_account_account_type` (`id_account_type`)
@@ -44,9 +49,9 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- Déchargement des données de la table `account`
 --
 
-INSERT INTO `account` (`id_account`, `id_account_type`, `email`, `password`, `salt`) VALUES
-(1, 1, 'boumi@fr.com', 'fea1d2fc7e9e7610662ebbabf54b9f583ad7ee52d26aa21ea3be6502b433cf4f', 'zzz'),
-(2, 2, 'pro@com.fr', 'e4080317514cb1b4ef1cf51a61eda07b2de473e3a4d662952e9de9092d6c8b21', 'zzz');
+INSERT INTO `account` (`id_account`, `id_account_type`, `email`, `password`, `salt`, `nb_address`, `street`, `city`, `postal_code`, `country`) VALUES
+(1, 1, 'boumi@fr.com', 'fea1d2fc7e9e7610662ebbabf54b9f583ad7ee52d26aa21ea3be6502b433cf4f', 'zzz', 3, 'Avenue Charles Bohn', 'Belfort', '90000', 'France'),
+(2, 2, 'pro@com.fr', 'e4080317514cb1b4ef1cf51a61eda07b2de473e3a4d662952e9de9092d6c8b21', 'zzz', 134, 'Avenue Jean Jaures', 'Belfort', '90000', 'France');
 
 -- --------------------------------------------------------
 
@@ -123,11 +128,6 @@ CREATE TABLE IF NOT EXISTS `particular` (
   `lastname` varchar(50) NOT NULL,
   `birthday` date DEFAULT NULL,
   `sex` tinyint(1) DEFAULT NULL,
-  `nb_address` smallint(6) DEFAULT NULL,
-  `street` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `postal_code` varchar(8) DEFAULT NULL,
-  `country` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_particular`),
   KEY `fk_particular_account` (`id_account`),
   KEY `fk_particular_cooking_level` (`id_cooking_level`)
@@ -137,8 +137,8 @@ CREATE TABLE IF NOT EXISTS `particular` (
 -- Déchargement des données de la table `particular`
 --
 
-INSERT INTO `particular` (`id_particular`, `id_account`, `id_cooking_level`, `firstname`, `lastname`, `birthday`, `sex`, `nb_address`, `street`, `city`, `postal_code`, `country`) VALUES
-(1, 1, 1, 'Nicolas', 'Garnier', '1998-12-04', 1, 4, 'rue Lamartine', 'Dijon', '21000', 'France');
+INSERT INTO `particular` (`id_particular`, `id_account`, `id_cooking_level`, `firstname`, `lastname`, `birthday`, `sex`) VALUES
+(1, 1, 1, 'Nicolas', 'Garnier', '1998-12-04', 1);
 
 -- --------------------------------------------------------
 
@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `party` (
   `nb_guests` smallint(6) NOT NULL,
   `picture` longblob,
   `description` varchar(100) DEFAULT NULL,
+  `isPartyPro` tinyint(1) NOT NULL,
   PRIMARY KEY (`id_party`),
   KEY `fk_party_account` (`id_account`),
   KEY `fk_party_status` (`id_status`)
@@ -178,11 +179,6 @@ CREATE TABLE IF NOT EXISTS `professional` (
   `id_professional` smallint(6) NOT NULL AUTO_INCREMENT,
   `id_account` smallint(6) NOT NULL,
   `name` char(32) NOT NULL,
-  `nb_address` smallint(6) DEFAULT NULL,
-  `street` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `postal_code` varchar(8) DEFAULT NULL,
-  `country` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_professional`),
   KEY `fk_professional_account` (`id_account`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -191,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `professional` (
 -- Déchargement des données de la table `professional`
 --
 
-INSERT INTO `professional` (`id_professional`, `id_account`, `name`, `nb_address`, `street`, `city`, `postal_code`, `country`) VALUES
-(1, 2, 'Crep Family', 154, 'Avenue Jean Jaures', 'Belfort', '90000', 'France');
+INSERT INTO `professional` (`id_professional`, `id_account`, `name`) VALUES
+(1, 2, 'Crep Family');
 
 -- --------------------------------------------------------
 
