@@ -5,6 +5,11 @@
       <h2 class="subtitle">Créez une soirée en toute simplicité</h2>
 
       <b-form @submit="onSubmit" id="form_Create_Part" v-if="show" method="post">
+
+        <hr>
+
+        <h4>Informations sur votre soirée</h4>
+
         <b-form-group
           id="input-group-name"
           label="Quel sera le nom de votre soirée ?"
@@ -14,6 +19,8 @@
           <small id="error-name"></small>
         </b-form-group>
 
+<b-row>
+  <b-col>
         <b-form-group
           id="input-group-date"
           label="A quelle date se déroulera-t-elle ?"
@@ -27,6 +34,17 @@
           ></b-form-datepicker>
           <small id="error-date"></small>
         </b-form-group>
+  </b-col>
+  <b-col>
+    <b-form-group
+          id="input-group-time"
+          label="A quelle heure se déroulera-t-elle ?"
+          label-for="input-time"
+        >
+    <b-time v-model="form.time" ></b-time>
+    </b-form-group>
+  </b-col>
+</b-row>
 
         <b-row align-v="end">
           <b-col>
@@ -114,6 +132,8 @@
 
         <hr />
 
+        <h4>Informations complémentaires</h4>
+
         <b-row>
           <b-col>
             <b-form-group label="Ajoutez une description" label-for="input-description">
@@ -148,16 +168,9 @@
         <!-- Hidden input -->
         <input type="hidden" v-model="form.country" />
 
-        <b-button type="submit" variant="primary">Se connecter</b-button>
+        <b-button type="submit" variant="primary">Créer la soirée !</b-button>
       </b-form>
 
-      <div class="links">
-        Envie de nous rejoindre ?
-        <a href="/register">Créer un compte</a>
-      </div>
-      <!-- <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>-->
     </div>
   </div>
 </template>
@@ -165,6 +178,7 @@
 <script>
 import Logo from "~/components/Logo.vue";
 import userService from "@/services/UserService.js";
+import partyService from "@/services/PartyService.js";
 import formValidate from "@/assistant/FormValidate.js";
 
 export default {
@@ -177,6 +191,7 @@ export default {
       form: {
         name: "",
         date: "",
+        time: "00:00:00",
         guest: 2,
         price: 0,
         nbAddress: null,
@@ -204,20 +219,15 @@ export default {
         return;
       }
 
-      //   try {
-      //     let res = await this.$auth.loginWith("local", {
-      //       data: {
-      //         email: this.form.email,
-      //         password: this.form.password
-      //       }
-      //     });
+      try {
+        let res = await partyService.createParty(this.form)
 
-      //     this.$router.push("/dashboard");
-      //   } catch (error) {
-      //     let err = document.getElementById("error-password");
-      //     err.innerText = "Votre identifiant ou mot de passe est incorrect !";
-      //     err.classList.add("text-danger");
-      //   }
+        // this.$router.push("/dashboard");
+      } catch (error) {
+        // let err = document.getElementById("error-password");
+        // err.innerText = "Votre identifiant ou mot de passe est incorrect !";
+        // err.classList.add("text-danger");
+      }
     },
 
     async fillAddress() {

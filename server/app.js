@@ -11,6 +11,7 @@ const jsonwebtoken = require('jsonwebtoken')
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
 var partRouter = require("./routes/part")
+var partyRouter = require("./routes/party")
 
 var app = express();
 var db = require("./database/Database.js");
@@ -39,6 +40,7 @@ app.use(bodyParser.json())
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/part", partRouter);
+app.use("/party", partyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

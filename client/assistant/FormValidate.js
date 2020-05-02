@@ -292,7 +292,13 @@ function validateCreatePart(document, form){
   input = document.getElementById("input-price")
   elt = form.price
 
-  if (elt == null || elt == "") {
+
+
+
+
+  if (elt === null || elt === "") {
+    
+    console.log("ah bon")
     validate = setError(input, err, "Veuillez choisir un prix pour votre soirée.")
   } else {
     validate = resetError(input, err)

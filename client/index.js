@@ -47,6 +47,12 @@ app.post('/users', function (req, res) {
   res.send('POST request to the homepage');
 });
 
+// POST method route
+app.post('/party', function (req, res) {
+  console.log(req);
+  res.send('POST request to the homepage');
+});
+
 
 // POST method route
 app.post('/part', function (req, res) {
