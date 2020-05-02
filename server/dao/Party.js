@@ -5,27 +5,20 @@ const connection = database.connection;
 
 
 function createParty(req, callback){
-    // let getCookingLevels = 'SELECT * ' +
-    //                        'FROM cooking_level'
-    // connection.query(getCookingLevels, function (err, result, fields) {
-    // if (err) {
-    //     console.log(err)
-    //     callback(err.sqlMessage, null)
-    // }
-    // else {
-
-    //     cookingLevels = [{text : "Sélectionnez un niveau de cuisine", value : null}]
-
-    //     for (var i = 0; i < result.length; i++){
-    //         var obj = new Object()
-    //         obj.text = result[i].description
-    //         obj.value = result[i].id_cooking_level
-    //         cookingLevels.push(obj)              
-    //     }
+    let party = req.body
+    console.log("bijour : "+req.body.isPartyPro)
+    let insertIntoParty = 'insert into party values (null, '+ party.idAccount +', 1, "'+ party.name +'", "'+ party.date + ' ' + party.time + '", '+ party.price +', '+ party.nbAddress +', "'+ party.street +'", "'+ party.city +'", "'+ party.postCode +'", "'+ party.country +'", '+ party.guest +', "'+ party.dataImage +'", "'+ party.description +'", '+ party.isPartyPro +')'
+    connection.query(insertIntoParty, function (err, result, fields) {
+    if (err) {
+        console.log("je suis une erreur")
+        console.log(err)
+        callback(err.sqlMessage, null)
+    }
+    else {
         
-    //     callback(null, JSON.stringify(cookingLevels))
-    //     }
-    // })
+        callback(null, {hey: 'gg'})
+        }
+    })
 }
 
 

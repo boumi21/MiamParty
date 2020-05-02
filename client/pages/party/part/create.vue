@@ -150,6 +150,7 @@
           <b-col>
             <b-form-group label="Choissisez une image" label-for="input-image">
               <b-form-file
+                v-on:input="convertImage()"
                 v-model="form.image"
                 id="input-image"
                 accept=".jpg, .png"
@@ -201,6 +202,8 @@ export default {
         country: "France",
         description: "",
         image: null,
+        dataImage: "",
+        idAccount: this.$auth.user.id,
         isPartyPro: this.$auth.user.isPro
       },
       min_date: getMinDate(),
@@ -230,13 +233,20 @@ export default {
       }
     },
 
+
+    
+
+    async convertImage() {
+      const file = this.form.image
+      let result =  await toBase64(file)
+      this.form.dataImage = result
+    },
+
     async fillAddress() {
       let result = await userService.getUserAddress({
         userId: this.$auth.user.id,
         isPart: this.$auth.user.isPart
       });
-      console.log("voici voila : ");
-      console.log(result);
 
       this.form.nbAddress = result.data.nb_address;
       this.form.street = result.data.street;
@@ -253,6 +263,13 @@ function getMinDate() {
   //minDate.setDate(minDate.getDate() + 3); -> A remmetre si on veut autoriser l'ajout seulement 3 jours après aujourd'hui
   return minDate;
 }
+
+async function toBase64(file){ return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+})}
 </script>
 
 <style scoped>
