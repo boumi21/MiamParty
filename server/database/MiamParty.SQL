@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 02 mai 2020 à 09:16
+-- Généré le :  sam. 02 mai 2020 à 20:40
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -61,7 +61,7 @@ INSERT INTO `account` (`id_account`, `id_account_type`, `email`, `password`, `sa
 
 DROP TABLE IF EXISTS `account_type`;
 CREATE TABLE IF NOT EXISTS `account_type` (
-  `id_account_type` smallint(6) NOT NULL AUTO_INCREMENT,
+  `id_account_type` smallint(6) NOT NULL,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id_account_type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -83,7 +83,7 @@ INSERT INTO `account_type` (`id_account_type`, `description`) VALUES
 
 DROP TABLE IF EXISTS `cooking_level`;
 CREATE TABLE IF NOT EXISTS `cooking_level` (
-  `id_cooking_level` smallint(6) NOT NULL AUTO_INCREMENT,
+  `id_cooking_level` smallint(6) NOT NULL,
   `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id_cooking_level`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -166,7 +166,17 @@ CREATE TABLE IF NOT EXISTS `party` (
   PRIMARY KEY (`id_party`),
   KEY `fk_party_account` (`id_account`),
   KEY `fk_party_status` (`id_status`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `party`
+--
+
+INSERT INTO `party` (`id_party`, `id_account`, `id_status`, `party_name`, `party_date`, `price`, `nb_address`, `street`, `city`, `postal_code`, `country`, `nb_guests`, `picture`, `description`, `isPartyPro`) VALUES
+(2, 1, 1, 'Nouvelle soirée', '2020-05-05 19:00:00', '8.00', 3, 'Avenue Charles Bohn', 'Belfort', '90000', 'France', 6, NULL, 'Une superbe description', 0),
+(3, 1, 1, 'frfre', '2020-05-21 00:00:00', '0.00', 3, 'Avenue Charles Bohn', 'Belfort', '90000', 'France', 2, NULL, 'null', 0),
+(4, 1, 1, 'encore une', '2020-05-20 04:00:00', '8.00', 3, 'Avenue Charles Bohn', 'Belfort', '90000', 'France', 2, NULL, 'Une petite description', 0),
+(5, 1, 1, 'avec image', '2020-05-27 05:02:00', '10.00', 3, 'Avenue Charles Bohn', 'Belfort', '90000', 'France', 2, 0x646174613a696d6167652f706e673b6261736536342c6956424f5277304b47676f414141414e535568455567414141424d414141415443415941414142795544624d414141415a556c455156513479324e674741576a5942536767617147753546412f424f4976325042495046455567786a422b49645150776643393448784c796b7573344769442b684766514f6942334a38536f6a454539454d327775534a7a6373464d4734747451677834447352616c6b5a454e784c2b41754a51614d63734778424f416d47766f706b3841567a31734c5a676730627341414141415355564f524b35435949493d, 'Une chtite description', 0);
 
 -- --------------------------------------------------------
 
@@ -213,10 +223,17 @@ CREATE TABLE IF NOT EXISTS `reservation` (
 
 DROP TABLE IF EXISTS `status`;
 CREATE TABLE IF NOT EXISTS `status` (
-  `id_status` smallint(6) NOT NULL AUTO_INCREMENT,
+  `id_status` smallint(6) NOT NULL,
   `description` varchar(50) NOT NULL,
   PRIMARY KEY (`id_status`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `status`
+--
+
+INSERT INTO `status` (`id_status`, `description`) VALUES
+(1, 'En ligne');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
