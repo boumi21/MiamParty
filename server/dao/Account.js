@@ -50,11 +50,11 @@ function getUserInfo(user, callback){
             console.log(" ")
             console.log(result[0])
             var userTable
-            switch (result[0].description) {
-                case "Particulier":
+            switch (result[0].id_account_type) {
+                case 1:
                     userTable = 'particular'
                     break
-                case "Professionnel":
+                case 2:
                     userTable = 'professional'
                     break
             }

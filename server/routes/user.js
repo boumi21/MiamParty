@@ -86,11 +86,11 @@ router.post("/login2", function (req, res) {
             });
           }
           else {
-            var desc = userInfo.description
+            var idPart = userInfo.id_account_type
             var isPart
             var isPro
 
-            if(desc == "Particulier"){
+            if(idPart == 1){
               part = true
               pro = false
             } else{
@@ -115,7 +115,7 @@ router.post("/login2", function (req, res) {
                 isPro : pro,
                 
                 //Part
-                idPart : userInfo.id_partiular,
+                idPart : userInfo.id_particular,
                 cookingLevel : userInfo.id_cooking_level,
                 firstname : userInfo.firstname,
                 lastname : userInfo.lastname,
