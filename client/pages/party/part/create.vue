@@ -4,22 +4,13 @@
       <logo />
       <h2 class="subtitle">Créez une soirée en toute simplicité</h2>
 
-      <b-form
-        @submit="onSubmit"
-        id="form_Create_Part"
-        v-if="show"
-        method="post"
-      >
+      <b-form @submit="onSubmit" id="form_Create_Part" v-if="show" method="post">
         <b-form-group
           id="input-group-name"
           label="Quel sera le nom de votre soirée ?"
           label-for="input-name"
         >
-          <b-form-input
-            id="input-name"
-            v-model="form.name"
-            placeholder="Nom de votre soirée"
-          ></b-form-input>
+          <b-form-input id="input-name" v-model="form.name" placeholder="Nom de votre soirée"></b-form-input>
           <small id="error-name"></small>
         </b-form-group>
 
@@ -44,12 +35,7 @@
               label="Combien d'invités pourront participer au maximum ?"
               label-for="input-guest"
             >
-              <b-form-spinbutton
-                id="input-guest"
-                v-model="form.guest"
-                min="2"
-                max="100"
-              ></b-form-spinbutton>
+              <b-form-spinbutton id="input-guest" v-model="form.guest" min="2" max="100"></b-form-spinbutton>
               <small id="error-guest"></small>
             </b-form-group>
           </b-col>
@@ -78,29 +64,28 @@
 
         <h4>Adresse de la soirée</h4>
         <div class="m-3">
-          <b-button pill variant="outline-success" v-on:click="fillAddress()"
-            >Utiliser l'adresse enregistrée dans mon profil</b-button
-          >
+          <b-button
+            pill
+            variant="outline-success"
+            v-on:click="fillAddress()"
+          >Utiliser l'adresse enregistrée dans mon profil</b-button>
         </div>
         <b-row align-v="end">
           <b-col cols="3">
             <b-form-group id="input-group-nbAddress">
               <b-form-input
                 id="input-nbAddress"
-                type="text"
+                type="number"
                 placeholder="N° de rue"
                 v-model="form.nbAddress"
+                step="1"
               ></b-form-input>
               <small id="error-nbAddress"></small>
             </b-form-group>
           </b-col>
           <b-col cols="9">
             <b-form-group id="input-group-street">
-              <b-form-input
-                id="input-street"
-                v-model="form.street"
-                placeholder="Nom de rue"
-              ></b-form-input>
+              <b-form-input id="input-street" v-model="form.street" placeholder="Nom de rue"></b-form-input>
               <small id="error-street"></small>
             </b-form-group>
           </b-col>
@@ -109,12 +94,7 @@
         <b-row align-v="end">
           <b-col>
             <b-form-group id="input-group-city">
-              <b-form-input
-                id="input-city"
-                type="text"
-                placeholder="Ville"
-                v-model="form.city"
-              ></b-form-input>
+              <b-form-input id="input-city" type="text" placeholder="Ville" v-model="form.city"></b-form-input>
               <small id="error-city"></small>
             </b-form-group>
           </b-col>
@@ -138,29 +118,32 @@
           <b-col>
             <b-form-group label="Ajoutez une description" label-for="input-description">
               <b-form-textarea
-      id="input-description"
-      v-model="form.description"
-      placeholder="Donnez des informations complémentaires sur votre soirée !"
-      rows="3"
-      max-rows="6"
-    ></b-form-textarea>
+                id="input-description"
+                v-model="form.description"
+                placeholder="Donnez des informations complémentaires sur votre soirée !"
+                rows="3"
+                max-rows="6"
+              ></b-form-textarea>
+              <small id="error-description"></small>
             </b-form-group>
           </b-col>
           <b-col>
             <b-form-group label="Choissisez une image" label-for="input-image">
-            <b-form-file 
-          v-model="form.image"
-          id="input-image"
-          accept=".jpg, .png"
-          :state="Boolean(file)"
-          placeholder="(png ou jpeg)"
-          drop-placeholder="Déposez votre image ici..."
-        ></b-form-file>
+              <b-form-file
+                v-model="form.image"
+                id="input-image"
+                accept=".jpg, .png"
+                placeholder="(png ou jpeg)"
+                drop-placeholder="Déposez votre image ici..."
+              ></b-form-file>
+              <small id="error-image"></small>
             </b-form-group>
           </b-col>
         </b-row>
 
-        
+        <b-card class="mt-3" header="Form Data Result">
+          <pre class="m-0">{{ form }}</pre>
+        </b-card>
 
         <!-- Hidden input -->
         <input type="hidden" v-model="form.country" />
@@ -176,7 +159,6 @@
         <pre class="m-0">{{ form }}</pre>
       </b-card>-->
     </div>
-   
   </div>
 </template>
 
@@ -197,13 +179,14 @@ export default {
         date: "",
         guest: 2,
         price: 0,
-        nbAddress: "",
+        nbAddress: null,
         street: "",
         city: "",
         postCode: null,
         country: "France",
         description: "",
-        image: null
+        image: null,
+        isPartyPro: this.$auth.user.isPro
       },
       min_date: getMinDate(),
       show: true

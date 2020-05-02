@@ -260,13 +260,13 @@ function validateCreatePart(document, form){
 
   let validate = true
 
-  /** Check firstname */
+  /** Check party name */
 
   let err = document.getElementById("error-name")
   let input = document.getElementById("input-name")
   let elt = form.name
 
-  if (elt.length <= 4) {
+  if (elt.trim().length <= 4) {
     validate = setError(input, err, "Votre nom de soirée doit faire plus de 4 caractères.")
   } else {
     validate = resetError(input, err)
@@ -293,10 +293,62 @@ function validateCreatePart(document, form){
   elt = form.price
 
   if (elt == null || elt == "") {
-    validate = setError(input, err, "Veuillez choisir une date pour votre soirée.")
+    validate = setError(input, err, "Veuillez choisir un prix pour votre soirée.")
   } else {
     validate = resetError(input, err)
   }
+
+
+  /** Check nb address */
+
+  err = document.getElementById("error-nbAddress")
+  input = document.getElementById("input-nbAddress")
+  elt = form.nbAddress
+
+  if (elt == null) {
+    validate = setError(input, err, "Veuillez choisir un numméro de rue.")
+  } else {
+    validate = resetError(input, err)
+  }
+
+
+    /** Check street */
+
+    err = document.getElementById("error-street")
+    input = document.getElementById("input-street")
+    elt = form.street
+  
+    if (elt == null || elt.trim() == "") {
+      validate = setError(input, err, "Veuillez choisir une rue.")
+    } else {
+      validate = resetError(input, err)
+    }
+
+
+    /** Check city */
+
+    err = document.getElementById("error-city")
+    input = document.getElementById("input-city")
+    elt = form.city
+  
+    if (elt == null || elt.trim() == "") {
+      validate = setError(input, err, "Veuillez choisir une ville.")
+    } else {
+      validate = resetError(input, err)
+    }
+
+
+    /** Check postal code */
+
+    err = document.getElementById("error-postCode")
+    input = document.getElementById("input-postCode")
+    elt = form.postCode
+  
+    if (elt == null) {
+      validate = setError(input, err, "Veuillez choisir un code postal.")
+    } else {
+      validate = resetError(input, err)
+    }
 
 
   return validate
