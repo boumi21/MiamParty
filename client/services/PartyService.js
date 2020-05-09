@@ -6,7 +6,7 @@ export default {
         return api().post('party/create', partyInfo)
     },
 
-    getParties(){
-        return api().post('party/getAll')
+    getParties(filters){
+        return api().post('party/getAll', filters)
     }
 }
