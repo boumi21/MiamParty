@@ -18,24 +18,13 @@
           <b-badge v-else pill variant="success">Pro</b-badge>
           <b-card-text><em>{{ item.firstname }}</em></b-card-text>
           <template v-slot:footer>
-            <b-button block pill variant="outline-primary">Gérez vos soirées</b-button>
+            <b-button block pill variant="outline-primary">Détails</b-button>
           </template>
         </b-card>
             </div>
         </div>
-
-        
-
         
       </b-card-group>
-
-      <ul id="example-1">
-  <li v-for="item in items" :key="item.id_account">
-    {{ item.party_name }}
-  </li>
-</ul>
-
-<div id="testi"></div>
 
 
     </div>
@@ -75,11 +64,6 @@ function decodeImage(data){
     for(let i = 0; i < data.length; i++){
         if (data[i].picture != null){
             var imgsrc = String.fromCharCode.apply(null, data[i].picture.data);
-            //var image = new Image(500, 500);
-            // image.src = '/images/party-food1.jpg' //imgsrc
-            // var div = document.getElementById('testi');
-            // div.appendChild(image);
-            // console.log("division "+div)
             data[i].picture = imgsrc
         } else {
             data[i].picture = '/images/party-food1.jpg'

@@ -16,7 +16,7 @@
         <b-card img-src="/images/party-food2.jpg" img-alt="Image" img-top class>
           <b-card-text>Parcourez les soirées proposées par les autres utilisateurs et les restaurants !</b-card-text>
           <template v-slot:footer>
-            <b-button block pill variant="outline-primary" class>Recherchez une soirée</b-button>
+            <b-button block pill variant="outline-primary" href="/party/part/search">Recherchez une soirée</b-button>
           </template>
         </b-card>
 
