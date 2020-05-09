@@ -27,7 +27,7 @@
             <b>votre</b> soirée !
           </b-card-text>
           <template v-slot:footer>
-            <b-button block pill variant="outline-primary">Créez votre soirée</b-button>
+            <b-button block pill variant="outline-primary" href="/party/create">Créez votre soirée</b-button>
           </template>
         </b-card>
       </b-card-group>

@@ -162,14 +162,12 @@
           </b-col>
         </b-row>
 
-        <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ form }}</pre>
-        </b-card>
+        <hr>
 
         <!-- Hidden input -->
         <input type="hidden" v-model="form.country" />
 
-        <b-button type="submit" variant="primary">Créer la soirée !</b-button>
+        <b-button type="submit" variant="primary" class="mb-4">Créer la soirée !</b-button>
       </b-form>
 
     </div>
