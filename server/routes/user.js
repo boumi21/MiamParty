@@ -176,6 +176,44 @@ router.post("/userAddress", function (req, res) {
   })
 });
 
+router.post("/getUserInfo", function (req, res) {
+  account.getUserInfo(req.body, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      });
+    }
+    else {
+      res.send(result);
+    }
+  })
+})
+
+router.post("/updatePart", function (req, res) {
+  account.updatePart(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      });
+    }
+    else {
+      res.send(result)
+    }
+  })
+})
+
+router.post("/updatePro", function (req, res) {
+  account.updatePro(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      });
+    }
+    else {
+      res.send(result)
+    }
+  })
+})
 
 
 // router.post('/refresh', (req, res, next) => {

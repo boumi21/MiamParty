@@ -13,8 +13,14 @@ function regexName(field) {
     return nameReg.test(field)
 }
 
+function regexAddress(field) {
+    const addressReg = /^[A-Za-z\é\è\ê\-]{0,49}$/
+    return addressReg.test(field)
+}
+
 export default {
     regexEmail,
     regexPassword,
-    regexName
+    regexName,
+    regexAddress
 }

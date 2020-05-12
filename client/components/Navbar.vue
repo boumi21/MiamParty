@@ -20,7 +20,7 @@
                     <em v-else>Non connecté</em>
                 </template>
                 <div v-if="$auth.loggedIn">
-                <b-dropdown-item href="#">Profil</b-dropdown-item>
+                <b-dropdown-item @click="redirectSettings">Mon compte</b-dropdown-item>
                 <b-dropdown-item @click="logout">Se déconneter</b-dropdown-item>
                 </div>
                 <div v-else>
@@ -40,6 +40,16 @@ export default {
   async logout() {
     await this.$auth.logout();
   },
+  redirectSettings() {
+      if (this.$auth.user.hasOwnProperty("idPart"))
+      {
+          this.$router.push("/settings/part")
+      }
+      else
+      {
+          this.$router.push("/settings/pro")
+      }
+  }
 },
 }
 </script>

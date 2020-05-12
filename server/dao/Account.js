@@ -36,11 +36,10 @@ function signIn(loginInfo, callback) {
 
 //Récupère les informations de l'utilisateur pour un particulier ou un pro
 function getUserInfo(user, callback){
-    
     let getAccountType =
     'SELECT * ' +
     'FROM account_type ' +
-    'WHERE account_type.id_account_type = ' + user.id_account_type
+    'WHERE account_type.id_account_type = ' + mysql.escape(user.id_account_type)
     console.log(getAccountType)
     connection.query(getAccountType, function(err, result, fields) {
         if (err) {
@@ -224,10 +223,162 @@ function getUserAddress(req, callback){
     })
 }
 
+function updatePart(updateInfo, callback) {
+    console.log("je suis dans account updatePart")
+    console.log(updateInfo.body)
+    let checkEmail = 'SELECT * ' +
+                     'FROM account ' +
+                     'WHERE account.email = ' + mysql.escape(updateInfo.body.email)
+
+    connection.query(checkEmail, function (err, result, fields) {
+        if (err) {
+            callback(err.sqlMessage, null);
+        }
+        else {
+            if (result.length != 0 && result[0].id_account != updateInfo.body.accountId) {
+                callback("Cette adresse email est déjà utilisée.", null);
+            }
+            else if (updateInfo.body.actualPassword != null && password.hashString(updateInfo.body.actualPassword + updateInfo.body.salt) != updateInfo.body.pwcheck) {
+                callback("Le mot de passe actuel est incorrect.", null);
+            }
+            else {
+                let updateAccount
+                if (updateInfo.body.actualPassword != null) {
+                    let salt = password.getSalt(64)
+                    let pw = password.hashString(updateInfo.body.password + salt)
+                    updateAccount = "UPDATE account SET " +
+                                    "email = " + mysql.escape(updateInfo.body.email) + ", " +
+                                    "password = '" + pw + "', " +
+                                    "salt = '" + salt + "', " +
+                                    "nb_address = " + mysql.escape(updateInfo.body.nbAddress) + ", " +
+                                    "street = " + mysql.escape(updateInfo.body.street) + ", " +
+                                    "city = " + mysql.escape(updateInfo.body.city) + ", " +
+                                    "postal_code = " + mysql.escape(updateInfo.body.postalCode) + ", " +
+                                    "country = " + mysql.escape(updateInfo.body.country) + " " +
+                                    "WHERE id_account = " + mysql.escape(updateInfo.body.accountId)
+                }
+                else {
+                    updateAccount = "UPDATE account SET " +
+                                    "email = " + mysql.escape(updateInfo.body.email) + ", " +
+                                    "nb_address = " + mysql.escape(updateInfo.body.nbAddress) + ", " +
+                                    "street = " + mysql.escape(updateInfo.body.street) + ", " +
+                                    "city = " + mysql.escape(updateInfo.body.city) + ", " +
+                                    "postal_code = " + mysql.escape(updateInfo.body.postalCode) + ", " +
+                                    "country = " + mysql.escape(updateInfo.body.country) + " " +
+                                    "WHERE id_account = " + mysql.escape(updateInfo.body.accountId)
+                }
+
+                connection.query(updateAccount, function (err, result, fields) {
+                    if (err) {
+                        console.log(err)
+                        callback(err.sqlMessage, null);
+                    }
+                    else {
+                        let updateParticular = "UPDATE particular SET " +
+                                               "id_cooking_level = " + mysql.escape(updateInfo.body.level) + ", " +
+                                               "firstname = " + mysql.escape(updateInfo.body.firstname) + ", " +
+                                               "lastname = " + mysql.escape(updateInfo.body.lastname) + ", " +
+                                               "birthday = " + mysql.escape(updateInfo.body.birth) + ", " +
+                                               "sex = " + mysql.escape(updateInfo.body.sex) + " " +
+                                               "WHERE id_particular = " + mysql.escape(updateInfo.body.particularId)
+
+                        connection.query(updateParticular, function (err, result, fields) {
+                            if (err) {
+                                console.log(err)
+                                callback(err.sqlMessage, null);
+                            }
+                            else {
+                                console.log(result.protocol41)
+                                callback(null, result)
+                            }
+                        })
+                    }
+                })
+
+            }
+        }
+       
+    })
+}
+
+function updatePro(updateInfo, callback) {
+    let checkEmail = 'SELECT * ' +
+                     'FROM account ' +
+                     'WHERE account.email = ' + mysql.escape(updateInfo.body.email)
+
+    connection.query(checkEmail, function (err, result, fields) {
+        if (err) {
+            callback(err.sqlMessage, null);
+        }
+        else {
+            if (result.length != 0 && result[0].id_account != updateInfo.body.accountId) {
+                callback("Cette adresse email est déjà utilisée.", null);
+            }
+            else if (updateInfo.body.actualPassword != null && password.hashString(updateInfo.body.actualPassword + updateInfo.body.salt) != updateInfo.body.pwcheck) {
+                callback("Le mot de passe actuel est incorrect.", null);
+            }
+            else {
+                let updateAccount
+                if (updateInfo.body.actualPassword != null) {
+                    let salt = password.getSalt(64)
+                    let pw = password.hashString(updateInfo.body.password + salt)
+                    updateAccount = "UPDATE account SET " +
+                                    "email = " + mysql.escape(updateInfo.body.email) + ", " +
+                                    "password = '" + pw + "', " +
+                                    "salt = '" + salt + "', " +
+                                    "nb_address = " + mysql.escape(updateInfo.body.nbAddress) + ", " +
+                                    "street = " + mysql.escape(updateInfo.body.street) + ", " +
+                                    "city = " + mysql.escape(updateInfo.body.city) + ", " +
+                                    "postal_code = " + mysql.escape(updateInfo.body.postalCode) + ", " +
+                                    "country = " + mysql.escape(updateInfo.body.country) + " " +
+                                    "WHERE id_account = " + mysql.escape(updateInfo.body.accountId)
+                }
+                else {
+                    updateAccount = "UPDATE account SET " +
+                                    "email = " + mysql.escape(updateInfo.body.email) + ", " +
+                                    "nb_address = " + mysql.escape(updateInfo.body.nbAddress) + ", " +
+                                    "street = " + mysql.escape(updateInfo.body.street) + ", " +
+                                    "city = " + mysql.escape(updateInfo.body.city) + ", " +
+                                    "postal_code = " + mysql.escape(updateInfo.body.postalCode) + ", " +
+                                    "country = " + mysql.escape(updateInfo.body.country) + " " +
+                                    "WHERE id_account = " + mysql.escape(updateInfo.body.accountId)
+                }
+
+                connection.query(updateAccount, function (err, result, fields) {
+                    if (err) {
+                        console.log(err)
+                        callback(err.sqlMessage, null);
+                    }
+                    else {
+                        let updatePro = "UPDATE professional SET " +
+                                               "name = " + mysql.escape(updateInfo.body.name) + " " +
+                                               "WHERE id_professional = " + mysql.escape(updateInfo.body.professionalId)
+
+                        connection.query(updatePro, function (err, result, fields) {
+                            if (err) {
+                                console.log(err)
+                                callback(err.sqlMessage, null);
+                            }
+                            else {
+                                console.log(result.protocol41)
+                                callback(null, result)
+                            }
+                        })
+                    }
+                })
+
+            }
+        }
+       
+    })
+}
+
 module.exports = {
     getUserInfo,
     signIn,
     signUpPart,
     signUpPro,
-    getUserAddress
+    getUserAddress,
+    updatePart,
+    updatePro
 }
