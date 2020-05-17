@@ -37,12 +37,7 @@
         </b-card>
       </b-card-group>
 
-      <a v-if="$auth.user.isPart" href="./settings/part">
-        <b-button pill variant="outline-secondary">
-          <img src="/svg/user-profile.svg" alt="user profile" />Profil
-        </b-button>
-      </a>
-      <a v-if="$auth.user.isPro" href="./settings/pro">
+      <a href="#">
         <b-button pill variant="outline-secondary">
           <img src="/svg/user-profile.svg" alt="user profile" />Profil
         </b-button>

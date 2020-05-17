@@ -56,7 +56,12 @@
                 <em>{{ item.firstname }}</em>
               </b-card-text>
               <template v-slot:footer>
-                <b-button block pill variant="outline-primary">Détails</b-button>
+                <b-button
+                  block
+                  pill
+                  variant="outline-primary"
+                  :href="`./book/${item.id_party}`"
+                >Détails</b-button>
               </template>
             </b-card>
           </div>
