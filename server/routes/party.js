@@ -29,6 +29,48 @@ router.post("/getAll", function (req, res) {
       res.send(result.data)
     }
   })
+}),
+
+
+router.post("/getType", function (req, res) {
+  party.getPartyType(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
+}),
+
+
+router.post("/getPro", function (req, res) {
+  party.getPartyPro(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
+}),
+
+
+router.post("/getPart", function (req, res) {
+  party.getPartyPart(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
 })
   
   

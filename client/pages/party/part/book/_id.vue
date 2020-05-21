@@ -47,9 +47,42 @@
 </template>
 
 <script>
+import partyService from "@/services/PartyService.js";
 export default {
-  middleware: "auth"
+  middleware: "auth",
+  data() {
+    return {
+      party: null,
+    };
+  },
+  async mounted() {
+    let resultParty
+    let result = await partyService.getPartyType({partyId: this.$route.params.id})
+    let isPartyPro = result.data[0].isPartyPro
+    if(isPartyPro == 0){
+      resultParty = await partyService.getPartyPart({partyId: this.$route.params.id})
+    } else{
+      resultParty = await partyService.getPartyPro({partyId: this.$route.params.id})
+    }
+    
+  }
 };
+
+
+function decodeImage(data) {
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].picture != null) {
+      if (data[i].picture.data.length != 0) {
+        var imgsrc = String.fromCharCode.apply(null, data[i].picture.data);
+        data[i].picture = imgsrc;
+      } else {
+        data[i].picture = "/images/party-food1.jpg";
+      }
+    } else {
+      data[i].picture = "/images/party-food1.jpg";
+    }
+  }
+}
 </script>
 
 <style scoped>
