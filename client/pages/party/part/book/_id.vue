@@ -38,7 +38,7 @@
         >
         <p>{{party.date}}</p>
         <p>{{party.price}}€/pers</p>
-        <p>{{party.nb_guests}} places restantes</p>
+        <p>{{party.guests_left}} places restantes</p>
       </b-card>
     </b-col>
   </b-row>
@@ -62,13 +62,14 @@
           header-bg-variant="success"
           header-text-variant="white"
         >
+        
         <b-form @submit="onSubmit">
-          <label for="input-participants">Nombre de places</label>
+          <label for="input-participants"><font-awesome-icon icon="city"/> Nombre de places</label>
           <b-form-spinbutton
             id="input-participants"
             v-model="form.participants"
             min="1"
-            max="100"
+            :max="party.guests_left"
             step="1"
           ></b-form-spinbutton>
         </b-form>

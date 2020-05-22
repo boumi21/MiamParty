@@ -33,7 +33,14 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/fontawesome',
   ],
+
+  fontawesome: {
+    icons: {
+      solid: true,
+    }
+  },
   /*
   ** Nuxt.js modules
   */

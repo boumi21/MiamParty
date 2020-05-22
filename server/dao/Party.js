@@ -106,7 +106,7 @@ function getPartyType(req, callback) {
 
 function getPartyPro(req, callback) {
   let getParty =
-  'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pr.name as "owner" FROM party p inner join account a on p.id_account = a.id_account inner join professional pr on a.id_account = pr.id_account WHERE id_party = ' + req.body.partyId
+  'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pr.name as "owner", (p.nb_guests - IFNULL(sum(r.nb_places),0)) as "guests_left" FROM party p inner join account a on p.id_account = a.id_account left outer join reservation r on p.id_party = r.id_party inner join professional pr on a.id_account = pr.id_account WHERE id_party = ' + req.body.partyId
 
     connection.query(getPartyType, function (err, result) {
       if (err) {
@@ -122,7 +122,7 @@ function getPartyPro(req, callback) {
 
 function getPartyPart(req, callback) {
   let getParty =
-    'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pa.firstname as "owner" FROM party p inner join account a on p.id_account = a.id_account inner join particular pa on a.id_account = pa.id_account WHERE p.id_party = ' + req.body.partyId
+    'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pa.firstname as "owner", (p.nb_guests - IFNULL(sum(r.nb_places),0)) as "guests_left" FROM party p inner join account a on p.id_account = a.id_account  left outer join reservation r on p.id_party = r.id_party inner join particular pa on a.id_account = pa.id_account WHERE p.id_party = ' + req.body.partyId
 
     connection.query(getParty, function (err, result) {
       if (err) {

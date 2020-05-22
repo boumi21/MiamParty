@@ -25,6 +25,8 @@
     "tls": "^0.0.1"
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "nodemon": "^1.18.9"
   }
 }
