@@ -76,7 +76,7 @@
                   header-text-variant="white"
                 >
                   <b-form @submit="onSubmit">
-                    <b-row>
+                    <b-row class="mb-3">
                       <b-col>
                         <label for="input-participants"
                           ><font-awesome-icon icon="city" /> Nombre de
@@ -91,14 +91,15 @@
                         ></b-form-spinbutton>
                       </b-col>
                       <b-col>
-                        Prix : {{ party.price * form.participants }}
+                        <p>Total à payer</p>
+                         <strong>{{ party.price * form.participants }}€</strong>
                       </b-col>
                     </b-row>
                     <b-row>
                       <b-col>
                         <div>
-                          <b-button v-b-modal.modal-confirm
-                            >Launch demo modal</b-button
+                          <b-button v-b-modal.modal-confirm variant="success"
+                            >Réserver</b-button
                           >
 
                           <b-modal
@@ -127,13 +128,13 @@
                             </b-row>
                             <hr />
                             <div class="text-right">
-                              <b-button type="submit" variant="success"
-                                >Réserver</b-button
+                              <b-button type="submit" variant="success" @click="onSubmit"
+                                >Oui, Réserver</b-button
                               >
                               <b-button
                                 variant="secondary"
                                 @click="$bvModal.hide('modal-confirm')"
-                                >Retour</b-button
+                                >Non, Retour</b-button
                               >
                             </div>
                           </b-modal>
@@ -172,15 +173,17 @@ export default {
     async onSubmit(e) {
       e.preventDefault();
 
-      // let result = await partyService.getParties({
-      //   isPartyPro: this.form.status,
-      //   price: this.form.price,
-      //   date: this.form.date
-      // });
-      // decodeImage(result.data.error);
-      // console.log(result.data.error);
+      let result = await partyService.bookParty({
+        account: this.$auth.user.id,
+        party: this.party.id_party,
+        places: this.form.participants
+      });
 
-      // this.items = result.data.error;
+      if(result.data.result){
+        console.log("un succes")
+      } else {
+        console.log("un rate")
+      }
     }
   },
   async mounted() {

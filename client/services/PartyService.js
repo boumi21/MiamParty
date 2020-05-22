@@ -19,5 +19,9 @@ export default {
 
   getPartyPart(partyId){
     return api().post("party/getPart", partyId)
-}
+  },
+
+  bookParty(bookingInfo){
+    return api().post("party/book", bookingInfo)
+  }
 };

@@ -71,6 +71,20 @@ router.post("/getPart", function (req, res) {
       res.send(result)
     }
   })
+}),
+
+
+router.post("/book", function (req, res) {
+  party.bookParty(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
 })
   
   

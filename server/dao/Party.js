@@ -135,10 +135,27 @@ function getPartyPart(req, callback) {
     });
 }
 
+
+function bookParty(req, callback) {
+  let bookParty =
+    'insert into reservation values (' + req.body.account + ',' + req.body.party + ',' + req.body.places + ')'
+
+    connection.query(bookParty, function (err, result) {
+      if (err) {
+        console.log("je suis une erreur");
+        console.log(err);
+        callback(err.sqlMessage, null);
+      } else {
+        callback(null, {result: 'success'});
+      }
+    });
+}
+
 module.exports = {
   createParty,
   getParties,
   getPartyType,
   getPartyPro,
-  getPartyPart
+  getPartyPart,
+  bookParty
 };
