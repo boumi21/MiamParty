@@ -81,18 +81,23 @@ import partyService from "@/services/PartyService.js";
 export default {
   middleware: "auth",
 
-  async asyncData() {
-    console.log("aha");
-
-    let result = await partyService.getParties({
+  mounted: function () {
+    this.$nextTick(async function () {
+        let result = await partyService.getParties({
       isPartyPro: 3,
       price: 1000,
-      date: null
+      date: null,
+      account: this.$auth.user.id
     });
     decodeImage(result.data.error);
-    //console.log(result)
+    console.log("alllloooo")
+    this.items = result.data.error
+    })
+    },
 
-    return { items: result.data.error };
+  async asyncData() {
+
+    
   },
 
   data() {
@@ -113,7 +118,8 @@ export default {
       let result = await partyService.getParties({
         isPartyPro: this.form.status,
         price: this.form.price,
-        date: this.form.date
+        date: this.form.date,
+        account: this.$auth.user.id
       });
       decodeImage(result.data.error);
       console.log(result.data.error);

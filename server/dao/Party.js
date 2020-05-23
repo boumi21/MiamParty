@@ -49,6 +49,7 @@ function createParty(req, callback) {
 
 function getParties(req, callback) {
   let filterStatus = "";
+  let account = req.body.account;
   if (req.body.isPartyPro == 1) {
     filterStatus = "and z.isPartyPro = 1 ";
   } else if (req.body.isPartyPro == 0) {
@@ -67,12 +68,17 @@ function getParties(req, callback) {
   }
 
   let getAllParties =
-    "SELECT * FROM ( " +
-    'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pa.firstname FROM party p inner join account a on p.id_account = a.id_account inner join particular pa on a.id_account = pa.id_account WHERE p.id_status = 1 AND p.party_date >= CURDATE() ' +
-    "UNION " +
-    'SELECT p.*, DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pr.name FROM party p inner join account a on p.id_account = a.id_account inner join professional pr on a.id_account = pr.id_account WHERE p.id_status = 1 AND p.party_date >= CURDATE() ' +
-    ") z " +
-    "WHERE 1 " +
+    'SELECT * FROM ( '+
+      'SELECT p.*,(p.nb_guests - IFNULL(sum(r.nb_places),0)) as "guests_left", DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pa.firstname FROM party p inner join account a on p.id_account = a.id_account left outer join reservation r on p.id_party = r.id_party inner join particular pa on a.id_account = pa.id_account WHERE p.id_status = 1 AND p.party_date >= CURDATE() ' +
+       'group by p.id_party '+
+       'UNION '+
+       'SELECT p.*,(p.nb_guests - IFNULL(sum(r.nb_places),0)) as "guests_left", DATE_FORMAT(p.party_date, "%d/%m/%Y") as "date", pr.name FROM party p inner join account a on p.id_account = a.id_account left outer join reservation r on p.id_party = r.id_party inner join professional pr on a.id_account = pr.id_account WHERE p.id_status = 1 AND p.party_date >= CURDATE() '+
+       'group by p.id_party '+
+       ') z '+
+       'WHERE 1 '+
+       'and z.guests_left > 0 ' +
+       'and z.id_account <> ' + account + ' ' +
+       'and '+ account +' not in (select r.id_account from reservation r where r.id_party = z.id_party) ' +
     filterStatus +
     filterPrice +
     filterDate;
