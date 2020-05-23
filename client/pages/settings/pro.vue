@@ -141,7 +141,7 @@ import userService from "@/services/UserService.js"
 import authService from "@/services/AuthService.js"
 
 export default {
-
+middleware: "auth-pro",
     mounted: function () {
     this.$nextTick(async function () {
         try {

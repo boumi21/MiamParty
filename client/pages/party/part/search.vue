@@ -79,7 +79,7 @@
 import partyService from "@/services/PartyService.js";
 
 export default {
-  middleware: "auth",
+  middleware: "auth-part",
 
   mounted: function () {
     this.$nextTick(async function () {

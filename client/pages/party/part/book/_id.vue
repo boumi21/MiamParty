@@ -163,7 +163,7 @@
 <script>
 import partyService from "@/services/PartyService.js";
 export default {
-  middleware: "auth",
+  middleware: "auth-part",
   data() {
     return {
       party: {},

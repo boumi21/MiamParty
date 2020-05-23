@@ -194,6 +194,7 @@ import partyService from "@/services/PartyService.js";
 import formValidate from "@/assistant/FormValidate.js";
 
 export default {
+  middleware: "auth",
   components: {
     Logo
   },
