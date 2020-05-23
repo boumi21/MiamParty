@@ -35,8 +35,14 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary">Filtrer</b-button>
+        
       </b-form>
       <hr />
+
+      <h1 class="display-2" v-if="items.length <= 0" >Aucune soirée à afficher </h1>
+      <div class="text-center" v-if="items[0] === true">
+        <b-spinner variant="primary" label="Text Centered"></b-spinner>
+      </div>
 
       <b-card-group deck>
         <div class="row">
@@ -109,7 +115,7 @@ export default {
         date: null
       },
       min_date: getMinDate(),
-      items: []
+      items: [true]
     };
   },
   methods: {
@@ -123,7 +129,6 @@ export default {
         account: this.$auth.user.id
       });
       decodeImage(result.data.error);
-      console.log(result.data.error);
 
       this.items = result.data.error;
     }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">MiamParty</b-navbar-brand>
+            <nuxt-link to="/dashboard"><b-navbar-brand id="brand">MiamParty</b-navbar-brand></nuxt-link>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -53,4 +53,12 @@ export default {
 },
 }
 </script>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+    #brand{
+        font-family: 'Carter One', cursive;
+    }
+</style>
 
