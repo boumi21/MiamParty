@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <logo />
+      <LogoMiam class="mt-4 mb-4" />
       <h2 class="subtitle">Créez une soirée en toute simplicité</h2>
 
       <b-form @submit="onSubmit" id="form_Create_Part" v-if="show" method="post">
@@ -189,6 +189,7 @@
 
 <script>
 import Logo from "~/components/Logo.vue";
+import LogoMiam from "~/components/LogoMiam.vue";
 import userService from "@/services/UserService.js";
 import partyService from "@/services/PartyService.js";
 import formValidate from "@/assistant/FormValidate.js";
@@ -196,7 +197,8 @@ import formValidate from "@/assistant/FormValidate.js";
 export default {
   middleware: "auth",
   components: {
-    Logo
+    Logo,
+    LogoMiam
   },
 
   data() {
