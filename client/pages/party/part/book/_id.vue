@@ -1,45 +1,28 @@
 <template>
   <div class="container">
     <div>
-      <h2>
-        {{ party.party_name }}<small> par </small
-        ><u
-          ><small> {{ party.owner }} </small></u
-        ><small class="ml-5"
-          ><b-badge v-if="party.isPartyPro == 0" pill variant="primary"
-            >Particulier</b-badge
-          >
-          <b-badge v-else pill variant="success">Pro</b-badge></small
-        >
-      </h2>
-      <hr />
+      <h1>
+        {{ party.party_name }}
+        <small>par</small>
+        <u>
+          <small>{{ party.owner }}</small>
+        </u>
+        <small class="ml-5">
+          <b-badge v-if="party.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
+          <b-badge v-else pill variant="success">Pro</b-badge>
+        </small>
+      </h1>
+      <hr class="mb-4" />
 
-      <div>
-        <b-row>
-          <b-col> </b-col>
+      <div class="mb-4">
+        <b-row class="mb-4">
+          <b-col></b-col>
           <b-col cols="8">
-            <b-img
-              :src="party.picture"
-              fluid-grow
-              alt="Responsive image"
-            ></b-img>
+            <b-img thumbnail :src="party.picture" fluid-grow alt="Responsive image"></b-img>
           </b-col>
-          <b-col> </b-col>
+          <b-col></b-col>
         </b-row>
-        <b-row>
-          <b-col>
-            <b-card
-              header="Adresse de la soirée"
-              border-variant="info"
-              header-bg-variant="info"
-              header-text-variant="white"
-            >
-              <p>
-                {{ party.nb_address }} {{ party.street }}, {{ party.city }},
-                {{ party.postal_code }} {{ party.country }}
-              </p>
-            </b-card>
-          </b-col>
+        <b-row class="mb-4">
           <b-col>
             <b-card
               header="Informations"
@@ -47,23 +30,32 @@
               header-bg-variant="primary"
               header-text-variant="white"
             >
-              <p>{{ party.date }}</p>
-              <p>{{ party.price }}€/pers</p>
-              <p>{{ party.guests_left }} places restantes</p>
-            </b-card>
-          </b-col>
-        </b-row>
-
-        <b-row>
-          <b-col>
-            <b-card
-              v-if="party.description !== ''"
-              header="Description"
-              border-variant="secondary"
-              header-bg-variant="secondary"
-              header-text-variant="white"
-            >
-              {{ party.description }}
+              <b-row>
+                <b-col cols="4"></b-col>
+                <b-col cols="8" class="text-left">
+                  <p>
+                    <font-awesome-icon icon="calendar-alt" class="mr-4" />
+                    {{ party.date }}
+                  </p>
+                  <p>
+                    <font-awesome-icon icon="euro-sign" class="mr-4" />
+                    {{ party.price }}€/pers
+                  </p>
+                  <p>
+                    <font-awesome-icon icon="chair" class="mr-4" />
+                    {{ party.guests_left }} places restantes
+                  </p>
+                </b-col>
+              </b-row>
+              <hr />
+              <p class="h5">
+                Adresse de la soirée
+                <font-awesome-icon icon="map-marker-alt" class="mr-4" />
+              </p>
+              <p>
+                {{ party.nb_address }} {{ party.street }}, {{ party.city }},
+                {{ party.postal_code }} {{ party.country }}
+              </p>
             </b-card>
           </b-col>
           <b-col>
@@ -78,10 +70,7 @@
                   <b-form @submit="onSubmit">
                     <b-row class="mb-3">
                       <b-col>
-                        <label for="input-participants"
-                          ><font-awesome-icon icon="city" /> Nombre de
-                          places</label
-                        >
+                        <label for="input-participants">Nombre de places</label>
                         <b-form-spinbutton
                           id="input-participants"
                           v-model="form.participants"
@@ -92,15 +81,13 @@
                       </b-col>
                       <b-col>
                         <p>Total à payer</p>
-                         <strong>{{ party.price * form.participants }}€</strong>
+                        <strong>{{ party.price * form.participants }}€</strong>
                       </b-col>
                     </b-row>
                     <b-row>
                       <b-col>
                         <div>
-                          <b-button v-b-modal.modal-confirm variant="success"
-                            >Réserver</b-button
-                          >
+                          <b-button v-b-modal.modal-confirm variant="success">Réserver</b-button>
 
                           <b-modal
                             centered
@@ -112,11 +99,11 @@
                               <b-col>
                                 <p class="my-4 text-center">
                                   Prix à payer :
-                                  <strong
-                                    >{{
-                                      party.price * form.participants
-                                    }}€</strong
-                                  >
+                                  <strong>
+                                    {{
+                                    party.price * form.participants
+                                    }}€
+                                  </strong>
                                 </p>
                               </b-col>
                               <b-col>
@@ -128,14 +115,15 @@
                             </b-row>
                             <hr />
                             <div class="text-right">
-                              <b-button type="submit" variant="success" @click="onSubmit"
-                                >Oui, Réserver</b-button
-                              >
+                              <b-button
+                                type="submit"
+                                variant="success"
+                                @click="onSubmit"
+                              >Oui, Réserver</b-button>
                               <b-button
                                 variant="secondary"
                                 @click="$bvModal.hide('modal-confirm')"
-                                >Non, Retour</b-button
-                              >
+                              >Non, Retour</b-button>
                             </div>
                           </b-modal>
                         </div>
@@ -147,11 +135,27 @@
             </b-row>
           </b-col>
         </b-row>
+
+        <b-row>
+          <b-col>
+            <b-card
+              v-if="party.description !== ''"
+              header="Description"
+              border-variant="secondary"
+              header-bg-variant="secondary"
+              header-text-variant="white"
+            >{{ party.description }}</b-card>
+          </b-col>
+        </b-row>
+      </div>
+      <hr />
+      <div class="text-right mb-5">
+        <b-button variant="secondary" :href="'../search'">Retour</b-button>
       </div>
 
       <!-- <b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ party }}</pre>
-      </b-card>  -->
+      </b-card>-->
     </div>
   </div>
 </template>
@@ -179,10 +183,21 @@ export default {
         places: this.form.participants
       });
 
-      if(result.data.result){
-        console.log("un succes")
+      if (result.data.result) {
+        this.$root.$bvToast.toast("Soirée réservée", {
+          title: `Super !`,
+          variant: "success",
+          solid: true
+        });
+        this.$bvModal.hide("modal-confirm");
+        this.$router.push("/dashboard");
       } else {
-        console.log("un rate")
+        this.$root.$bvToast.toast("Veuillez réessayer plus tard", {
+          title: `Erreur !`,
+          variant: "warning",
+          solid: true
+        });
+        this.$bvModal.hide("modal-confirm");
       }
     }
   },
