@@ -38,14 +38,14 @@
       </b-form>
       <hr />
 
-      <b-card-group deck class="mb-4">
+      <b-card-group deck>
         <div class="row">
           <div
             class="col-sm-6 col-lg-4 min-width"
             v-for="(item, i) in items"
             :key="`${i}-${item.id_account}`"
           >
-            <b-card :img-src="item.picture" img-alt="party-food" img-top>
+            <b-card :img-src="item.picture" img-alt="party-food" class="mb-4" img-top>
               <b-card-text>
                 <strong>{{ item.party_name }}</strong>
               </b-card-text>
@@ -76,7 +76,8 @@
 </template>
 
 <script>
-import partyService from "@/services/PartyService.js";
+import partyService from "@/services/PartyService.js"
+import util from '~/assets/js/util'
 
 export default {
   middleware: "auth-part",
@@ -133,7 +134,7 @@ function decodeImage(data) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].picture != null) {
       if (data[i].picture.data.length != 0) {
-        var imgsrc = String.fromCharCode.apply(null, data[i].picture.data);
+        var imgsrc = util.Utf8ArrayToStr(data[i].picture.data);
         data[i].picture = imgsrc;
       } else {
         data[i].picture = "/images/party-food1.jpg";
@@ -151,6 +152,9 @@ function getMinDate() {
   //minDate.setDate(minDate.getDate() + 3); -> A remmetre si on veut autoriser l'ajout seulement 3 jours après aujourd'hui
   return minDate;
 }
+
+
+
 </script>
 
 <style scoped>

@@ -161,7 +161,9 @@
 </template>
 
 <script>
-import partyService from "@/services/PartyService.js";
+import partyService from "@/services/PartyService.js"
+import util from '~/assets/js/util'
+
 export default {
   middleware: "auth-part",
   data() {
@@ -224,7 +226,7 @@ export default {
 function decodeImage(data) {
   if (data.picture != null) {
     if (data.picture.data.length != 0) {
-      var imgsrc = String.fromCharCode.apply(null, data.picture.data);
+      var imgsrc = util.Utf8ArrayToStr(data.picture.data);
       data.picture = imgsrc;
     } else {
       data.picture = "/images/party-food1.jpg";
