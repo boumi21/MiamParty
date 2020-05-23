@@ -242,9 +242,13 @@ export default {
     },
 
     async convertImage() {
-      const file = this.form.image;
-      let result = await toBase64(file);
-      this.form.dataImage = result;
+      const file = this.form.image
+      let result = ""
+      if(file){
+        result = await toBase64(file);       
+      }
+      this.form.dataImage = result;  
+      
     },
 
     async fillAddress() {
