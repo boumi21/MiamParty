@@ -164,7 +164,8 @@ function getPartiesInc(req, callback) {
   'WHERE party.id_party IN ' +
   '(SELECT reservation.id_party FROM reservation ' +
   'WHERE reservation.id_account = ' + mysql.escape(req.body.id_account) + ') ' +
-  'AND party.id_status = 1'
+  'AND party.id_status != 3 ' +
+  'AND party.party_date > SYSDATE()'
   console.log("req getPartiesInc:")
   console.log(getPartyInc)
   connection.query(getPartyInc, function(err, result) {
@@ -202,7 +203,8 @@ function getPartiesOwn(req, callback) {
   let getPartiesOwn = 
   'SELECT * FROM party ' +
   'WHERE party.id_account = ' + mysql.escape(req.body.id_account) + ' ' +
-  'AND party.id_status = 1'
+  'AND party.id_status != 3 ' +
+  'AND party.party_date > SYSDATE()'
   console.log("req getPartiesOwn:")
   console.log(getPartiesOwn)
   connection.query(getPartiesOwn, function(err, result) {
@@ -241,7 +243,8 @@ function getPartiesEnd(req, callback) {
   'WHERE party.id_party IN ' +
   '(SELECT reservation.id_party FROM reservation ' +
   'WHERE reservation.id_account = ' + mysql.escape(req.body.id_account) + ') ' +
-  'AND party.id_status = 2'
+  'AND party.id_status != 3 ' +
+  'AND party.party_date <= SYSDATE()'
   console.log("req getPartiesInc:")
   console.log(getPartyInc)
   connection.query(getPartyInc, function(err, result) {

@@ -108,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `mark` (
   `id_account` smallint(6) NOT NULL,
   `id_party` smallint(6) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
+  `mark` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`id_mark`),
   KEY `fk_mark_account` (`id_account`),
   KEY `fk_mark_party` (`id_party`)
