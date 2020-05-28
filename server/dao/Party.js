@@ -158,11 +158,154 @@ function bookParty(req, callback) {
     });
 }
 
+function getPartiesInc(req, callback) {
+  let getPartyInc = 
+  'SELECT * FROM party ' +
+  'WHERE party.id_party IN ' +
+  '(SELECT reservation.id_party FROM reservation ' +
+  'WHERE reservation.id_account = ' + mysql.escape(req.body.id_account) + ') ' +
+  'AND party.id_status = 1'
+  console.log("req getPartiesInc:")
+  console.log(getPartyInc)
+  connection.query(getPartyInc, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function cancelParty(req, callback) {
+  let cancelParty = 
+  'DELETE FROM reservation ' +
+  'WHERE reservation.id_party = ' + mysql.escape(req.body.id_party) + ' ' +
+  'AND reservation.id_account = ' + mysql.escape(req.body.id_account)
+  console.log("req cancelParty")
+  console.log(cancelParty)
+  connection.query(cancelParty, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function getPartiesOwn(req, callback) {
+  let getPartiesOwn = 
+  'SELECT * FROM party ' +
+  'WHERE party.id_account = ' + mysql.escape(req.body.id_account) + ' ' +
+  'AND party.id_status = 1'
+  console.log("req getPartiesOwn:")
+  console.log(getPartiesOwn)
+  connection.query(getPartiesOwn, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function deleteParty(req, callback) {
+  let deleteParty = 
+  'UPDATE party SET id_status = 3 ' +
+  'WHERE party.id_party = ' + mysql.escape(req.body.id_party)
+  console.log("req deleteParty")
+  console.log(deleteParty)
+  connection.query(deleteParty, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function getPartiesEnd(req, callback) {
+  let getPartyInc = 
+  'SELECT * FROM party ' +
+  'WHERE party.id_party IN ' +
+  '(SELECT reservation.id_party FROM reservation ' +
+  'WHERE reservation.id_account = ' + mysql.escape(req.body.id_account) + ') ' +
+  'AND party.id_status = 2'
+  console.log("req getPartiesInc:")
+  console.log(getPartyInc)
+  connection.query(getPartyInc, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function setPartyMark(req, callback) {
+  let setPartyMark =
+  'INSERT INTO mark ' +
+  '(id_account, id_party, mark, description) VALUES ?'
+  let value = [[req.body.id_account, req.body.id_party, req.body.mark, req.body.description ]]
+
+  connection.query(setPartyMark, [value], function (err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
+function getUserMark(req, callback) {
+  let getUserMark =
+  'SELECT * FROM mark ' +
+  'WHERE mark.id_account = ' + mysql.escape(req.body.id_account) + ' ' +
+  'AND mark.id_party = ' + mysql.escape(req.body.id_party)
+  console.log("req getusermark:")
+  console.log(getUserMark)
+  connection.query(getUserMark, function (err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log("getUserMark result:")
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
 module.exports = {
   createParty,
   getParties,
   getPartyType,
   getPartyPro,
   getPartyPart,
-  bookParty
+  bookParty,
+  getPartiesInc,
+  deleteParty,
+  getPartiesOwn,
+  cancelParty,
+  getPartiesEnd,
+  setPartyMark,
+  getUserMark
 };

@@ -9,7 +9,7 @@
         <b-card img-src="/images/party-food1.jpg" img-alt="party-food" img-top>
           <b-card-text>Préparez vos soirées qui arrivent, remémorez-vous celles du passé et plus encore !</b-card-text>
           <template v-slot:footer>
-            <b-button block pill variant="outline-primary">Gérez vos soirées</b-button>
+            <b-button block pill variant="outline-primary" href="/party/management">Gérez vos soirées</b-button>
           </template>
         </b-card>
 
@@ -28,7 +28,7 @@
         <b-card img-src="/images/party-food3.jpg" img-alt="Image" img-top>
           <b-card-text>
             Vous vous sentez l'âme d'un cordon bleu et êtes prêt à accueillir ?
-            <br />N'attendez plus pour créez
+            <br />N'attendez plus pour créer
             <b>votre</b> soirée !
           </b-card-text>
           <template v-slot:footer>
