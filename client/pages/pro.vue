@@ -1,12 +1,16 @@
 <template>
   <div class="container">
     <div>
+      <LogoMiam class="mt-4 mb-4" />
+      <h3 class="info">
+        Inscrivez-vous pour découvrir toutes nos fonctionnalités
+      </h3>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group id="input-group-name" label="" label-for="input-name">
           <b-form-input
             id="input-name"
             v-model="form.name"
-            placeholder="Nom de l'entreprise"
+            placeholder="Nom du restaurant"
           ></b-form-input>
           <small id="error-name"></small>
         </b-form-group>
@@ -49,7 +53,7 @@
         <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
       </b-form>
 
-      <div class="links">
+      <div class="links mb-2">
         Vous possédez déjà un compte ?
         <a
           href="/login"
@@ -57,19 +61,19 @@
         S'identifier
         </a>
       </div>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
     </div>
   </div>
 </template>
 
 <script>
+import LogoMiam from "~/components/LogoMiam.vue"
 import formValidate from "@/assistant/FormValidate.js"
 import authService from "@/services/AuthService.js"
 
 export default {  
-
+components: {
+    LogoMiam
+  },
   data() {
      
     return {

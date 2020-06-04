@@ -4,7 +4,7 @@
             <h1 class="title">
             </h1>
             <h2 class="subtitle">
-                Bienvenue !
+                Bienvenue sur <span class="brand">MiamParty</span> !
             </h2>
             <b-card border-variant="primary" header-bg-variant="primary" header-text-variant="white" header="Créer un compte pour..." style="max-width: 35rem;" align="center" class="mx-auto">
                 <b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -14,13 +14,18 @@
                     <b-button type="submit" variant="primary" class="w-25">Valider</b-button>
                 </b-form>
             </b-card>
+            <LogoMiam class="mt-4 mb-4" />
         </div>
     </div>
 </template>
 
 <script>
+import LogoMiam from "~/components/LogoMiam.vue"
 
 export default {
+  components: {
+    LogoMiam
+  },
    data() {
      
     return {
@@ -60,6 +65,12 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+    .brand{
+        font-family: 'Carter One', cursive;
+    }
+
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
