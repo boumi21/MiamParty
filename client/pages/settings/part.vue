@@ -158,11 +158,13 @@
             <b-button type="submit" id="submit-btn" variant="primary" class="mt-3" :disabled=false>Modifier</b-button>
             <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
         </b-form>
+        <hr />
+      <div class="text-right mb-5">
+        <b-button variant="secondary" :href="'../dashboard'">Retour</b-button>
+      </div>
       
-    <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-    </b-card>
         </div>
+        
     </div>
 </template>
 

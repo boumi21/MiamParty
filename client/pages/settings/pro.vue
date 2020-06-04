@@ -4,7 +4,7 @@
         <h1 class="mt-4">Informations du compte</h1>
         <hr />
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-            <b-card variant="light" header="Informations de l'organisation" style="max-width: 35rem;" align="center" class="mx-auto">
+            <b-card variant="light" header="Informations du restaurant" style="max-width: 35rem;" align="center" class="mx-auto">
                 <b-form-group id="input-group-name" label="Nom" label-for="input-name">
                 <b-form-input
                     id="input-name"
@@ -128,9 +128,10 @@
             <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
         </b-form>
       
-    <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-    </b-card>
+        <hr />
+        <div class="text-right mb-5">
+            <b-button variant="secondary" :href="'../dashboard'">Retour</b-button>
+        </div>
         </div>
     </div>
 </template>
