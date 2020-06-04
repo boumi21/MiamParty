@@ -167,6 +167,11 @@ let validate = await formValidate.validateSignUpPart(document, this.form)
           password: this.form.password
         } })
 
+        this.$root.$bvToast.toast("Inscription éffectuée", {
+          title: `Bienvenue !`,
+          variant: "success",
+          solid: true
+        });
         this.$router.push("/dashboard")
 
 

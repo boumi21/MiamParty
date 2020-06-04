@@ -297,6 +297,40 @@ function getUserMark(req, callback) {
   })
 }
 
+
+function getCountParties(req, callback){
+
+  let countParties = null
+
+  if(req.body.isPart){
+    countParties =
+    'SELECT COUNT(*) as "count" FROM ' +
+    '( SELECT * FROM party ' +
+    'WHERE party.id_party IN ' +
+    '(SELECT reservation.id_party FROM reservation ' +
+    'WHERE reservation.id_account = ' + mysql.escape(req.body.id_account) + ') ' +
+    'AND party.id_status != 3 ' +
+    'AND party.party_date > SYSDATE() ) as subquery'   
+  } else {
+    countParties =
+    'SELECT COUNT(*) as "count" FROM ' +
+    '( SELECT * FROM party ' +
+    'WHERE party.id_account = ' + mysql.escape(req.body.id_account) + ' ' +
+    'AND party.id_status != 3 ' +
+    'AND party.party_date > SYSDATE() ) as subquery'
+  }
+
+  connection.query(countParties, function(err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      callback(null, result)
+    }
+  })
+}
+
 module.exports = {
   createParty,
   getParties,
@@ -310,5 +344,6 @@ module.exports = {
   cancelParty,
   getPartiesEnd,
   setPartyMark,
-  getUserMark
+  getUserMark,
+  getCountParties
 };

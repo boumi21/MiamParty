@@ -51,5 +51,9 @@ setPartyMark(credentials){
 
 getUserMark(credentials){
   return api().post("party/getUserMark", credentials)
+},
+
+getCountParties(credentials){
+  return api().post("party/getCountParties", credentials)
 }
 };
