@@ -2,203 +2,248 @@
   <div class="container">
     <div>
       <b-card no-body>
-    <b-tabs pills card>
-      <b-tab v-if="this.$auth.user.isPro == false" title="Soirées à venir" active>
-      <h1 class="display-2" v-if="itemsInc.length <= 0" >Aucune soirée à afficher </h1>
-      <div class="text-center" v-if="itemsInc[0] === true">
-        <b-spinner variant="primary" label="Text Centered"></b-spinner>
+        <b-tabs pills card>
+          <b-tab v-if="this.$auth.user.isPro == false" title="Soirées à venir" active>
+            <h1 class="display-2" v-if="itemsInc.length <= 0">Aucune soirée à afficher</h1>
+            <div class="text-center" v-if="itemsInc[0] === true">
+              <b-spinner variant="primary" label="Text Centered"></b-spinner>
+            </div>
+
+            <b-card-group deck>
+              <div class="row">
+                <div
+                  class="col-sm-6 col-lg-4 min-width"
+                  v-for="(itemInc, i) in itemsInc"
+                  :key="`${i}-${itemInc.id_account}`"
+                >
+                  <b-card :img-src="itemInc.picture" img-alt="party-food" class="mb-4" img-top>
+                    <b-card-text>
+                      <strong>{{ itemInc.party_name }}</strong>
+                    </b-card-text>
+                    <b-card-text>{{ itemInc.date }}</b-card-text>
+                    <b-badge v-if="itemInc.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
+                    <b-badge v-else pill variant="success">Pro</b-badge>
+                    <b-card-text>
+                      <em>{{ itemInc.firstname }}</em>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <b-button
+                        block
+                        pill
+                        variant="outline-primary"
+                        :href="`./part/book/${itemInc.id_party}`"
+                      >Détails</b-button>
+                      <b-button
+                        block
+                        pill
+                        variant="outline-danger"
+                        v-b-modal.modal-confirm-cancel-reservation
+                      >Annuler</b-button>
+<b-modal
+                        centered
+                        hide-footer
+                        id="modal-confirm-cancel-reservation"
+                        title="Confirmation annulation réservation"
+                      >
+                        <p>Voulez-vous annuler votre réservation ?</p>
+                        <hr />
+                        <div class="text-right">
+                          <b-button
+                            type="submit"
+                            variant="danger"
+                            @click="cancelParty(itemInc.id_party)"
+                          >Oui, Annuler</b-button>
+                          <b-button
+                            variant="secondary"
+                            @click="$bvModal.hide('modal-confirm-cancel-reservation')"
+                          >Non, Retour</b-button>
+                        </div>
+                      </b-modal>
+
+                    </template>
+                  </b-card>
+                </div>
+              </div>
+            </b-card-group>
+          </b-tab>
+
+          <b-tab title="Mes soirées">
+            <h1 class="display-2" v-if="itemsOwn.length <= 0">Aucune soirée à afficher</h1>
+            <div class="text-center" v-if="itemsOwn[0] === true">
+              <b-spinner variant="primary" label="Text Centered"></b-spinner>
+            </div>
+
+            <b-card-group deck>
+              <div class="row">
+                <div
+                  class="col-sm-6 col-lg-4 min-width"
+                  v-for="(itemOwn, i) in itemsOwn"
+                  :key="`${i}-${itemOwn.id_account}`"
+                >
+                  <b-card :img-src="itemOwn.picture" img-alt="party-food" class="mb-4" img-top>
+                    <b-card-text>
+                      <strong>{{ itemOwn.party_name }}</strong>
+                    </b-card-text>
+                    <b-card-text>{{ itemOwn.date }}</b-card-text>
+                    <b-badge v-if="itemOwn.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
+                    <b-badge v-else pill variant="success">Pro</b-badge>
+                    <b-card-text>
+                      <em>{{ itemOwn.firstname }}</em>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <b-button
+                        block
+                        pill
+                        variant="outline-primary"
+                        :href="`./part/book/${itemOwn.id_party}`"
+                      >Détails</b-button>
+                      <b-button
+                        block
+                        v-b-modal.modal-confirm
+                        pill
+                        variant="outline-danger"
+                      >Supprimer</b-button>
+
+                      <b-modal
+                        centered
+                        hide-footer
+                        id="modal-confirm"
+                        title="Confirmation suppression"
+                      >
+                        <p>Voulez-vous supprimer cette soirée ?</p>
+                        <hr />
+                        <div class="text-right">
+                          <b-button
+                            type="submit"
+                            variant="danger"
+                            @click="deleteParty(itemOwn.id_party)"
+                          >Oui, Supprimer</b-button>
+                          <b-button
+                            variant="secondary"
+                            @click="$bvModal.hide('modal-confirm')"
+                          >Non, Retour</b-button>
+                        </div>
+                      </b-modal>
+
+                    </template>
+                  </b-card>
+                </div>
+              </div>
+            </b-card-group>
+          </b-tab>
+
+          <b-tab title="Soirées terminées">
+            <h1 class="display-2" v-if="itemsEnd.length <= 0">Aucune soirée à afficher</h1>
+            <div class="text-center" v-if="itemsEnd[0] === true">
+              <b-spinner variant="primary" label="Text Centered"></b-spinner>
+            </div>
+
+            <b-card-group deck>
+              <div class="row">
+                <div
+                  class="col-sm-6 col-lg-4 min-width"
+                  v-for="(itemEnd, i) in itemsEnd"
+                  :key="`${i}-${itemEnd.id_account}`"
+                >
+                  <b-card :img-src="itemEnd.picture" img-alt="party-food" class="mb-4" img-top>
+                    <b-card-text>
+                      <strong>{{ itemEnd.party_name }}</strong>
+                    </b-card-text>
+                    <b-card-text>{{ itemEnd.date }}</b-card-text>
+                    <b-badge v-if="itemEnd.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
+                    <b-badge v-else pill variant="success">Pro</b-badge>
+                    <b-card-text>
+                      <em>{{ itemEnd.firstname }}</em>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <b-button
+                        block
+                        pill
+                        variant="outline-primary"
+                        :href="`./part/book/${itemEnd.id_party}`"
+                      >Détails</b-button>
+                      <b-button
+                        block
+                        pill
+                        variant="outline-danger"
+                        :href="`./mark/${itemEnd.id_party}`"
+                      >Noter</b-button>
+                    </template>
+                  </b-card>
+                </div>
+              </div>
+            </b-card-group>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+      <hr />
+      <div class="text-right mb-5">
+        <b-button variant="secondary" :href="'../dashboard'">Retour</b-button>
       </div>
-
-      <b-card-group deck>
-        <div class="row">
-          <div
-            class="col-sm-6 col-lg-4 min-width"
-            v-for="(itemInc, i) in itemsInc"
-            :key="`${i}-${itemInc.id_account}`"
-          >
-            <b-card :img-src="itemInc.picture" img-alt="party-food" class="mb-4" img-top>
-              <b-card-text>
-                <strong>{{ itemInc.party_name }}</strong>
-              </b-card-text>
-              <b-card-text>{{ itemInc.date }}</b-card-text>
-              <b-badge v-if="itemInc.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
-              <b-badge v-else pill variant="success">Pro</b-badge>
-              <b-card-text>
-                <em>{{ itemInc.firstname }}</em>
-              </b-card-text>
-              <template v-slot:footer>
-                <b-button
-                  block
-                  pill
-                  variant="outline-primary"
-                  :href="`./part/book/${itemInc.id_party}`"
-                >Détails</b-button>
-                <b-button
-                  block
-                  pill
-                  variant="outline-danger"
-                  @click="cancelParty(itemInc.id_party)"
-                >Annuler</b-button>
-              </template>
-            </b-card>
-          </div>
-        </div>
-      </b-card-group>
-      </b-tab>
-
-      <b-tab title="Mes soirées">
-      <h1 class="display-2" v-if="itemsOwn.length <= 0" >Aucune soirée à afficher </h1>
-      <div class="text-center" v-if="itemsOwn[0] === true">
-        <b-spinner variant="primary" label="Text Centered"></b-spinner>
-      </div>
-
-      <b-card-group deck>
-        <div class="row">
-          <div
-            class="col-sm-6 col-lg-4 min-width"
-            v-for="(itemOwn, i) in itemsOwn"
-            :key="`${i}-${itemOwn.id_account}`"
-          >
-            <b-card :img-src="itemOwn.picture" img-alt="party-food" class="mb-4" img-top>
-              <b-card-text>
-                <strong>{{ itemOwn.party_name }}</strong>
-              </b-card-text>
-              <b-card-text>{{ itemOwn.date }}</b-card-text>
-              <b-badge v-if="itemOwn.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
-              <b-badge v-else pill variant="success">Pro</b-badge>
-              <b-card-text>
-                <em>{{ itemOwn.firstname }}</em>
-              </b-card-text>
-              <template v-slot:footer>
-                <b-button
-                  block
-                  pill
-                  variant="outline-primary"
-                  :href="`./part/book/${itemOwn.id_party}`"
-                >Détails</b-button>
-                <b-button
-                  block
-                  pill
-                  variant="outline-danger"
-                  @click="deleteParty(itemOwn.id_party)"
-                >Supprimer</b-button>
-              </template>
-            </b-card>
-          </div>
-        </div>
-      </b-card-group>
-      </b-tab>
-
-
-      <b-tab title="Soirées terminées">
-      <h1 class="display-2" v-if="itemsEnd.length <= 0" >Aucune soirée à afficher </h1>
-      <div class="text-center" v-if="itemsEnd[0] === true">
-        <b-spinner variant="primary" label="Text Centered"></b-spinner>
-      </div>
-
-      <b-card-group deck>
-        <div class="row">
-          <div
-            class="col-sm-6 col-lg-4 min-width"
-            v-for="(itemEnd, i) in itemsEnd"
-            :key="`${i}-${itemEnd.id_account}`"
-          >
-            <b-card :img-src="itemEnd.picture" img-alt="party-food" class="mb-4" img-top>
-              <b-card-text>
-                <strong>{{ itemEnd.party_name }}</strong>
-              </b-card-text>
-              <b-card-text>{{ itemEnd.date }}</b-card-text>
-              <b-badge v-if="itemEnd.isPartyPro == 0" pill variant="primary">Particulier</b-badge>
-              <b-badge v-else pill variant="success">Pro</b-badge>
-              <b-card-text>
-                <em>{{ itemEnd.firstname }}</em>
-              </b-card-text>
-              <template v-slot:footer>
-                <b-button
-                  block
-                  pill
-                  variant="outline-primary"
-                  :href="`./part/book/${itemEnd.id_party}`"
-                >Détails</b-button>
-                <b-button
-                  block
-                  pill
-                  variant="outline-danger"
-                  :href="`./mark/${itemEnd.id_party}`"
-                >Noter</b-button>
-              </template>
-            </b-card>
-          </div>
-        </div>
-      </b-card-group>
-      </b-tab>
-      </b-tabs>
-  </b-card>
     </div>
   </div>
 </template>
 
 <script>
-import partyService from "@/services/PartyService.js"
-import util from '~/assets/js/util'
+import partyService from "@/services/PartyService.js";
+import util from "~/assets/js/util";
 
 export default {
-  middleware: "auth-part",
+  middleware: "auth",
 
-  mounted: function () {
-    this.$nextTick(async function () {
-        let result = await partyService.getPartiesInc({
-            id_account: this.$auth.user.id
-        })
-        console.log(result.data)
-        decodeImage(result.data)
-        this.itemsInc = result.data
+  mounted: function() {
+    this.$nextTick(async function() {
+      let result = await partyService.getPartiesInc({
+        id_account: this.$auth.user.id
+      });
+      console.log(result.data);
+      decodeImage(result.data);
+      this.itemsInc = result.data;
 
-        let result2 = await partyService.getPartiesOwn({
-            id_account: this.$auth.user.id
-        })
-        console.log(result2.data)
-        decodeImage(result2.data)
-        this.itemsOwn = result2.data
+      let result2 = await partyService.getPartiesOwn({
+        id_account: this.$auth.user.id
+      });
+      console.log(result2.data);
+      decodeImage(result2.data);
+      this.itemsOwn = result2.data;
 
-         let result3 = await partyService.getPartiesEnd({
-            id_account: this.$auth.user.id
-        })
-        console.log(result3.data)
-        decodeImage(result3.data)
-        this.itemsEnd = result3.data
-        
-    })
-    },
+      let result3 = await partyService.getPartiesEnd({
+        id_account: this.$auth.user.id
+      });
+      console.log(result3.data);
+      decodeImage(result3.data);
+      this.itemsEnd = result3.data;
+    });
+  },
 
   async asyncData() {},
 
   data() {
     return {
       itemsInc: [],
-      itemsOwn:[],
+      itemsOwn: [],
       itemsEnd: []
     };
   },
 
   methods: {
     deleteParty: async function(id_party) {
-        console.log("func deleteParty")
-        console.log(id_party)
-        let result = await partyService.deleteParty({
-            id_party: id_party
-        })
-        location.reload()
+      console.log("func deleteParty");
+      console.log(id_party);
+      let result = await partyService.deleteParty({
+        id_party: id_party
+      });
+      location.reload();
     },
 
-   cancelParty: async function(id_party) {
-        console.log("func cancelParty")
-        console.log(id_party)
-        let result = await partyService.cancelParty({
-            id_party: id_party,
-            id_account: this.$auth.user.id
-        })
-        location.reload()
+    cancelParty: async function(id_party) {
+      console.log("func cancelParty");
+      console.log(id_party);
+      let result = await partyService.cancelParty({
+        id_party: id_party,
+        id_account: this.$auth.user.id
+      });
+      location.reload();
     }
   }
 };
@@ -225,9 +270,6 @@ function getMinDate() {
   //minDate.setDate(minDate.getDate() + 3); -> A remmetre si on veut autoriser l'ajout seulement 3 jours après aujourd'hui
   return minDate;
 }
-
-
-
 </script>
 
 <style scoped>

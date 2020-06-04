@@ -119,10 +119,6 @@
       <div class="text-right mb-5">
         <b-button variant="secondary" :href="'../search'">Retour</b-button>
       </div>
-
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
     </div>
   </div>
 </template>
@@ -150,6 +146,11 @@ export default {
 
     let result = await partyService.setPartyMark(this.form)
     location.reload()
+        this.$root.$bvToast.toast("Votre note a bien été enregistrée", {
+          title: `Vous avez noté la soirée !`,
+          variant: "success",
+          solid: true
+    });
     }
   },
   async mounted() {
