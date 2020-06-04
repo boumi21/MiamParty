@@ -1,49 +1,39 @@
 <template>
   <div class="container">
     <div>
-      <logo />
-      <h1 class="title">
+
+      <div>
+  <b-carousel
+    id="carousel-fade"
+    style="text-shadow: 0px 0px 2px #000"
+    fade
+    indicators
+    img-width="1344"
+    img-height="896"
+  >
+    <b-carousel-slide
+      caption="Convivialité"
+      img-src="/images/miam1.jpg"
+    ></b-carousel-slide>
+    <b-carousel-slide
+      caption="Partage"
+      img-src="/images/miam2.jpg"
+    ></b-carousel-slide>
+    <b-carousel-slide
+      caption="Saveurs"
+      img-src="/images/miam3.jpg"
+    ></b-carousel-slide>
+  </b-carousel>
+</div>
+
+      <h1 id="brand" class="title">
         Miam Party
       </h1>
-      <h2 class="subtitle">
-        Bienvenue !
-      </h2>
-      <h3 class="info">
-        Ceci sera la page d'accueil du site :)
-      </h3>
-      <b-form @submit="onSubmit" id="submit-group" v-if="show" method="post">
-
-        <b-form-group id="input-group-login" class="input" label="" label-for="input-login">
-          <b-form-input id="input-login" v-model="form.login" placeholder="E-mail ou numéro de mobile"></b-form-input>
-          <small id="error-login" class=""></small>
-        </b-form-group>
-
-        <b-form-group id="input-group-password" class="input" label="" label-for="input-password" >
-          <b-form-input
-            id="input-password"
-            v-model="form.password"
-            type="password"
-            placeholder="Mot de passe"
-          ></b-form-input>
-          <small id="error-password"></small>
-        </b-form-group>
-
-        <b-button type="submit" variant="primary">Se connecter</b-button>
-        <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
-      </b-form>
-      <div class="links">
-        Envie de nous rejoindre ?
-        <a
-          href="/register"
-        >
-        Créer un compte
-        </a>
+      <b-button pill size="lg" variant="primary" href="/login">Se connecter</b-button>
+      <b-button pill size="lg" variant="success" href="/register">S'inscrire</b-button>
       </div>
-      <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>
-    </div>
-  </div>
+    
+</div>
 </template>
 
 <script>
@@ -100,7 +90,13 @@ import formValidate from "@/assistant/FormValidate.js"
 
 </script>
 
-<style>
+<style scoped>
+
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+    #brand{
+        font-family: 'Carter One', cursive;
+    }
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
