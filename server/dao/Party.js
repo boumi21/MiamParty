@@ -331,6 +331,38 @@ function getCountParties(req, callback){
   })
 }
 
+function getReview(req, callback) {
+  let getReview =
+  'SELECT mark.id_mark, mark.id_account, mark.mark, mark.description, particular.firstname as "name" FROM mark, particular, account ' +
+  'WHERE mark.id_party = ' + mysql.escape(req.body.id_party) + ' ' +
+  'AND mark.id_account = account.id_account ' +
+  'AND account.id_account_type = 1 ' +
+  'AND account.id_account = particular.id_account ' +
+  'AND account.id_account = mark.id_account ' +
+  'UNION ' +
+  'SELECT mark.id_mark, mark.id_account, mark.mark, mark.description, CONCAT(professional.name, " (pro)") as "name" FROM mark, professional, account ' +
+  'WHERE mark.id_party = ' + mysql.escape(req.body.id_party) + ' ' +
+  'AND mark.id_account = account.id_account ' +
+  'AND account.id_account_type = 2 ' +
+  'AND account.id_account = professional.id_account ' +
+  'AND account.id_account = mark.id_account ' +
+  'ORDER BY id_mark ASC'
+
+  console.log("req getreview:")
+  console.log(getReview)
+  connection.query(getReview, function (err, result) {
+    if (err) {
+      console.log(err);
+      callback(err.sqlMessage, null);
+    }
+    else {
+      console.log("getReview result:")
+      console.log(result)
+      callback(null, result)
+    }
+  })
+}
+
 module.exports = {
   createParty,
   getParties,
@@ -345,5 +377,6 @@ module.exports = {
   getPartiesEnd,
   setPartyMark,
   getUserMark,
-  getCountParties
+  getCountParties,
+  getReview
 };

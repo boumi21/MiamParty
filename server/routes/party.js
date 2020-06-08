@@ -191,4 +191,17 @@ router.post("/getCountParties", function(req, res) {
   })
 })
 
+router.post("/getReview", function(req, res) {
+  party.getReview(req, function callback(err, result) {
+    if (err != null) {
+      res.send({
+        error: err
+      })
+    }
+    else {
+      res.send(result)
+    }
+  })
+})
+
 module.exports = router;
