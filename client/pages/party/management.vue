@@ -95,7 +95,7 @@
                         block
                         pill
                         variant="outline-primary"
-                        :href="`./part/book/${itemOwn.id_party}`"
+                        :href="`./view/${itemOwn.id_party}`"
                       >Détails</b-button>
                       <b-button
                         block
@@ -160,7 +160,7 @@
                         block
                         pill
                         variant="outline-primary"
-                        :href="`./part/book/${itemEnd.id_party}`"
+                        :href="`./closed/${itemEnd.id_party}`"
                       >Détails</b-button>
                       <b-button
                         block
