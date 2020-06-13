@@ -69,7 +69,7 @@
                 >
                 <b-card-group deck>
                   <div
-                    class="col-sm-6 col-lg-4 min-width"
+                    class="mb-4 w-100"
                     v-for="(itemEnd, i) in itemsEnd"
                     :key="`${i}-${itemEnd.id_mark}`">
                     <b-card
