@@ -103,7 +103,7 @@
           </b-col>
         </b-row>
 
-        <b-row>
+        <b-row class="mb-4">
           <b-col>
             <b-card
               v-if="party.description !== ''"
@@ -114,10 +114,36 @@
             >{{ party.description }}</b-card>
           </b-col>
         </b-row>
+        <b-row>
+              <b-col>
+                <b-card
+                header="Notation"
+                border-variant="success"
+                header-bg-variant="success"
+                header-text-variant="white"
+                >
+                <b-card-group deck>
+                  <div
+                    class="mb-4 w-100"
+                    v-for="(itemEnd, i) in itemsEnd"
+                    :key="`${i}-${itemEnd.id_mark}`">
+                    <b-card
+                      :header=itemEnd.name
+                      border-variant="success">
+                      <b-card-text>
+                        <strong>Note :</strong> {{ itemEnd.mark }}/5
+                      </b-card-text>
+                      <b-card-text><strong>Commentaire :</strong> {{ itemEnd.description }}</b-card-text>
+                    </b-card>
+                  </div>
+                </b-card-group>
+                </b-card>
+              </b-col>
+            </b-row>
       </div>
       <hr />
       <div class="text-right mb-5">
-        <b-button variant="secondary" :href="'../search'">Retour</b-button>
+        <b-button variant="secondary" :href="'../management'">Retour</b-button>
       </div>
     </div>
   </div>
@@ -137,7 +163,8 @@ export default {
         id_party: this.$route.params.id,
         description: null,
         mark: 0
-      }
+      },
+      itemsEnd: []
     };
   },
   methods: {
@@ -179,6 +206,12 @@ export default {
                 document.getElementById("submit").textContent = "Déjà notée"
         
     }
+
+    let review = await partyService.getReview({
+        id_party: this.$route.params.id,
+        id_account: this.$auth.user.id
+      });
+      this.itemsEnd = review.data;
   }
 };
 

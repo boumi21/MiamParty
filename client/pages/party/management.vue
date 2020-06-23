@@ -31,13 +31,13 @@
                         block
                         pill
                         variant="outline-primary"
-                        :href="`./part/book/${itemInc.id_party}`"
+                        :href="`./view/${itemInc.id_party}`"
                       >Détails</b-button>
                       <b-button
                         block
                         pill
                         variant="outline-danger"
-                        v-b-modal.modal-confirm-cancel-reservation
+                        @click="cancelParty(itemInc.id_party)"
                       >Annuler</b-button>
 <b-modal
                         centered
@@ -99,7 +99,7 @@
                       >Détails</b-button>
                       <b-button
                         block
-                        v-b-modal.modal-confirm
+                        @click="deleteParty(itemOwn.id_party)"
                         pill
                         variant="outline-danger"
                       >Supprimer</b-button>
@@ -156,12 +156,6 @@
                       <em>{{ itemEnd.firstname }}</em>
                     </b-card-text>
                     <template v-slot:footer>
-                      <b-button
-                        block
-                        pill
-                        variant="outline-primary"
-                        :href="`./closed/${itemEnd.id_party}`"
-                      >Détails</b-button>
                       <b-button
                         block
                         pill

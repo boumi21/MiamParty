@@ -102,7 +102,7 @@
       </div>
       <hr />
       <div class="text-right mb-5">
-        <b-button variant="secondary" :href="'../search'">Retour</b-button>
+        <b-button variant="secondary" :href="'../management'">Retour</b-button>
       </div>
     </div>
   </div>

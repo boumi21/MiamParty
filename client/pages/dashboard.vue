@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <div>
+    <div class="mb-4">
       <h1 class="mt-4" v-if="$auth.user.isPart">Bienvenue {{$auth.user.firstname}}</h1>
       <h1 class="mt-4" v-if="$auth.user.isPro">Bienvenue {{$auth.user.namePro}}</h1>
       <hr />
-      <h2 class="subtitle">Vous avez <b-badge href="/party/management/" variant="primary">{{numberParties}}</b-badge> soirée(s) à venir !</h2>
+      <h2 class="subtitle">Vous avez <b-badge href="/party/management" variant="primary">{{numberParties}}</b-badge> soirée(s) à venir !</h2>
 
       <b-card-group deck class="mb-4">
         <b-card img-src="/images/party-food1.jpg" img-alt="party-food" img-top>
