@@ -1,3 +1,7 @@
+/*
+  Connexion à la bdd MySQL
+*/
+
 const mysql = require("mysql");
 
 const connection = mysql.createConnection({
@@ -6,7 +10,7 @@ const connection = mysql.createConnection({
   password: "",
   database: "miampartytest",
 });
- 
+
 connection.connect(function (err) {
   if (err) {
     throw err;
@@ -17,12 +21,5 @@ connection.connect(function (err) {
 
 module.exports = {
   mysql,
-  connection
+  connection,
 };
-
-// connection.query('SELECT DESCRIPTION from account_type WHERE ID_ACCOUNT_TYPE = 1', function(err, rows, fields) {
-//   if (err) throw err;
-//   console.log('The solution is: ', rows[0]);
-// });
-
-//connection.end();
