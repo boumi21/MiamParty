@@ -1,90 +1,81 @@
-
 module.exports = {
-  mode: 'universal',
+  mode: "universal",
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: process.env.npm_package_name || "",
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        hid: "description",
+        name: "description",
+        content: process.env.npm_package_description || ""
+      }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
+   ** Customize the progress-bar color
+   */
+  loading: { color: "#fff" },
   /*
-  ** Global CSS
-  */
-  css: [
-  ],
+   ** Global CSS
+   */
+  css: [],
   /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-  ],
+   ** Plugins to load before mounting the App
+   */
+  plugins: [],
   /*
-  ** Nuxt.js dev-modules
-  */
-  buildModules: [
-    '@nuxtjs/fontawesome',
-  ],
+   ** Nuxt.js dev-modules
+   */
+  buildModules: ["@nuxtjs/fontawesome"],
 
   fontawesome: {
     icons: {
-      solid: true,
+      solid: true
     }
   },
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     // Doc: https://bootstrap-vue.js.org
-    'bootstrap-vue/nuxt',
-    '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    "bootstrap-vue/nuxt",
+    "@nuxtjs/axios",
+    "@nuxtjs/auth"
   ],
-  
 
+  // nuxt auth module
   auth: {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/user/login2', method: 'post', propertyName: 'token'},
-          user: { url: '/user/user', method: 'get', propertyName: 'user' },
+          login: { url: "/user/login2", method: "post", propertyName: "token" },
+          user: { url: "/user/user", method: "get", propertyName: "user" },
           logout: false
-        },
-        // tokenRequired: true,
-        // tokenType: 'bearer'
-        // autoFetchUser: true
+        }
       }
     }
   },
 
-
   axios: {
-    baseURL: 'http://localhost:8080'
+    baseURL: "http://localhost:8080"
   },
 
-
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     /*
-    ** You can extend webpack config here
-    */
-    extend (config, ctx) {
-    	config.node = {
-
-                fs: "empty"
-            };
+     ** You can extend webpack config here
+     */
+    extend(config, ctx) {
+      config.node = {
+        fs: "empty"
+      };
     }
   }
-}
+};
