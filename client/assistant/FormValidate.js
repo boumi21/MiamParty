@@ -183,8 +183,6 @@ function validateSignUpPart(document, form) {
     parseInt(elt.substring(0, elt.indexOf("-", 1) + 1)) < 1900 ||
     parseInt(elt.substring(0, elt.indexOf("-", 1) + 1)) > year
   ) {
-    console.log("date invalide");
-    console.log(parseInt(elt.substring(0, elt.indexOf("-", 1) + 1)));
     validate = setError(input, err, "Vous devez saisir une date valide.");
   } else {
     resetError(input, err);
@@ -308,7 +306,6 @@ function validateCreatePart(document, form) {
   elt = form.price;
 
   if (elt === null || elt === "") {
-    console.log("ah bon");
     validate = setError(
       input,
       err,

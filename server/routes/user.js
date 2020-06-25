@@ -13,14 +13,12 @@ router.post("/registerPart", function (req, res) {
         error: err,
       });
     } else {
-      console.log("Je renvoie le résultat");
       res.send(result);
     }
   });
 });
 
 router.post("/registerPro", function (req, res) {
-  console.log("je passe ici");
   account.signUpPro(req, function callback(err, result) {
     if (err != null) {
       res.send({

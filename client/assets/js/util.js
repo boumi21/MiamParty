@@ -1,6 +1,7 @@
 /*
   Fichier où l'on peut placer des fonctions qui peuvent ensuite être réutilisées dans plusieurs pages en important 'util'
-*/ 1;
+*/
+
 const util = {
   // Converti un tableau utf8 en String. Utile pour gérer les images avec la bdd
   Utf8ArrayToStr(array) {
