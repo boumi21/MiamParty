@@ -30,9 +30,6 @@
         Envie de nous rejoindre ?
         <a href="/register">Créer un compte</a>
       </div>
-      <!-- <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ form }}</pre>
-      </b-card>-->
     </div>
   </div>
 </template>
@@ -61,13 +58,14 @@ export default {
   methods: {
     async onSubmit(e) {
       e.preventDefault();
-
+      // Valide le formulaire
       let validate = await formValidate.validateSignIn(document, this.form);
       if (validate == false) {
         return;
       }
 
       try {
+        // Tente de loguer l'utilisateur
         let res = await this.$auth.loginWith("local", {
           data: {
             email: this.form.email,
