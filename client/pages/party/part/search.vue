@@ -35,11 +35,10 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary">Filtrer</b-button>
-        
       </b-form>
       <hr />
 
-      <h1 class="display-2" v-if="items.length <= 0" >Aucune soirée à afficher </h1>
+      <h1 class="display-2" v-if="items.length <= 0">Aucune soirée à afficher</h1>
       <div class="text-center" v-if="items[0] === true">
         <b-spinner variant="primary" label="Text Centered"></b-spinner>
       </div>
@@ -73,38 +72,30 @@
           </div>
         </div>
       </b-card-group>
-
-      <!-- <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ items }}</pre>
-      </b-card>-->
     </div>
   </div>
 </template>
 
 <script>
-import partyService from "@/services/PartyService.js"
-import util from '~/assets/js/util'
+import partyService from "@/services/PartyService.js";
+import util from "~/assets/js/util";
 
 export default {
   middleware: "auth-part",
 
-  mounted: function () {
-    this.$nextTick(async function () {
-        let result = await partyService.getParties({
-      isPartyPro: 3,
-      price: 1000,
-      date: null,
-      account: this.$auth.user.id
+  mounted: function() {
+    this.$nextTick(async function() {
+      // Récupère toutes les soirées
+      let result = await partyService.getParties({
+        isPartyPro: 3,
+        price: 1000,
+        date: null,
+        account: this.$auth.user.id
+      });
+      // Décode l'image de la bdd
+      decodeImage(result.data.error);
+      this.items = result.data.error;
     });
-    decodeImage(result.data.error);
-    console.log("alllloooo")
-    this.items = result.data.error
-    })
-    },
-
-  async asyncData() {
-
-    
   },
 
   data() {
@@ -122,6 +113,7 @@ export default {
     async onSubmit(e) {
       e.preventDefault();
 
+      // Récupère les soirées avec les filtres
       let result = await partyService.getParties({
         isPartyPro: this.form.status,
         price: this.form.price,
@@ -150,6 +142,7 @@ function decodeImage(data) {
   }
 }
 
+// Récupère la date minimum que l'on peut sélectioner pour le calendrier
 function getMinDate() {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -157,9 +150,6 @@ function getMinDate() {
   //minDate.setDate(minDate.getDate() + 3); -> A remmetre si on veut autoriser l'ajout seulement 3 jours après aujourd'hui
   return minDate;
 }
-
-
-
 </script>
 
 <style scoped>

@@ -4,14 +4,14 @@ var path = require("path");
 var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const bodyParser = require('body-parser')
-const jwt = require('express-jwt')
-const jsonwebtoken = require('jsonwebtoken')
+const bodyParser = require("body-parser");
+const jwt = require("express-jwt");
+const jsonwebtoken = require("jsonwebtoken");
 
 var indexRouter = require("./routes/index");
 var userRouter = require("./routes/user");
-var partRouter = require("./routes/part")
-var partyRouter = require("./routes/party")
+var partRouter = require("./routes/part");
+var partyRouter = require("./routes/party");
 
 var app = express();
 var db = require("./database/Database.js");
@@ -22,21 +22,10 @@ app.set("view engine", "jade");
 
 app.use(logger("dev"));
 app.use(cors());
-//app.use(express.json());
-//app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.json({limit: '10mb', extended: true}))
-app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
-
-//JWT middleware
-// app.use(
-//   jwt({
-//     secret: 'dummy'
-//   }).unless({
-//     path: ['/user/login2']
-//   })
-// )
+app.use(bodyParser.json({ limit: "10mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);

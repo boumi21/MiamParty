@@ -1,5 +1,5 @@
-import database from "../database/Database.js"
-import password from "./Password.js"
+import database from "../database/Database.js";
+import password from "./Password.js";
 
 exports.signUp = function (registrationInfo) {
   var salt = Password.getSalt(64);
@@ -25,7 +25,7 @@ exports.signUp = function (registrationInfo) {
     ", salt = " +
     salt +
     ", email = " +
-    registrationInfo.email
+    registrationInfo.email;
 
   database.query(insertParticular);
 };
@@ -36,7 +36,6 @@ exports.test = function (newTask, result) {
       console.log("error: ", err);
       result(err, null);
     } else {
-      console.log(res.insertId);
       result(null, res.insertId);
     }
   });
