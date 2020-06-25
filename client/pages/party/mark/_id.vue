@@ -62,41 +62,76 @@
             <b-row>
               <b-col>
                 <b-card
-                header="Notation"
-                border-variant="success"
-                header-bg-variant="success"
-                header-text-variant="white"
+                  header="Notation"
+                  border-variant="success"
+                  header-bg-variant="success"
+                  header-text-variant="white"
                 >
-
-                <div class="txt-center">
+                  <div class="txt-center">
                     <form @submit="onSubmit">
-                        <div class="form-group">
-                            <textarea class="form-control"
-                            placeholder="Entrez votre commentaire ici"
-                            v-model="form.description"
-                            maxlength="150"
-                            id="textArea"
-                            rows="3"></textarea>
-                        </div>
+                      <div class="form-group">
+                        <textarea
+                          class="form-control"
+                          placeholder="Entrez votre commentaire ici"
+                          v-model="form.description"
+                          maxlength="150"
+                          id="textArea"
+                          rows="3"
+                        ></textarea>
+                      </div>
 
-                        <div class="rating">
-                            <input id="star5" name="star" type="radio" value="5" v-model="form.mark" class="radio-btn hide" />
-                            <label for="star5">☆</label>
-                            <input id="star4" name="star" type="radio" value="4" v-model="form.mark" class="radio-btn hide" />
-                            <label for="star4">☆</label>
-                            <input id="star3" name="star" type="radio" value="3" v-model="form.mark" class="radio-btn hide" />
-                            <label for="star3">☆</label>
-                            <input id="star2" name="star" type="radio" value="2" v-model="form.mark" class="radio-btn hide" />
-                            <label for="star2">☆</label>
-                            <input id="star1" name="star" type="radio" value="1" v-model="form.mark" class="radio-btn hide" />
-                            <label for="star1">☆</label>
-                            <div class="clear"></div>
-                        </div>
+                      <div class="rating">
+                        <input
+                          id="star5"
+                          name="star"
+                          type="radio"
+                          value="5"
+                          v-model="form.mark"
+                          class="radio-btn hide"
+                        />
+                        <label for="star5">☆</label>
+                        <input
+                          id="star4"
+                          name="star"
+                          type="radio"
+                          value="4"
+                          v-model="form.mark"
+                          class="radio-btn hide"
+                        />
+                        <label for="star4">☆</label>
+                        <input
+                          id="star3"
+                          name="star"
+                          type="radio"
+                          value="3"
+                          v-model="form.mark"
+                          class="radio-btn hide"
+                        />
+                        <label for="star3">☆</label>
+                        <input
+                          id="star2"
+                          name="star"
+                          type="radio"
+                          value="2"
+                          v-model="form.mark"
+                          class="radio-btn hide"
+                        />
+                        <label for="star2">☆</label>
+                        <input
+                          id="star1"
+                          name="star"
+                          type="radio"
+                          value="1"
+                          v-model="form.mark"
+                          class="radio-btn hide"
+                        />
+                        <label for="star1">☆</label>
+                        <div class="clear"></div>
+                      </div>
 
-                         <b-button type="submit" id="submit" variant="primary">Envoyer</b-button>
+                      <b-button type="submit" id="submit" variant="primary">Envoyer</b-button>
                     </form>
-                </div>
-
+                  </div>
                 </b-card>
               </b-col>
             </b-row>
@@ -115,31 +150,34 @@
           </b-col>
         </b-row>
         <b-row>
-              <b-col>
-                <b-card
-                header="Notation"
-                border-variant="success"
-                header-bg-variant="success"
-                header-text-variant="white"
+          <b-col>
+            <b-card
+              header="Notation"
+              border-variant="success"
+              header-bg-variant="success"
+              header-text-variant="white"
+            >
+              <b-card-group deck>
+                <div
+                  class="mb-4 w-100"
+                  v-for="(itemEnd, i) in itemsEnd"
+                  :key="`${i}-${itemEnd.id_mark}`"
                 >
-                <b-card-group deck>
-                  <div
-                    class="mb-4 w-100"
-                    v-for="(itemEnd, i) in itemsEnd"
-                    :key="`${i}-${itemEnd.id_mark}`">
-                    <b-card
-                      :header=itemEnd.name
-                      border-variant="success">
-                      <b-card-text>
-                        <strong>Note :</strong> {{ itemEnd.mark }}/5
-                      </b-card-text>
-                      <b-card-text><strong>Commentaire :</strong> {{ itemEnd.description }}</b-card-text>
-                    </b-card>
-                  </div>
-                </b-card-group>
-                </b-card>
-              </b-col>
-            </b-row>
+                  <b-card :header="itemEnd.name" border-variant="success">
+                    <b-card-text>
+                      <strong>Note :</strong>
+                      {{ itemEnd.mark }}/5
+                    </b-card-text>
+                    <b-card-text>
+                      <strong>Commentaire :</strong>
+                      {{ itemEnd.description }}
+                    </b-card-text>
+                  </b-card>
+                </div>
+              </b-card-group>
+            </b-card>
+          </b-col>
+        </b-row>
       </div>
       <hr />
       <div class="text-right mb-5">
@@ -149,12 +187,15 @@
   </div>
 </template>
 
+
+
 <script>
-import partyService from "@/services/PartyService.js"
-import util from '~/assets/js/util'
+import partyService from "@/services/PartyService.js";
+import util from "~/assets/js/util";
 
 export default {
   middleware: "auth-part",
+
   data() {
     return {
       party: {},
@@ -169,22 +210,26 @@ export default {
   },
   methods: {
     async onSubmit(e) {
-    e.preventDefault();
+      e.preventDefault();
 
-    let result = await partyService.setPartyMark(this.form)
-    location.reload()
-        this.$root.$bvToast.toast("Votre note a bien été enregistrée", {
-          title: `Vous avez noté la soirée !`,
-          variant: "success",
-          solid: true
-    });
+      // Ajoute la note dans la bdd
+      let result = await partyService.setPartyMark(this.form);
+      location.reload();
+      this.$root.$bvToast.toast("Votre note a bien été enregistrée", {
+        title: `Vous avez noté la soirée !`,
+        variant: "success",
+        solid: true
+      });
     }
   },
+
   async mounted() {
     let resultParty;
+    // Récupération de l'id de la soirée
     let result = await partyService.getPartyType({
       partyId: this.$route.params.id
     });
+    // Vérifie si la soirée est pro ou non
     let isPartyPro = result.data[0].isPartyPro;
     if (isPartyPro == 0) {
       resultParty = await partyService.getPartyPart({
@@ -195,23 +240,23 @@ export default {
         partyId: this.$route.params.id
       });
     }
+    // Décode l'image de la bdd
     decodeImage(resultParty.data[0]);
     this.party = resultParty.data[0];
 
-    let rate = await partyService.getUserMark(this.form)
-    console.log("je passe la")
-    console.log(rate.data)
+    // Vérifie si la soirée est déjà notée
+    let rate = await partyService.getUserMark(this.form);
     if (rate.data.length != 0) {
-        document.getElementById("submit").disabled = "true"
-                document.getElementById("submit").textContent = "Déjà notée"
-        
+      document.getElementById("submit").disabled = "true";
+      document.getElementById("submit").textContent = "Déjà notée";
     }
 
+    // Récupère toutes les notes déjà attribuées
     let review = await partyService.getReview({
-        id_party: this.$route.params.id,
-        id_account: this.$auth.user.id
-      });
-      this.itemsEnd = review.data;
+      id_party: this.$route.params.id,
+      id_account: this.$auth.user.id
+    });
+    this.itemsEnd = review.data;
   }
 };
 
@@ -262,40 +307,41 @@ function decodeImage(data) {
 }
 
 .txt-center {
-    text-align: center;
+  text-align: center;
 }
 .hide {
-    display: none;
+  display: none;
 }
 
 .clear {
-    float: none;
-    clear: both;
+  float: none;
+  clear: both;
 }
 
 .rating {
-    font-size: 20px;
-    width: 150px;
-    unicode-bidi: bidi-override;
-    direction: rtl;
-    text-align: center;
-    position: relative;
+  font-size: 20px;
+  width: 150px;
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  text-align: center;
+  position: relative;
 }
 
 .rating > label {
-    float: right;
-    display: inline;
-    padding: 0;
-    margin: 0;
-    position: relative;
-    width: 1.1em;
-    cursor: pointer;
-    color: #000;
+  float: right;
+  display: inline;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  width: 1.1em;
+  cursor: pointer;
+  color: #000;
 }
 
 .rating > label:hover,
 .rating > label:hover ~ label,
 .rating > input.radio-btn:checked ~ label {
-    color: transparent;color: #ffd000;
+  color: transparent;
+  color: #ffd000;
 }
 </style>
