@@ -71,23 +71,18 @@
             >{{ party.description }}</b-card>
           </b-col>
         </b-row>
-
       </div>
       <hr />
       <div class="text-right mb-5">
         <b-button variant="secondary" :href="'../management'">Retour</b-button>
       </div>
-
-      <!-- <b-card class="mt-3" header="Form Data Result">
-        <pre class="m-0">{{ party }}</pre>
-      </b-card>-->
     </div>
   </div>
 </template>
 
 <script>
-import partyService from "@/services/PartyService.js"
-import util from '~/assets/js/util'
+import partyService from "@/services/PartyService.js";
+import util from "~/assets/js/util";
 
 export default {
   middleware: "auth",
@@ -97,12 +92,13 @@ export default {
       form: {
         participants: 1
       }
-      //calculPrice: this.party.guests_left * this.party.price
     };
   },
-  methods: {},
+
   async mounted() {
     let resultParty;
+
+    // Récupère le type de la soirée (pro ou non)
     let result = await partyService.getPartyType({
       partyId: this.$route.params.id
     });
@@ -116,6 +112,7 @@ export default {
         partyId: this.$route.params.id
       });
     }
+    // Décode l'image de la bdd
     decodeImage(resultParty.data[0]);
     this.party = resultParty.data[0];
   }

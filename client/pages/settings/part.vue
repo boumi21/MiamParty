@@ -1,225 +1,187 @@
 <template>
   <div class="container">
     <div>
-        <h1 class="mt-4">Informations du compte</h1>
-        <hr />
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-            <b-card variant="light" header="Informations personnelles" style="max-width: 35rem;" align="center" class="mx-auto">
-                <b-form-group id="input-group-firstname" label="Prénom" label-for="input-firstname">
-                <b-form-input
-                    id="input-firstname"
-                    v-model="form.firstname"
-                    placeholder=""
-                    onkeydon
-                ></b-form-input>
-                <small id="error-firstname"></small>
-                </b-form-group>
+      <h1 class="mt-4">Informations du compte</h1>
+      <hr />
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-card
+          variant="light"
+          header="Informations personnelles"
+          style="max-width: 35rem;"
+          align="center"
+          class="mx-auto"
+        >
+          <b-form-group id="input-group-firstname" label="Prénom" label-for="input-firstname">
+            <b-form-input id="input-firstname" v-model="form.firstname" placeholder onkeydon></b-form-input>
+            <small id="error-firstname"></small>
+          </b-form-group>
 
-                <b-form-group id="input-group-lastname" label="Nom" label-for="input-lastname">
-                <b-form-input
-                    id="input-lastname"
-                    v-model="form.lastname"
-                ></b-form-input>
-                <small id="error-lastname"></small>
-                </b-form-group>
+          <b-form-group id="input-group-lastname" label="Nom" label-for="input-lastname">
+            <b-form-input id="input-lastname" v-model="form.lastname"></b-form-input>
+            <small id="error-lastname"></small>
+          </b-form-group>
 
-                <b-form-group id="input-group-level" label="Niveau de cuisine" label-for="input-level">
-                <b-form-select
-                    id="input-level"
-                    v-model="form.level"
-                    :options="levels"
-                ></b-form-select>
-                <small id="error-level"></small>
-                </b-form-group>
+          <b-form-group id="input-group-level" label="Niveau de cuisine" label-for="input-level">
+            <b-form-select id="input-level" v-model="form.level" :options="levels"></b-form-select>
+            <small id="error-level"></small>
+          </b-form-group>
 
-                <b-form-group id="input-group-sex" label="Sexe" label-for="input-sex">
-                <b-form-radio-group
-                    v-model="form.sex"
-                    :options="sexs"
-                    id="input-sex"
-                ></b-form-radio-group>
-                <small id="error-sex"></small>
-                </b-form-group>
-                
-                <b-form-group id="input-group-birth" label="Date de naissance" label-for="input-birth">
-                <b-form-input type="date" id="input-birth" v-model="form.birth"></b-form-input>
-                <small id="error-birth"></small>
-                </b-form-group>
-            </b-card>
+          <b-form-group id="input-group-sex" label="Sexe" label-for="input-sex">
+            <b-form-radio-group v-model="form.sex" :options="sexs" id="input-sex"></b-form-radio-group>
+            <small id="error-sex"></small>
+          </b-form-group>
 
-            <b-card variant="light" header="Sécurite du compte" style="max-width: 35rem;" align="center" class="mx-auto mt-4">
-                <b-form-group
-                    id="input-group-email"
-                    label="E-mail"
-                    label-for="input-email"
-                    description=""
-                >
-                <b-form-input
-                    id="input-email"
-                    v-model="form.email"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-email"></small>
-                </b-form-group>
+          <b-form-group id="input-group-birth" label="Date de naissance" label-for="input-birth">
+            <b-form-input type="date" id="input-birth" v-model="form.birth"></b-form-input>
+            <small id="error-birth"></small>
+          </b-form-group>
+        </b-card>
 
-                <b-form-group id="input-group-password" label="Nouveau mot de passe" label-for="input-password">
-                <b-form-input
-                    id="input-password"
-                    v-model="form.password"
-                    type="password"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-password"></small>
-                </b-form-group>
+        <b-card
+          variant="light"
+          header="Sécurite du compte"
+          style="max-width: 35rem;"
+          align="center"
+          class="mx-auto mt-4"
+        >
+          <b-form-group id="input-group-email" label="E-mail" label-for="input-email" description>
+            <b-form-input id="input-email" v-model="form.email" placeholder></b-form-input>
+            <small id="error-email"></small>
+          </b-form-group>
 
-                <b-form-group id="input-group-confirm-password" label="Confirmez le mot de passe" label-for="input-confirm-password">
-                <b-form-input
-                    id="input-confirm-password"
-                    v-model="form.confirmPassword"
-                    type="password"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-confirm-password"></small>
-                </b-form-group>
+          <b-form-group
+            id="input-group-password"
+            label="Nouveau mot de passe"
+            label-for="input-password"
+          >
+            <b-form-input id="input-password" v-model="form.password" type="password" placeholder></b-form-input>
+            <small id="error-password"></small>
+          </b-form-group>
 
-                <b-form-group id="input-group-actual-password" label="Mot de passe actuel" label-for="input-actual-password">
-                <b-form-input
-                    id="input-actual-password"
-                    v-model="form.actualPassword"
-                    type="password"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-actual-password"></small>
-                </b-form-group>
-            </b-card>
+          <b-form-group
+            id="input-group-confirm-password"
+            label="Confirmez le mot de passe"
+            label-for="input-confirm-password"
+          >
+            <b-form-input
+              id="input-confirm-password"
+              v-model="form.confirmPassword"
+              type="password"
+              placeholder
+            ></b-form-input>
+            <small id="error-confirm-password"></small>
+          </b-form-group>
 
-            <b-card variant="light" header="Adresse" style="max-width: 35rem;" align="center" class="mx-auto mt-4">
-                <b-form-group
-                    label="Numéro :"
-                    label-for="input-nb-address"
-                >
-                <b-form-input 
-                    id="input-nb-address"
-                    v-model="form.nbAddress"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-nb-address"></small>
-                </b-form-group>
+          <b-form-group
+            id="input-group-actual-password"
+            label="Mot de passe actuel"
+            label-for="input-actual-password"
+          >
+            <b-form-input
+              id="input-actual-password"
+              v-model="form.actualPassword"
+              type="password"
+              placeholder
+            ></b-form-input>
+            <small id="error-actual-password"></small>
+          </b-form-group>
+        </b-card>
 
-                <b-form-group
-                    label="Rue :"
-                    label-for="input-street"
-                >
-                <b-form-input
-                    id="input-street"
-                    v-model="form.street"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-street"></small>
-                </b-form-group>
+        <b-card
+          variant="light"
+          header="Adresse"
+          style="max-width: 35rem;"
+          align="center"
+          class="mx-auto mt-4"
+        >
+          <b-form-group label="Numéro :" label-for="input-nb-address">
+            <b-form-input id="input-nb-address" v-model="form.nbAddress" placeholder></b-form-input>
+            <small id="error-nb-address"></small>
+          </b-form-group>
 
-                <b-form-group
-                    label="Ville :"
-                    label-for="input-city"
-                >
-                 <b-form-input
-                    id="input-city"
-                    v-model="form.city"
-                    placeholder=""
-                    ></b-form-input>
-                    <small id="error-city"></small>
-                </b-form-group>
+          <b-form-group label="Rue :" label-for="input-street">
+            <b-form-input id="input-street" v-model="form.street" placeholder></b-form-input>
+            <small id="error-street"></small>
+          </b-form-group>
 
-                <b-form-group
-                    label="Code postal :"
-                    label-for="input-postal-code"
-                >
-                <b-form-input
-                id="input-postal-code"
-                    v-model="form.postalCode"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-postal-code"></small>
-                </b-form-group>
+          <b-form-group label="Ville :" label-for="input-city">
+            <b-form-input id="input-city" v-model="form.city" placeholder></b-form-input>
+            <small id="error-city"></small>
+          </b-form-group>
 
-                <b-form-group
-                    label="Pays :"
-                    label-for="input-country"
-                >
-                <b-form-input
-                id="input-country"
-                    v-model="form.country"
-                    placeholder=""
-                ></b-form-input>
-                <small id="error-country"></small>
-                </b-form-group>
-            </b-card>
+          <b-form-group label="Code postal :" label-for="input-postal-code">
+            <b-form-input id="input-postal-code" v-model="form.postalCode" placeholder></b-form-input>
+            <small id="error-postal-code"></small>
+          </b-form-group>
 
-            <b-button type="submit" id="submit-btn" variant="primary" class="mt-3" :disabled=false>Modifier</b-button>
-            <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
-        </b-form>
-        <hr />
+          <b-form-group label="Pays :" label-for="input-country">
+            <b-form-input id="input-country" v-model="form.country" placeholder></b-form-input>
+            <small id="error-country"></small>
+          </b-form-group>
+        </b-card>
+
+        <b-button
+          type="submit"
+          id="submit-btn"
+          variant="primary"
+          class="mt-3"
+          :disabled="false"
+        >Modifier</b-button>
+      </b-form>
+      <hr />
       <div class="text-right mb-5">
         <b-button variant="secondary" :href="'../dashboard'">Retour</b-button>
       </div>
-      
-        </div>
-        
     </div>
+  </div>
 </template>
 
 <script>
-import formValidate from "@/assistant/FormValidate.js"
-import userService from "@/services/UserService.js"
-import authService from "@/services/AuthService.js"
+import formValidate from "@/assistant/FormValidate.js";
+import userService from "@/services/UserService.js";
+import authService from "@/services/AuthService.js";
 
 export default {
-middleware: "auth-part",
-    mounted: function () {
-    this.$nextTick(async function () {
-        try {
-            let result = await userService.getUserInfo({
-                id_account: this.$auth.user.id,
-                id_account_type: this.$auth.user.accountType
-            })
-            this.form.firstname = result.data.firstname
-            this.form.lastname = result.data.lastname
-            this.form.level = result.data.id_cooking_level
-            this.form.sex = result.data.sex
-            //this.form.birth = result.data.birthday
-            this.form.email = result.data.email
-            this.form.nbAddress= result.data.nb_address
-            this.form.street = result.data.street
-            this.form.city = result.data.city
-            this.form.postalCode = result.data.postal_code
-            this.form.country = result.data.country
-            this.form.salt = result.data.salt
-            this.form.pwcheck = result.data.password
-        }
-        catch (e) {
-            console.log(e)
-        }
-    })
-    },
+  middleware: "auth-part",
+  mounted: function() {
+    this.$nextTick(async function() {
+      try {
+        // Récupère les informations de l'utilisateur
+        let result = await userService.getUserInfo({
+          id_account: this.$auth.user.id,
+          id_account_type: this.$auth.user.accountType
+        });
+        this.form.firstname = result.data.firstname;
+        this.form.lastname = result.data.lastname;
+        this.form.level = result.data.id_cooking_level;
+        this.form.sex = result.data.sex;
+        this.form.email = result.data.email;
+        this.form.nbAddress = result.data.nb_address;
+        this.form.street = result.data.street;
+        this.form.city = result.data.city;
+        this.form.postalCode = result.data.postal_code;
+        this.form.country = result.data.country;
+        this.form.salt = result.data.salt;
+        this.form.pwcheck = result.data.password;
+      } catch (e) {}
+    });
+  },
 
   async asyncData() {
-      try {
-         let cooking = await authService.getCookingLevels()
+    try {
+      // Récupère les niveaux de cuisine
+      let cooking = await authService.getCookingLevels();
 
-            return {levels: cooking.data}
-        }
-        catch (e) {
-            console.log(e)
-        }
+      return { levels: cooking.data };
+    } catch (e) {}
   },
-  
+
   data() {
-     
     return {
       form: {
-        firstname: '',
-        lastname: '',
-        email: '',
+        firstname: "",
+        lastname: "",
+        email: "",
         password: null,
         confirmPassword: null,
         actualPassword: null,
@@ -236,72 +198,67 @@ middleware: "auth-part",
         accountId: this.$auth.user.id,
         particularId: this.$auth.user.idPart
       },
-      sexs: [{text: 'Femme', value: 1}, {text: 'Homme', value: 0}, {text: 'Non précisé', value: null}],
+      sexs: [
+        { text: "Femme", value: 1 },
+        { text: "Homme", value: 0 },
+        { text: "Non précisé", value: null }
+      ],
       levels: [],
       show: true
-    }
+    };
   },
-  
+
   methods: {
     async onSubmit(e) {
-        e.preventDefault()
+      e.preventDefault();
 
-    /** Validate Update */
+      /** Validate Update */
 
-    let validate = await formValidate.validateUpdatePart(document, this.form)
-        if (validate == false) {
-            console.log("validate false")
-            return
-        }
+      let validate = await formValidate.validateUpdatePart(document, this.form);
+      if (validate == false) {
+        return;
+      }
 
-    /** Send form to server-side */
+      /** Send form to server-side */
 
-    try {
-        console.log("jenvoie")
-        let res = await userService.updatePart(this.form)
-        console.log("je reviens")
-        console.log(res.data)
+      try {
+        // Mise à jour des informations dans la bdd
+        let res = await userService.updatePart(this.form);
         if (res.data.hasOwnProperty("error")) {
-            console.log(res.data.error)
-            let err = document.getElementById("error-password")
-            err.innerText = res.data.error
-            err.classList.add("text-danger")
-            this.form.password = null
-            this.form.confirmPassword = null
-            this.form.actualPassword = null
-            return
+          let err = document.getElementById("error-password");
+          err.innerText = res.data.error;
+          err.classList.add("text-danger");
+          this.form.password = null;
+          this.form.confirmPassword = null;
+          this.form.actualPassword = null;
+          return;
+        } else {
+          try {
+            location.reload();
+          } catch (error) {
+            console.log(error);
+          }
         }
-        else {
-            try {
-                location.reload()
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
-    }
-    catch(e) {
-        console.log(e)
-    }
-
-    
-  },
+      } catch (e) {
+        console.log(e);
+      }
+    },
 
     onReset(evt) {
-      evt.preventDefault()
+      evt.preventDefault();
       // Reset our form values
-      this.form.email = ''
-      this.form.name = ''
-      this.form.food = null
-      this.form.checked = null
+      this.form.email = "";
+      this.form.name = "";
+      this.form.food = null;
+      this.form.checked = null;
       // Trick to reset/clear native browser form validation state
-      this.show = false
+      this.show = false;
       this.$nextTick(() => {
-        this.show = true
-      })
-    },
+        this.show = true;
+      });
+    }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -313,5 +270,4 @@ middleware: "auth-part",
   align-items: center;
   text-align: center;
 }
-
 </style>

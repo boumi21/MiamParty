@@ -229,30 +229,31 @@ export default {
     async onSubmit(e) {
       e.preventDefault();
 
-      /** Validate Party creation */
-
+      /** Valide le formulaire */
       let validate = await formValidate.validateCreatePart(document, this.form);
       if (validate == false) {
         return;
       }
 
       try {
+        // Ajoute la soirée à la bdd
         let res = await partyService.createParty(this.form);
 
         this.$router.push("/dashboard");
       } catch (error) {}
     },
 
+    // Converti l'image pour la bdd
     async convertImage() {
-      const file = this.form.image
-      let result = ""
-      if(file){
-        result = await toBase64(file);       
+      const file = this.form.image;
+      let result = "";
+      if (file) {
+        result = await toBase64(file);
       }
-      this.form.dataImage = result;  
-      
+      this.form.dataImage = result;
     },
 
+    // Rempli les champs de l'adresse automatiquement
     async fillAddress() {
       let result = await userService.getUserAddress({
         userId: this.$auth.user.id,
@@ -267,6 +268,7 @@ export default {
   }
 };
 
+// Récupère la date minimum pour le calendrier
 function getMinDate() {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -275,6 +277,7 @@ function getMinDate() {
   return minDate;
 }
 
+// Converti l'image en base 64
 async function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

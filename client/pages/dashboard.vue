@@ -4,17 +4,31 @@
       <h1 class="mt-4" v-if="$auth.user.isPart">Bienvenue {{$auth.user.firstname}}</h1>
       <h1 class="mt-4" v-if="$auth.user.isPro">Bienvenue {{$auth.user.namePro}}</h1>
       <hr />
-      <h2 class="subtitle">Vous avez <b-badge href="/party/management" variant="primary">{{numberParties}}</b-badge> soirée(s) à venir !</h2>
+      <h2 class="subtitle">
+        Vous avez
+        <b-badge href="/party/management" variant="primary">{{numberParties}}</b-badge>soirée(s) à venir !
+      </h2>
 
       <b-card-group deck class="mb-4">
         <b-card img-src="/images/party-food1.jpg" img-alt="party-food" img-top>
           <b-card-text>Préparez vos soirées qui arrivent, remémorez-vous celles du passé et plus encore !</b-card-text>
           <template v-slot:footer>
-            <b-button block pill variant="outline-primary" href="/party/management">Gérez vos soirées</b-button>
+            <b-button
+              block
+              pill
+              variant="outline-primary"
+              href="/party/management"
+            >Gérez vos soirées</b-button>
           </template>
         </b-card>
 
-        <b-card v-if="$auth.user.isPart" img-src="/images/party-food2.jpg" img-alt="Image" img-top class>
+        <b-card
+          v-if="$auth.user.isPart"
+          img-src="/images/party-food2.jpg"
+          img-alt="Image"
+          img-top
+          class
+        >
           <b-card-text>Parcourez les soirées proposées par les autres utilisateurs et les restaurants !</b-card-text>
           <template v-slot:footer>
             <b-button
@@ -65,10 +79,12 @@ export default {
   },
 
   async mounted() {
-
-    let result = await partyService.getCountParties({isPart: this.$auth.user.isPart, id_account: this.$auth.user.id});
-    console.log(result)
-    this.numberParties = result.data[0].count
+    // Compte le nombre de soirées à venir pour l'utilisateur
+    let result = await partyService.getCountParties({
+      isPart: this.$auth.user.isPart,
+      id_account: this.$auth.user.id
+    });
+    this.numberParties = result.data[0].count;
   }
 };
 </script>

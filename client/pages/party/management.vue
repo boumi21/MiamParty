@@ -39,7 +39,7 @@
                         variant="outline-danger"
                         @click="cancelParty(itemInc.id_party)"
                       >Annuler</b-button>
-<b-modal
+                      <b-modal
                         centered
                         hide-footer
                         id="modal-confirm-cancel-reservation"
@@ -59,7 +59,6 @@
                           >Non, Retour</b-button>
                         </div>
                       </b-modal>
-
                     </template>
                   </b-card>
                 </div>
@@ -124,7 +123,6 @@
                           >Non, Retour</b-button>
                         </div>
                       </b-modal>
-
                     </template>
                   </b-card>
                 </div>
@@ -187,30 +185,28 @@ export default {
 
   mounted: function() {
     this.$nextTick(async function() {
+      // Récupère les soirées à venir
       let result = await partyService.getPartiesInc({
         id_account: this.$auth.user.id
       });
-      console.log(result.data);
       decodeImage(result.data);
       this.itemsInc = result.data;
 
+      // Récupère les soirées de l'utilisateur
       let result2 = await partyService.getPartiesOwn({
         id_account: this.$auth.user.id
       });
-      console.log(result2.data);
       decodeImage(result2.data);
       this.itemsOwn = result2.data;
 
+      // Récupère les oirées terminées auxquelles l'utilisateur a participé
       let result3 = await partyService.getPartiesEnd({
         id_account: this.$auth.user.id
       });
-      console.log(result3.data);
       decodeImage(result3.data);
       this.itemsEnd = result3.data;
     });
   },
-
-  async asyncData() {},
 
   data() {
     return {
@@ -222,8 +218,7 @@ export default {
 
   methods: {
     deleteParty: async function(id_party) {
-      console.log("func deleteParty");
-      console.log(id_party);
+      // Change le statut de la soirée dans la bdd (passage au statut supprimé)
       let result = await partyService.deleteParty({
         id_party: id_party
       });
@@ -231,8 +226,7 @@ export default {
     },
 
     cancelParty: async function(id_party) {
-      console.log("func cancelParty");
-      console.log(id_party);
+      // Annula la réservation dans la bdd
       let result = await partyService.cancelParty({
         id_party: id_party,
         id_account: this.$auth.user.id
@@ -255,14 +249,6 @@ function decodeImage(data) {
       data[i].picture = "/images/party-food1.jpg";
     }
   }
-}
-
-function getMinDate() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const minDate = new Date(today);
-  //minDate.setDate(minDate.getDate() + 3); -> A remmetre si on veut autoriser l'ajout seulement 3 jours après aujourd'hui
-  return minDate;
 }
 </script>
 
